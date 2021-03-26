@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/recommendFragment">
+
+    <fragment
+        android:id="@+id/recommendFragment"
+        android:name="com.example.recommendmeamovie.ui.recommend.RecommendFragment"
+        android:label="Recommend Me A Movie"
+        tools:layout="@layout/recommend_fragment">
+        <action
+            android:id="@+id/action_recommendFragment_to_movieFragment"
+            app:destination="@id/movieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieFragment"
+        android:name="com.example.recommendmeamovie.ui.movie.MovieFragment"
+        android:label="Movie"
+        tools:layout="@layout/movie_fragment" />
+    <fragment
+        android:id="@+id/watchlistFragment"
+        android:name="com.example.recommendmeamovie.ui.watchlist.WatchlistFragment"
+        android:label="Watchlist"
+        tools:layout="@layout/watchlist_fragment" />
+    <fragment
+        android:id="@+id/yourMoviesFragment"
+        android:name="com.example.recommendmeamovie.ui.yourmovies.YourMoviesFragment"
+        android:label="Your Movies"
+        tools:layout="@layout/your_movies_fragment" />
+</navigation>

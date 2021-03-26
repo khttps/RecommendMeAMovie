@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Recommend Me A Movie</string>
+    <string name="your_movies">Your Movies</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="settings">Settings</string>
 </resources>
