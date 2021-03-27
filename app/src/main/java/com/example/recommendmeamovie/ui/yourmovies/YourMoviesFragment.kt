@@ -7,26 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.recommendmeamovie.R
+import com.example.recommendmeamovie.databinding.YourMoviesFragmentBinding
 
 class YourMoviesFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = YourMoviesFragment()
-    }
 
     private lateinit var viewModel: YourMoviesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.your_movies_fragment, container, false)
-    }
+    ): View {
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(YourMoviesViewModel::class.java)
-        // TODO: Use the ViewModel
+        val binding =  YourMoviesFragmentBinding.inflate(inflater)
+
+        return binding.root
     }
 
 }

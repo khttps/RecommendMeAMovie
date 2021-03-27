@@ -7,26 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.recommendmeamovie.R
+import com.example.recommendmeamovie.databinding.WatchlistFragmentBinding
 
 class WatchlistFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = WatchlistFragment()
-    }
 
     private lateinit var viewModel: WatchlistViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.watchlist_fragment, container, false)
+    ): View {
+
+        val binding = WatchlistFragmentBinding.inflate(inflater)
+
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(WatchlistViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
 
 }

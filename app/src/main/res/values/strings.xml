@@ -3,4 +3,9 @@
     <string name="your_movies">Your Movies</string>
     <string name="watchlist">Watchlist</string>
     <string name="settings">Settings</string>
+    <string name="directed_by">Directed by</string>
+    <string name="movie_poster">Movie Poster</string>
+    <string name="vote_average">Vote Average</string>
+    <string name="cast">Cast</string>
+    <string name="crew">Crew</string>
 </resources>

@@ -1,13 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".ui.movie.MovieFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_margin="@dimen/activity_horizontal_margin">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/poster_image_view"
+            android:layout_width="138dp"
+            android:layout_height="200dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/movie_poster" />
+
+        <TextView
+            android:id="@+id/title_text_view"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            app:layout_constraintStart_toEndOf="@+id/poster_image_view"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Citizen Kane" />
+
+        <TextView
+            android:id="@+id/directed_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/directed_by"
+            app:layout_constraintStart_toStartOf="@+id/title_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/title_text_view" />
+
+        <TextView
+            android:id="@+id/director_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            app:layout_constraintStart_toStartOf="@+id/directed_by"
+            app:layout_constraintTop_toBottomOf="@+id/directed_by"
+            tools:text="Orson Welles" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/director_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/director_text_view">
+
+            <TextView
+                android:id="@+id/runtime_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                tools:text="119 minutes" />
+
+            <TextView
+                android:id="@+id/release_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                tools:text="1941" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/genre_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            tools:text="Drama/Mystery" />
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/genre_text_view">
+
+            <TextView
+                android:id="@+id/vote_average_text_view"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/vote_average"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/genre_text_view" />
+
+            <Button
+                android:id="@+id/add_to_watchlist_button"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/genre_text_view" />
+
+            <Button
+                android:id="@+id/add_to_your_films_button"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/genre_text_view" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/overview_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            tools:text="When a reporter is assigned to decipher newspaper magnate Charles Foster Kane's (Orson Welles) dying words, his investigation gradually reveals the fascinating portrait of a complex man who rose from obscurity to staggering heights. Though Kane's friend and colleague Jedediah Leland (Joseph Cotten), and his mistress, Susan Alexander (Dorothy Comingore), shed fragments of light on Kane's life, the reporter fears he may never penetrate the mystery of the elusive man's final word, Rosebud." />
+
+        <TextView
+            android:id="@+id/cast_text_view"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_height="wrap_content"
+            android:text="@string/cast"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/overview_text_view" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cast_text_view" />
+
+        <TextView
+            android:id="@+id/crew_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/crew"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/crew_text_view" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
