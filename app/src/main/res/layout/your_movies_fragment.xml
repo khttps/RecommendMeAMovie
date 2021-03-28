@@ -4,9 +4,7 @@
     android:id="@+id/yourMoviesFragment"
     tools:context=".ui.yourmovies.YourMoviesFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/your_movies_list"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="match_parent"/>
 </layout>

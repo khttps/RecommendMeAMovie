@@ -4,9 +4,7 @@
     android:id="@+id/watchlistFragment"
     tools:context=".ui.watchlist.WatchlistFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/watchlist_list"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="match_parent"/>
 </layout>
