@@ -9,7 +9,12 @@ import android.view.ViewGroup
 import com.example.recommendmeamovie.BuildConfig
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.databinding.RecommendFragmentBinding
+import com.example.recommendmeamovie.network.MovieDetails
 import com.example.recommendmeamovie.network.MovieService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,17 +28,22 @@ class RecommendFragment : Fragment() {
 
         val binding = RecommendFragmentBinding.inflate(inflater)
 
-        val call = MovieService.retrofitService.getPopularMovies(BuildConfig.API_KEY)
-        call.enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                binding.recommendTextView.text = response.body()
-            }
+        val scope = CoroutineScope(Dispatchers.Default)
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                binding.recommendTextView.text = t.message
-            }
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                val details = MovieService.retrofitService.getMovieDetails(34433, BuildConfig.API_KEY)
 
-        })
+                withContext(Dispatchers.Main) {
+                    binding.recommendTextView.text = details.title
+                }
+
+            }
+        }
+
+
+
+
 
         //viewModel = ViewModelProvider(this).get(RecommendViewModel::class.java)
         //binding.viewModel = viewModel
