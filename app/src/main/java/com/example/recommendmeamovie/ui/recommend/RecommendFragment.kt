@@ -41,10 +41,6 @@ class RecommendFragment : Fragment() {
             }
         }
 
-
-
-
-
         //viewModel = ViewModelProvider(this).get(RecommendViewModel::class.java)
         //binding.viewModel = viewModel
 

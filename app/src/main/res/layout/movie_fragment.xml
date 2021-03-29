@@ -7,12 +7,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/activity_horizontal_margin">
+        android:layout_margin="@dimen/default_margin">
 
         <ImageView
             android:id="@+id/poster_image_view"
             android:layout_width="138dp"
             android:layout_height="200dp"
+            android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:contentDescription="@string/movie_poster" />
@@ -22,8 +23,8 @@
             style="@style/TextAppearance.AppCompat.Headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginStart="@dimen/default_margin"
             app:layout_constraintStart_toEndOf="@+id/poster_image_view"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Citizen Kane" />
@@ -49,7 +50,7 @@
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/default_margin"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@+id/director_text_view"
             app:layout_constraintTop_toBottomOf="@+id/director_text_view">
@@ -58,14 +59,14 @@
                 android:id="@+id/runtime_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/default_margin"
                 tools:text="119 minutes" />
 
             <TextView
                 android:id="@+id/release_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/default_margin"
                 tools:text="1941" />
         </LinearLayout>
 
@@ -82,7 +83,7 @@
             android:id="@+id/linearLayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/default_margin"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@+id/linearLayout"
             app:layout_constraintTop_toBottomOf="@+id/genre_text_view">
@@ -101,7 +102,6 @@
                 android:layout_width="48dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/genre_text_view" />
 
@@ -118,7 +118,7 @@
             android:id="@+id/overview_text_view"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/default_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
@@ -127,7 +127,7 @@
         <TextView
             android:id="@+id/cast_text_view"
             android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/default_margin"
             android:layout_height="wrap_content"
             android:text="@string/cast"
             app:layout_constraintStart_toStartOf="parent"
@@ -136,8 +136,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/list_item_dimen"
             android:orientation="horizontal"
+            tools:listitem="@layout/credits_list_item"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -148,15 +149,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/crew"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/default_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/list_item_dimen"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             android:orientation="horizontal"
+            tools:listitem="@layout/credits_list_item"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/crew_text_view" />
