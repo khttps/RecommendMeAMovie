@@ -23,24 +23,30 @@ private val retrofit = Retrofit.Builder()
 
 interface MovieApiService {
 
-    @GET("3/movie/popular")
-    suspend fun getPopularMovies(@Query("api_key") key : String) : String
+    @GET("3/search/movie")
+    suspend fun getSearchResults(@Query("query") query: String): MoviesContainer
+
+    @GET("3/movie/{filter}")
+    suspend fun getMovies(
+        @Path("filter") filter: String,
+        @Query("api_key") key: String
+    ): MoviesContainer
 
     @GET("3/discover/movie")
     suspend fun getMovieRecommendation(
-        @Query("api_key") key : String,
-        @Query("primary_release_date.gte") releasedAfter : String,
-        @Query("primary_release_date.lte") releasedBefore : String,
-        @Query("vote_average.gte") voteGreaterThan : Int,
-        @Query("vote_average.lte") voteLessThan : Int,
-        @Query("with_genres") genre : Long
-    ) : List<Movie>
+        @Query("api_key") key: String,
+        @Query("primary_release_date.gte") releasedAfter: String,
+        @Query("primary_release_date.lte") releasedBefore: String,
+        @Query("vote_average.gte") voteGreaterThan: Int,
+        @Query("vote_average.lte") voteLessThan: Int,
+        @Query("with_genres") genre: Long
+    ): MoviesContainer
 
     @GET("3/movie/{id}")
-    suspend fun getMovieDetails(@Path("id") id : Long, @Query("api_key") key: String) : MovieDetails
+    suspend fun getMovieDetails(@Path("id") id: Long, @Query("api_key") key: String): MovieDetails
 
     @GET("3/movie/{id}/credits")
-    suspend fun getMovieCredits(@Path("id") id : Long, @Query("api_key") key: String) : Credits
+    suspend fun getMovieCredits(@Path("id") id: Long, @Query("api_key") key: String): Credits
 
 }
 

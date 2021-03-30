@@ -21,12 +21,8 @@
         tools:layout="@layout/movie_fragment" />
     <fragment
         android:id="@+id/watchlistFragment"
-        android:name="com.example.recommendmeamovie.ui.watchlist.WatchlistFragment"
-        android:label="Watchlist"
-        tools:layout="@layout/watchlist_fragment" />
-    <fragment
-        android:id="@+id/yourMoviesFragment"
-        android:name="com.example.recommendmeamovie.ui.yourmovies.YourMoviesFragment"
-        android:label="Your Movies"
-        tools:layout="@layout/your_movies_fragment" />
+        android:name="com.example.recommendmeamovie.ui.list.ListFragment"
+        android:label="List"
+        tools:layout="@layout/list_fragment" />
+
 </navigation>

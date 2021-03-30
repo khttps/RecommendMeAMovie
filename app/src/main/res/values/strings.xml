@@ -8,4 +8,7 @@
     <string name="vote_average">Vote Average</string>
     <string name="cast">Cast</string>
     <string name="crew">Crew</string>
+    <string name="search">Search</string>
+    <string name="popular">Popular</string>
+    <string name="top_rated">Top Rated</string>
 </resources>

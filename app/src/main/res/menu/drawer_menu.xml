@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/your_movies" android:id="@id/yourMoviesFragment"/>
-    <item android:title="@string/watchlist" android:id="@id/watchlistFragment"/>
+    <item android:title="@string/your_movies" android:id="@id/listFragment"/>
+    <item android:title="@string/watchlist" android:id="@id/listFragment"/>
 </menu>

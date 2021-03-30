@@ -8,8 +8,7 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:openDrawer="start">
+        android:fitsSystemWindows="true">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -25,7 +24,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="?attr/colorPrimary"
-                    app:popupTheme="@style/Theme.RecommendMeAMovie.PopupOverlay"/>
+                    app:popupTheme="@style/Theme.RecommendMeAMovie.PopupOverlay">
+                </androidx.appcompat.widget.Toolbar>
 
             </com.google.android.material.appbar.AppBarLayout>
 
