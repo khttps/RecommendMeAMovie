@@ -3,26 +3,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/recommendFragment">
-
+    app:startDestination="@id/mainFragment">
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.recommendmeamovie.ui.main.MainFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/main_fragment">
+        <action
+            android:id="@+id/action_mainFragment_to_recommendFragment"
+            app:destination="@id/recommendFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recommendFragment"
         android:name="com.example.recommendmeamovie.ui.recommend.RecommendFragment"
-        android:label="Recommend Me A Movie"
+        android:label="@string/app_name"
         tools:layout="@layout/recommend_fragment">
         <action
             android:id="@+id/action_recommendFragment_to_movieFragment"
             app:destination="@id/movieFragment" />
+        <action
+            android:id="@+id/action_recommendFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieFragment"
         android:name="com.example.recommendmeamovie.ui.movie.MovieFragment"
         android:label="Movie"
-        tools:layout="@layout/movie_fragment" />
+        tools:layout="@layout/movie_fragment">
+        <action
+            android:id="@+id/action_movieFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/watchlistFragment"
+        android:id="@+id/listFragment"
         android:name="com.example.recommendmeamovie.ui.list.ListFragment"
         android:label="List"
         tools:layout="@layout/list_fragment" />
-
 </navigation>

@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/listFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.list.ListFragment">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.recommendmeamovie.ui.list.ListViewModel" />
+    </data>
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/watchlist"
+        android:id="@+id/list"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        tools:listitem="@layout/movie_list_item"/>
+        listData="@{viewModel.list}"
+        android:layout_width="match_parent" />
 </layout>

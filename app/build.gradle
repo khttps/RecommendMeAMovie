@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
@@ -62,6 +64,7 @@ dependencies {
     // LiveData and ViewModel
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Testing
     testImplementation 'junit:junit:4.13.2'
@@ -83,6 +86,11 @@ dependencies {
     // Moshi
     implementation 'com.squareup.moshi:moshi-kotlin:1.11.0'
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+
+
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 
 
 

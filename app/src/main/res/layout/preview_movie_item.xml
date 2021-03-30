@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView
-    android:id="@+id/preview_poster"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="66dp"
-    android:layout_height="@dimen/list_item_dimen"/>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="movie"
+            type="com.example.recommendmeamovie.network.Movie" />
+    </data>
+
+    <ImageView
+        android:id="@+id/preview_poster"
+        poster="@{movie.poster}"
+        android:layout_width="66dp"
+        android:scaleType="fitXY"
+        android:layout_height="@dimen/list_item_dimen" />
+</layout>

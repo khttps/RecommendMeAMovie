@@ -1,73 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".ui.recommend.RecommendFragment">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="com.example.recommendmeamovie.ui.recommend.RecommendViewModel" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:text="Hello" />
 
-        <TextView
-            android:id="@+id/recommend_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/list_item_dimen"
-            android:layout_marginBottom="@dimen/default_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/popular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:text="@string/popular"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recommend_text_view" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/popular_list"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/list_item_dimen"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintStart_toStartOf="@+id/popular"
-            android:layout_marginHorizontal="@dimen/default_margin"
-            app:layout_constraintTop_toBottomOf="@+id/popular"
-            tools:listitem="@layout/preview_movie_item" />
-
-
-        <TextView
-            android:id="@+id/top_rated"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/top_rated"
-            android:layout_marginTop="@dimen/default_margin"
-            app:layout_constraintStart_toStartOf="@+id/popular"
-            app:layout_constraintTop_toBottomOf="@+id/popular_list" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/top_rated_list"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/list_item_dimen"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintStart_toStartOf="@+id/top_rated"
-            app:layout_constraintTop_toBottomOf="@+id/top_rated"
-            android:layout_marginHorizontal="@dimen/default_margin"
-            tools:listitem="preview_movie_item" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</layout>
+</FrameLayout>

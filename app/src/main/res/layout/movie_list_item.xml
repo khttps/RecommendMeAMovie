@@ -1,39 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_dimen"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/poster_image_view"
-        android:layout_width="66dp"
-        android:layout_height="match_parent"/>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent">
+
+    <data>
+        <variable
+            name="movie"
+            type="com.example.recommendmeamovie.network.Movie" />
+    </data>
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="@dimen/default_margin"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_dimen"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/name_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="The Assassination of Jesse James by the Coward Robert Ford"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/poster_image_view"
+            poster="@{movie.poster}"
+            android:layout_height="match_parent"
+            android:layout_width="66dp" />
 
-        <TextView
-            android:id="@+id/year_text_view"
-            android:layout_width="match_parent"
-            tools:text="2007"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/default_margin">
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/name_text_view"
+                android:layout_height="wrap_content"
+                android:text="@{movie.title}"
+                android:layout_width="match_parent"
+                android:maxLines="1"
+                android:textStyle="bold"
+                tools:text="The Assassination of Jesse James by the Coward Robert Ford" />
+
+            <TextView
+                android:ellipsize="end"
+                android:id="@+id/year_text_view"
+                android:text="@{movie.releaseDate}"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:maxLines="1"
+                tools:text="2007" />
+        </LinearLayout>
+
     </LinearLayout>
-
-</LinearLayout>
+</layout>
