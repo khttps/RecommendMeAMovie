@@ -42,11 +42,11 @@
             android:layout_height="@dimen/list_item_dimen"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            listData="@{viewModel.popularMovies}"
+            movieList="@{viewModel.popularMovies}"
             app:layout_constraintStart_toStartOf="@+id/popular"
             android:layout_marginHorizontal="@dimen/default_margin"
             app:layout_constraintTop_toBottomOf="@+id/popular"
-            tools:listitem="@layout/preview_movie_item" />
+            tools:listitem="@layout/main_list_item" />
 
 
         <TextView
@@ -63,7 +63,7 @@
             android:id="@+id/top_rated_list"
             android:layout_width="match_parent"
             android:layout_height="@dimen/list_item_dimen"
-            listData="@{viewModel.topRatedMovies}"
+            movieList="@{viewModel.topRatedMovies}"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintStart_toStartOf="@+id/top_rated"

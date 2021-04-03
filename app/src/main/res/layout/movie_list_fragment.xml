@@ -2,18 +2,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.list.ListFragment">
+    tools:context=".ui.movielist.MovieListFragment">
 
     <data>
         <variable
             name="viewModel"
-            type="com.example.recommendmeamovie.ui.list.ListViewModel" />
+            type="com.example.recommendmeamovie.ui.movielist.MovieListViewModel" />
     </data>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_height="match_parent"
-        listData="@{viewModel.list}"
         android:layout_width="match_parent" />
 </layout>

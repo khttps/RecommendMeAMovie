@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources  xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes">
+
+    <string-array name="genres_names">
+        <item>Action</item>
+        <item>Animation</item>
+        <item>Comedy</item>
+        <item>Crime</item>
+        <item>Drama</item>
+        <item>Fantasy</item>
+        <item>Horror</item>
+        <item>Mystery</item>
+        <item>Romance</item>
+        <item>Science Fiction</item>
+        <item>Thriller</item>
+        <item>War</item>
+        <item>Western</item>
+    </string-array>
+
+    <string-array name="genres_ids">
+        <item></item>
+        <item>28</item>
+        <item>16</item>
+        <item>35</item>
+        <item>80</item>
+        <item>18</item>
+        <item>14</item>
+        <item>27</item>
+        <item>9648</item>
+        <item>10749</item>
+        <item>878</item>
+        <item>53</item>
+        <item>10752</item>
+        <item>37</item>
+    </string-array>
+
+    <string-array name="release_names">
+        <item>1940s</item>
+        <item>1950s</item>
+        <item>1960s</item>
+        <item>1970s</item>
+        <item>1980s</item>
+        <item>1990s</item>
+        <item>2000s</item>
+        <item>2010s</item>
+        <item>2020s</item>
+    </string-array>
+
+    <string-array name="release_ids">
+        <item></item>
+        <item>1940-01-01</item>
+        <item>1950-01-01</item>
+        <item>1960-01-01</item>
+        <item>1970-01-01</item>
+        <item>1980-01-01</item>
+        <item>1990-01-01</item>
+        <item>2000-01-01</item>
+        <item>2010-01-01</item>
+        <item>2020-01-01</item>
+    </string-array>
+
+    <string-array name="vote_average">
+        <item>Low</item>
+        <item>Average</item>
+        <item>High</item>
+    </string-array>
+
+
+</resources>
+

@@ -1,19 +1,21 @@
 package com.example.recommendmeamovie.ui.main
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recommendmeamovie.databinding.PreviewMovieItemBinding
+import com.example.recommendmeamovie.databinding.MainListItemBinding
+import com.example.recommendmeamovie.generated.callback.OnClickListener
 import com.example.recommendmeamovie.network.Movie
 
 
-class MovieAdapter() : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(ListItemCallbacks()) {
+class MovieAdapter(private val listener : OnMovieClickListener) : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(ListItemCallbacks()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
        val inflater = LayoutInflater.from(parent.context)
-        return MovieViewHolder(PreviewMovieItemBinding.inflate(inflater))
+        return MovieViewHolder(MainListItemBinding.inflate(inflater))
 
     }
 
@@ -22,15 +24,20 @@ class MovieAdapter() : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(ListItem
         holder.bind(movie)
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return super.getItemViewType(position)
-    }
-
-    class MovieViewHolder(val binding: PreviewMovieItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MovieViewHolder(val binding: MainListItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
         fun bind(movie : Movie) {
             binding.movie = movie
             binding.executePendingBindings()
+        }
+
+        init {
+            binding.root.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            if (absoluteAdapterPosition != RecyclerView.NO_POSITION)
+                listener.onMovieClick(binding.movie!!)
         }
 
     }
@@ -44,6 +51,10 @@ class MovieAdapter() : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(ListItem
             return oldItem == newItem
         }
 
+    }
+
+    interface OnMovieClickListener {
+        fun onMovieClick(movie : Movie)
     }
 
 }

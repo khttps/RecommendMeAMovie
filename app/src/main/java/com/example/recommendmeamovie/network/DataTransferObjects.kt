@@ -11,7 +11,7 @@ data class MoviesContainer(
 
 @JsonClass(generateAdapter = true)
 data class Movie(
-    val id: Int,
+    val id: Long,
     val title: String,
     @Json(name = "poster_path") val poster: String,
     @Json(name = "release_date") val releaseDate: String,
@@ -19,14 +19,14 @@ data class Movie(
 
 @JsonClass(generateAdapter = true)
 data class MovieDetails(
-    val id: Int,
+    val id: Long,
     val title: String,
     val overview: String,
     val runtime: Int,
+    val genres: List<Genre>?,
     @Json(name = "poster_path") val poster: String,
     @Json(name = "release_date") val releaseDate: String,
-    @Json(name = "vote_average") val voteAverage: Double,
-    @Json(name = "genre_ids") val genres: List<Genre>?
+    @Json(name = "vote_average") val voteAverage: Double
 )
 
 @JsonClass(generateAdapter = true)
@@ -45,14 +45,14 @@ data class Credits(
 data class Cast(
     val name : String,
     val character: String,
-    @Json(name = "profile_path")  val picture : String
+    @Json(name = "profile_path")  val picture : String?
 )
 
 @JsonClass(generateAdapter = true)
 data class Crew(
     val name : String,
     val job: String,
-    @Json(name = "profile_path") val picture : String
+    @Json(name = "profile_path") val picture : String?
 )
 
 

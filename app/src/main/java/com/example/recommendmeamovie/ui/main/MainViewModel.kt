@@ -27,6 +27,11 @@ class MainViewModel : ViewModel() {
         get() = _eventNavigateToRecommend
 
 
+    private val _eventNavigateToMovie = MutableLiveData<Movie?>()
+    val eventNavigateToMovie : LiveData<Movie?>
+        get() = _eventNavigateToMovie
+
+
     init {
         viewModelScope.launch {
             loadPreviewMovies()
@@ -39,6 +44,14 @@ class MainViewModel : ViewModel() {
 
     fun navigateToRecommendCompleted() {
         _eventNavigateToRecommend.value = false
+    }
+
+    fun navigateToMovie(movie : Movie) {
+        _eventNavigateToMovie.value = movie
+    }
+
+    fun navigateToMovieCompleted() {
+        _eventNavigateToMovie.value = null
     }
 
     private suspend fun loadPreviewMovies() {

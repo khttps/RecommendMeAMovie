@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_mainFragment_to_recommendFragment"
             app:destination="@id/recommendFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_movieFragment"
+            app:destination="@id/movieFragment" />
     </fragment>
     <fragment
         android:id="@+id/recommendFragment"
@@ -33,10 +36,16 @@
         <action
             android:id="@+id/action_movieFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <argument
+            android:name="movieId"
+            app:argType="long" />
+        <argument
+            android:name="movieName"
+            app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/listFragment"
-        android:name="com.example.recommendmeamovie.ui.list.ListFragment"
+        android:id="@+id/movieListFragment"
+        android:name="com.example.recommendmeamovie.ui.movielist.MovieListFragment"
         android:label="List"
-        tools:layout="@layout/list_fragment" />
+        tools:layout="@layout/movie_list_fragment" />
 </navigation>

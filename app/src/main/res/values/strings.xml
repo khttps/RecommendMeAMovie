@@ -11,4 +11,7 @@
     <string name="search">Search</string>
     <string name="popular">Popular</string>
     <string name="top_rated">Top Rated</string>
+    <string name="select">Select</string>
+    <string name="runtime">%1$d minutes</string>
+
 </resources>

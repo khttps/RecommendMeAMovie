@@ -6,7 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import com.example.recommendmeamovie.R
+import com.example.recommendmeamovie.databinding.RecommendFragmentBinding
+
+data class Preference(
+    val question: String,
+    val choices: Map<String, String>
+)
 
 class RecommendFragment : Fragment() {
 
@@ -15,8 +22,14 @@ class RecommendFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.recommend_fragment, container, false)
+    ): View {
+
+        val binding = RecommendFragmentBinding.inflate(inflater)
+
+
+        return binding.root
     }
 
 }
+
+

@@ -1,22 +1,22 @@
-package com.example.recommendmeamovie.ui.list
+package com.example.recommendmeamovie.ui.movielist
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.recommendmeamovie.databinding.ListFragmentBinding
+import com.example.recommendmeamovie.databinding.MovieListFragmentBinding
 
-class ListFragment : Fragment() {
+class MovieListFragment : Fragment() {
 
-    private lateinit var viewModel: ListViewModel
+    private lateinit var viewModel: MovieListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        val binding = ListFragmentBinding.inflate(inflater)
+        val binding = MovieListFragmentBinding.inflate(inflater)
 
         return binding.root
     }
