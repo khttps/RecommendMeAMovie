@@ -2,10 +2,12 @@ package com.example.recommendmeamovie.ui.movie
 
 import androidx.lifecycle.*
 import com.example.recommendmeamovie.BuildConfig
-import com.example.recommendmeamovie.network.Credits
-import com.example.recommendmeamovie.network.Crew
-import com.example.recommendmeamovie.network.MovieDetails
-import com.example.recommendmeamovie.network.MovieService
+import com.example.recommendmeamovie.domain.Credit
+import com.example.recommendmeamovie.domain.MovieDetails
+import com.example.recommendmeamovie.source.MovieRepository
+import com.example.recommendmeamovie.source.remote.Crew
+import com.example.recommendmeamovie.source.remote.MovieDetailsDTO
+import com.example.recommendmeamovie.source.remote.MovieService
 import com.example.recommendmeamovie.utils.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,13 +16,11 @@ import java.lang.IllegalArgumentException
 
 class MovieViewModel(private val movieId : Long) : ViewModel() {
 
+    private val movieRepository = MovieRepository()
+
     private val _movieDetails = MutableLiveData<MovieDetails>()
     val movieDetails : LiveData<MovieDetails>
         get() = _movieDetails
-
-    private val _credits = MutableLiveData<Credits>()
-    val credits : LiveData<Credits>
-        get() = _credits
 
     private val _year = Transformations.map(_movieDetails) {
         it.releaseDate.substringBefore("-")
@@ -35,12 +35,12 @@ class MovieViewModel(private val movieId : Long) : ViewModel() {
         get() = _genres
 
 
-    private val _director = Transformations.map(_credits) { credits ->
-        credits.crew?.first {
-            it.job.equals("Director", true)
+    private val _director = Transformations.map(_movieDetails) { details ->
+        details.crew?.first {
+            it.role.equals("Director", true)
         }
     }
-    val director : LiveData<Crew?>
+    val director : LiveData<Credit?>
         get() = _director
 
     init {
@@ -53,27 +53,10 @@ class MovieViewModel(private val movieId : Long) : ViewModel() {
     private suspend fun getMovieDetails() {
         withContext(Dispatchers.IO) {
             _movieDetails.postValue(
-                MovieService
-                    .retrofitService
-                    .getMovieDetails(movieId, BuildConfig.API_KEY)
-            )
-
-            _credits.postValue(
-                MovieService
-                    .retrofitService
-                    .getMovieCredits(movieId, BuildConfig.API_KEY)
+                movieRepository.getMovieDetails(movieId)
             )
         }
     }
 
 }
 
-class MovieViewModelFactory(private val movieId: Long) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MovieViewModel::class.java))
-            return MovieViewModel(movieId) as T
-
-        throw IllegalArgumentException("Unrecognized ViewModel")
-    }
-
-}

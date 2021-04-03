@@ -1,16 +1,18 @@
-package com.example.recommendmeamovie.network
-
+package com.example.recommendmeamovie.source.remote
+import com.example.recommendmeamovie.domain.Credit
+import com.example.recommendmeamovie.domain.Movie
+import com.example.recommendmeamovie.domain.MovieDetails
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class MoviesContainer(
-    val results: List<Movie>,
+    val results: List<MovieDTO>,
     @Json(name = "total_results") val totalResults: Int
 )
 
 @JsonClass(generateAdapter = true)
-data class Movie(
+data class MovieDTO(
     val id: Long,
     val title: String,
     @Json(name = "poster_path") val poster: String,
@@ -18,12 +20,13 @@ data class Movie(
 )
 
 @JsonClass(generateAdapter = true)
-data class MovieDetails(
+data class MovieDetailsDTO(
     val id: Long,
     val title: String,
     val overview: String,
     val runtime: Int,
     val genres: List<Genre>?,
+    val credits : CreditsDTO,
     @Json(name = "poster_path") val poster: String,
     @Json(name = "release_date") val releaseDate: String,
     @Json(name = "vote_average") val voteAverage: Double
@@ -36,7 +39,7 @@ data class Genre(
 )
 
 @JsonClass(generateAdapter = true)
-data class Credits(
+data class CreditsDTO(
     val cast: List<Cast>?,
     val crew: List<Crew>?
 )
@@ -55,6 +58,40 @@ data class Crew(
     @Json(name = "profile_path") val picture : String?
 )
 
+
+fun MoviesContainer.asDomainModel() : List<Movie> {
+    return results.map {
+        Movie(it.id, it.title, it.poster, it.releaseDate)
+    }
+
+}
+
+fun MovieDetailsDTO.asDomainModel() : MovieDetails {
+    return MovieDetails(
+        id,
+        title,
+        overview,
+        runtime,
+        genres,
+        credits.cast?.asCastDomainModel(),
+        credits.crew?.asCrewDomainModel(),
+        poster,
+        releaseDate,
+        voteAverage
+    )
+}
+
+fun List<Cast>.asCastDomainModel() : List<Credit> {
+    return this.map {
+        Credit(it.name, it.character, it.picture)
+    }
+}
+
+fun List<Crew>.asCrewDomainModel() : List<Credit> {
+    return this.map {
+        Credit(it.name, it.job, it.picture)
+    }
+}
 
 
 //enum class Genre(val id : Int) {

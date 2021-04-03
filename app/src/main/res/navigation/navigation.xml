@@ -31,7 +31,6 @@
     <fragment
         android:id="@+id/movieFragment"
         android:name="com.example.recommendmeamovie.ui.movie.MovieFragment"
-        android:label="Movie"
         tools:layout="@layout/movie_fragment">
         <action
             android:id="@+id/action_movieFragment_to_mainFragment"

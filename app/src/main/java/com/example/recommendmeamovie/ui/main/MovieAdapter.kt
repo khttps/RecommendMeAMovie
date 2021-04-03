@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recommendmeamovie.databinding.MainListItemBinding
-import com.example.recommendmeamovie.generated.callback.OnClickListener
-import com.example.recommendmeamovie.network.Movie
+import com.example.recommendmeamovie.domain.Movie
+import com.example.recommendmeamovie.source.remote.MovieDTO
 
 
 class MovieAdapter(private val listener : OnMovieClickListener) : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(ListItemCallbacks()) {

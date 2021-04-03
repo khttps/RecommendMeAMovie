@@ -1,6 +1,6 @@
 package com.example.recommendmeamovie.utils
 
-import com.example.recommendmeamovie.network.Genre
+import com.example.recommendmeamovie.source.remote.Genre
 
 object Utils {
 

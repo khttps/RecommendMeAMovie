@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="picture"
-            type="String" />
+            name="credit"
+            type="com.example.recommendmeamovie.domain.Credit" />
     </data>
 
     <LinearLayout
@@ -17,7 +17,7 @@
 
         <ImageView
             android:id="@+id/credits_profile"
-            poster="@{picture}"
+            poster="@{credit.picture}"
             android:layout_width="@dimen/list_item_dimen"
             android:layout_height="@dimen/list_item_dimen"
             android:layout_gravity="center_horizontal"
@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             tools:text="Paul Thomas Anderson"
             android:ellipsize="end"
+            android:text="@{credit.name}"
             android:maxLines="1"
             android:textStyle="bold" />
 
@@ -36,6 +37,7 @@
             android:id="@+id/credits_role"
             android:layout_width="match_parent"
             tools:text="Screenwriter and Assdasda"
+            android:text="@{credit.role}"
             android:ellipsize="end"
             android:maxLines="1"
             android:layout_height="wrap_content"/>

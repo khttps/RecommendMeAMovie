@@ -4,14 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.recommendmeamovie.BuildConfig
-import com.example.recommendmeamovie.network.Movie
-import com.example.recommendmeamovie.network.MovieService
+import com.example.recommendmeamovie.domain.Movie
+import com.example.recommendmeamovie.source.MovieRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainViewModel : ViewModel() {
+
+    private val movieRepository = MovieRepository()
 
     private val _popularMovies = MutableLiveData<List<Movie>>()
     val popularMovies : LiveData<List<Movie>>
@@ -34,7 +35,7 @@ class MainViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-            loadPreviewMovies()
+            getMoviePreviews()
         }
     }
 
@@ -54,20 +55,14 @@ class MainViewModel : ViewModel() {
         _eventNavigateToMovie.value = null
     }
 
-    private suspend fun loadPreviewMovies() {
+    private suspend fun getMoviePreviews() {
         withContext(Dispatchers.IO) {
             _popularMovies.postValue(
-                MovieService
-                    .retrofitService
-                    .getMovies("popular", BuildConfig.API_KEY)
-                    .results
+                movieRepository.getPopularMovies()
             )
 
             _topRatedMovies.postValue(
-                MovieService
-                    .retrofitService
-                    .getMovies("top_rated", BuildConfig.API_KEY)
-                    .results
+                movieRepository.getTopRatedMovies()
             )
         }
     }

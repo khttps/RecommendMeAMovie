@@ -6,7 +6,7 @@
     <data>
         <variable
             name="movie"
-            type="com.example.recommendmeamovie.network.Movie" />
+            type="com.example.recommendmeamovie.domain.Movie" />
     </data>
 
     <LinearLayout

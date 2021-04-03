@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.recommendmeamovie.databinding.MainFragmentBinding
-import com.example.recommendmeamovie.network.Movie
+import com.example.recommendmeamovie.domain.Movie
 
 
 class MainFragment : Fragment(), MovieAdapter.OnMovieClickListener {

@@ -1,15 +1,13 @@
 package com.example.recommendmeamovie.ui.movie
 
-import android.app.ActionBar
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.recommendmeamovie.R
+import com.example.recommendmeamovie.MainActivity
 import com.example.recommendmeamovie.databinding.MovieFragmentBinding
 
 class MovieFragment : Fragment() {
@@ -22,7 +20,7 @@ class MovieFragment : Fragment() {
         val binding = MovieFragmentBinding.inflate(inflater)
         val args: MovieFragmentArgs by navArgs()
 
-        findNavController().currentDestination?.label = args.movieName
+        (activity as MainActivity).supportActionBar?.title = args.movieName
 
         val viewModelFactory = MovieViewModelFactory(args.movieId)
 
@@ -30,8 +28,8 @@ class MovieFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        binding.castList.adapter = CastAdapter()
-        binding.crewList.adapter = CrewAdapter()
+        binding.castList.adapter = CreditsAdapter()
+        binding.crewList.adapter = CreditsAdapter()
 
         return binding.root
     }

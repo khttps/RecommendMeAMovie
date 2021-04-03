@@ -172,7 +172,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cast_list"
-                castList="@{viewModel.credits.cast}"
+                creditsList="@{viewModel.movieDetails.cast}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -193,7 +193,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/crew_list"
-                crewList="@{viewModel.credits.crew}"
+                creditsList="@{viewModel.movieDetails.crew}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

@@ -1,4 +1,4 @@
-package com.example.recommendmeamovie.network
+package com.example.recommendmeamovie.source.remote
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
@@ -42,11 +42,8 @@ interface MovieApiService {
         @Query("with_genres") genre: Long
     ): MoviesContainer
 
-    @GET("3/movie/{id}")
-    suspend fun getMovieDetails(@Path("id") id: Long, @Query("api_key") key: String): MovieDetails
-
-    @GET("3/movie/{id}/credits")
-    suspend fun getMovieCredits(@Path("id") id: Long, @Query("api_key") key: String): Credits
+    @GET("3/movie/{id}?append_to_response=credits")
+    suspend fun getMovieDetails(@Path("id") id: Long, @Query("api_key") key: String): MovieDetailsDTO
 
 }
 
