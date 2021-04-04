@@ -9,4 +9,8 @@ object Utils {
                 it.name
             })
     }
+
+    fun getReleaseYear(releaseDate : String) : String {
+        return releaseDate.substringBefore("-")
+    }
 }

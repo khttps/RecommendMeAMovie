@@ -9,6 +9,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
+import android.widget.SearchView.OnQueryTextListener
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -19,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding : ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +49,30 @@ class MainActivity : AppCompatActivity() {
 
         val searchView = menu?.findItem(R.id.action_search)?.actionView as SearchView
 
+        searchView.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+                if (query.isNullOrBlank())
+                    return false
+
+                navController.navigate(NavigationDirections.actionGlobalMovieListFragment(query))
+                return true
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+
+                if (query.isNullOrBlank())
+                    return false
+
+                navController.navigate(NavigationDirections.actionGlobalMovieListFragment(query))
+                return true
+            }
+
+        })
+
         return true
+
     }
-
-
 }
+
+

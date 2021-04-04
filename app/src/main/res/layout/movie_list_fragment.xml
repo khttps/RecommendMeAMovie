@@ -14,5 +14,6 @@
         android:id="@+id/list"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_height="match_parent"
+        movieList="@{viewModel.list}"
         android:layout_width="match_parent" />
 </layout>

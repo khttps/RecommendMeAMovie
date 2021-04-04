@@ -24,7 +24,7 @@ private val retrofit = Retrofit.Builder()
 interface MovieApiService {
 
     @GET("3/search/movie")
-    suspend fun getSearchResults(@Query("query") query: String): MoviesContainer
+    suspend fun getSearchResults(@Query("query") query: String, @Query("api_key") key : String): MoviesContainer
 
     @GET("3/movie/{filter}")
     suspend fun getMovies(
@@ -43,7 +43,7 @@ interface MovieApiService {
     ): MoviesContainer
 
     @GET("3/movie/{id}?append_to_response=credits")
-    suspend fun getMovieDetails(@Path("id") id: Long, @Query("api_key") key: String): MovieDetailsDTO
+    suspend fun getMovieDetails(@Path("id") id: Long, @Query("api_key") key: String): NetworkMovieDetails
 
 }
 

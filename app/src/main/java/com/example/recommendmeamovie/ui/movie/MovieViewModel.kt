@@ -1,13 +1,9 @@
 package com.example.recommendmeamovie.ui.movie
 
 import androidx.lifecycle.*
-import com.example.recommendmeamovie.BuildConfig
 import com.example.recommendmeamovie.domain.Credit
 import com.example.recommendmeamovie.domain.MovieDetails
-import com.example.recommendmeamovie.source.MovieRepository
-import com.example.recommendmeamovie.source.remote.Crew
-import com.example.recommendmeamovie.source.remote.MovieDetailsDTO
-import com.example.recommendmeamovie.source.remote.MovieService
+import com.example.recommendmeamovie.repositories.MovieDetailsRepository
 import com.example.recommendmeamovie.utils.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,14 +12,14 @@ import java.lang.IllegalArgumentException
 
 class MovieViewModel(private val movieId : Long) : ViewModel() {
 
-    private val movieRepository = MovieRepository()
+    private val movieDetailsRepository = MovieDetailsRepository()
 
     private val _movieDetails = MutableLiveData<MovieDetails>()
     val movieDetails : LiveData<MovieDetails>
         get() = _movieDetails
 
     private val _year = Transformations.map(_movieDetails) {
-        it.releaseDate.substringBefore("-")
+        Utils.getReleaseYear(it.releaseDate)
     }
     val year : LiveData<String>
         get() = _year
@@ -53,10 +49,19 @@ class MovieViewModel(private val movieId : Long) : ViewModel() {
     private suspend fun getMovieDetails() {
         withContext(Dispatchers.IO) {
             _movieDetails.postValue(
-                movieRepository.getMovieDetails(movieId)
+                movieDetailsRepository.getMovieDetails(movieId)
             )
         }
     }
 
 }
 
+class MovieViewModelFactory(private val movieId: Long) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(MovieViewModel::class.java))
+            return MovieViewModel(movieId) as T
+
+        throw IllegalArgumentException("Unrecognized ViewModel")
+    }
+
+}

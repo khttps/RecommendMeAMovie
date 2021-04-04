@@ -3,20 +3,34 @@ package com.example.recommendmeamovie.ui.main
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recommendmeamovie.databinding.MainListItemBinding
+import com.example.recommendmeamovie.IMAGE_URL
+import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.domain.Movie
-import com.example.recommendmeamovie.source.remote.MovieDTO
+import com.example.recommendmeamovie.utils.Utils
+import com.squareup.picasso.Picasso
 
 
-class MovieAdapter(private val listener : OnMovieClickListener) : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(ListItemCallbacks()) {
+class MovieAdapter(private val listener : OnMovieClickListener, private val tag : String) : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(ListItemCallbacks()) {
+
+    companion object {
+        const val MAIN_LIST = "main"
+        const val MOVIE_LIST = "movie"
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
        val inflater = LayoutInflater.from(parent.context)
-        return MovieViewHolder(MainListItemBinding.inflate(inflater))
 
+        return MovieViewHolder(inflater.inflate(
+            when (tag) {
+                MAIN_LIST -> R.layout.main_list_item
+                else -> R.layout.movie_list_item
+            }, parent, false
+        ))
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
@@ -24,22 +38,36 @@ class MovieAdapter(private val listener : OnMovieClickListener) : ListAdapter<Mo
         holder.bind(movie)
     }
 
-    inner class MovieViewHolder(val binding: MainListItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    inner class MovieViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+        private lateinit var movie : Movie
 
         fun bind(movie : Movie) {
-            binding.movie = movie
-            binding.executePendingBindings()
+            this.movie = movie
+
+            val posterImageView = itemView.findViewById<ImageView>(R.id.poster_image_view)
+
+            Picasso
+                .get()
+                .load(IMAGE_URL + movie.poster)
+                .placeholder(R.drawable.loading_animation)
+                .error(R.drawable.ic_broken_image)
+                .into(posterImageView)
+
+            if (tag == MOVIE_LIST) {
+                itemView.findViewById<TextView>(R.id.name_text_view).text = movie.title
+                itemView.findViewById<TextView>(R.id.year_text_view).text = Utils.getReleaseYear(movie.releaseDate ?: "")
+            }
         }
 
         init {
-            binding.root.setOnClickListener(this)
+            itemView.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
             if (absoluteAdapterPosition != RecyclerView.NO_POSITION)
-                listener.onMovieClick(binding.movie!!)
+                listener.onMovieClick(movie)
         }
-
     }
 
     class ListItemCallbacks : DiffUtil.ItemCallback<Movie>() {

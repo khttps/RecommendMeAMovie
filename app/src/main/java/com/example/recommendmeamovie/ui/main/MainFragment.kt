@@ -24,8 +24,8 @@ class MainFragment : Fragment(), MovieAdapter.OnMovieClickListener {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        binding.popularList.adapter = MovieAdapter(this)
-        binding.topRatedList.adapter = MovieAdapter(this)
+        binding.popularList.adapter = MovieAdapter(this, MovieAdapter.MAIN_LIST)
+        binding.topRatedList.adapter = MovieAdapter(this, MovieAdapter.MAIN_LIST)
 
         viewModel.eventNavigateToRecommend.observe(this.viewLifecycleOwner, {
             if (it) {

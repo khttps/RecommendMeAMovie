@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-        <variable
-            name="movie"
-            type="com.example.recommendmeamovie.domain.Movie" />
-    </data>
-
     <ImageView
-        android:id="@+id/preview_poster"
-        poster="@{movie.poster}"
+        android:id="@+id/poster_image_view"
         android:layout_width="66dp"
         android:scaleType="fitXY"
         android:layout_height="@dimen/list_item_dimen" />

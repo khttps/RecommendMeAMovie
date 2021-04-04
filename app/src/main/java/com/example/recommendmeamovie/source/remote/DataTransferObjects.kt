@@ -7,27 +7,27 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class MoviesContainer(
-    val results: List<MovieDTO>,
+    val results: List<NetworkMovie>,
     @Json(name = "total_results") val totalResults: Int
 )
 
 @JsonClass(generateAdapter = true)
-data class MovieDTO(
+data class NetworkMovie(
     val id: Long,
     val title: String,
-    @Json(name = "poster_path") val poster: String,
-    @Json(name = "release_date") val releaseDate: String,
+    @Json(name = "poster_path") val poster: String?,
+    @Json(name = "release_date") val releaseDate: String?,
 )
 
 @JsonClass(generateAdapter = true)
-data class MovieDetailsDTO(
+data class NetworkMovieDetails(
     val id: Long,
     val title: String,
     val overview: String,
     val runtime: Int,
     val genres: List<Genre>?,
-    val credits : CreditsDTO,
-    @Json(name = "poster_path") val poster: String,
+    val credits : NetworkCredits,
+    @Json(name = "poster_path") val poster: String?,
     @Json(name = "release_date") val releaseDate: String,
     @Json(name = "vote_average") val voteAverage: Double
 )
@@ -39,7 +39,7 @@ data class Genre(
 )
 
 @JsonClass(generateAdapter = true)
-data class CreditsDTO(
+data class NetworkCredits(
     val cast: List<Cast>?,
     val crew: List<Crew>?
 )
@@ -66,7 +66,7 @@ fun MoviesContainer.asDomainModel() : List<Movie> {
 
 }
 
-fun MovieDetailsDTO.asDomainModel() : MovieDetails {
+fun NetworkMovieDetails.asDomainModel() : MovieDetails {
     return MovieDetails(
         id,
         title,
@@ -92,20 +92,3 @@ fun List<Crew>.asCrewDomainModel() : List<Credit> {
         Credit(it.name, it.job, it.picture)
     }
 }
-
-
-//enum class Genre(val id : Int) {
-//    ACTION (28),
-//    ANIMATION (16),
-//    COMEDY (35),
-//    CRIME (80),
-//    DRAMA (18),
-//    FANTASY(14),
-//    HORROR(27),
-//    MYSTERY(9648),
-//    ROMANCE(10749),
-//    SCIENCE_FICTION(878),
-//    THRILLER(53),
-//    WAR(10752),
-//    WESTERN(37)
-//}
