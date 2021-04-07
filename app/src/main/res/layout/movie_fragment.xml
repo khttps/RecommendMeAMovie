@@ -23,14 +23,16 @@
 
             <ImageView
                 android:id="@+id/poster_image_view"
-                poster="@{viewModel.movieDetails.poster}"
                 android:layout_width="138dp"
                 android:layout_height="200dp"
-                android:layout_marginTop="16dp"
+                android:background="@color/semi_transparent_grey"
                 android:contentDescription="@string/movie_poster"
+                android:padding="@dimen/unit_dimen"
                 android:scaleType="fitXY"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:poster="@{viewModel.movieDetails.poster}"
+                tools:src="@drawable/ic_broken_image" />
 
             <TextView
                 android:id="@+id/title_text_view"
@@ -39,12 +41,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_margin"
                 android:text="@{viewModel.movieDetails.title}"
+                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.092"
                 app:layout_constraintStart_toEndOf="@+id/poster_image_view"
                 app:layout_constraintTop_toTopOf="@+id/poster_image_view"
                 app:layout_constraintWidth_default="wrap"
-                tools:text="Citizen Kane" />
+                tools:text="Citizen Kane " />
 
             <TextView
                 android:id="@+id/directed_by"
@@ -60,6 +63,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.director.name}"
+                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/directed_by"
@@ -101,48 +105,51 @@
                 android:text="@{viewModel.genres}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintWidth_default="wrap"
                 app:layout_constraintStart_toStartOf="@+id/linearLayout"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                app:layout_constraintWidth_default="wrap"
                 tools:text="Drama/Mystery" />
 
             <LinearLayout
                 android:id="@+id/buttonsLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginTop="@dimen/default_margin"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
                 android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="@+id/linearLayout"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/title_text_view"
                 app:layout_constraintTop_toBottomOf="@+id/genre_text_view">
 
                 <TextView
                     android:id="@+id/vote_average_text_view"
                     android:layout_width="48dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
-                    android:background="#21E621"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="@dimen/half_margin"
+                    android:background="@drawable/ic_circle"
                     android:contentDescription="@string/vote_average"
                     android:gravity="center"
                     android:text="@{String.valueOf(viewModel.movieDetails.voteAverage)}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/genre_text_view" />
+                    app:layout_constraintTop_toBottomOf="@+id/genre_text_view"
+                    tools:text="7.5" />
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/add_to_watchlist_button"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_width="@dimen/button_dimen_alt"
+                    android:layout_height="@dimen/button_dimen_alt"
+                    android:layout_marginEnd="@dimen/half_margin"
                     android:padding="0dp"
-                    android:scaleType="fitXY"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_watchlist"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/genre_text_view" />
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/add_to_your_films_button"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_width="@dimen/button_dimen_alt"
+                    android:layout_height="@dimen/button_dimen_alt"
+                    android:layout_marginEnd="@dimen/half_margin"
                     android:padding="0dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_watched"
@@ -150,32 +157,53 @@
                     app:layout_constraintTop_toBottomOf="@+id/genre_text_view" />
             </LinearLayout>
 
+            <View
+                android:id="@+id/divider_one"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/unit_dimen"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/half_margin"
+                android:background="@color/semi_transparent_grey"
+                app:layout_constraintTop_toBottomOf="@+id/buttonsLayout"
+                tools:layout_editor_absoluteX="16dp" />
+
             <TextView
                 android:id="@+id/overview_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginVertical="@dimen/half_margin"
                 android:text="@{viewModel.movieDetails.overview}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonsLayout"
+                app:layout_constraintTop_toBottomOf="@+id/divider_one"
                 tools:text="When a reporter is assigned to decipher newspaper magnate Charles Foster Kane's (Orson Welles) dying words, his investigation gradually reveals the fascinating portrait of a complex man who rose from obscurity to staggering heights. Though Kane's friend and colleague Jedediah Leland (Joseph Cotten), and his mistress, Susan Alexander (Dorothy Comingore), shed fragments of light on Kane's life, the reporter fears he may never penetrate the mystery of the elusive man's final word, Rosebud." />
+
+            <View
+                android:id="@+id/divider_two"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/unit_dimen"
+                android:layout_marginVertical="@dimen/half_margin"
+                android:background="@color/semi_transparent_grey"
+                app:layout_constraintTop_toBottomOf="@+id/overview_text_view" />
 
             <TextView
                 android:id="@+id/cast_text_view"
+                style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginVertical="@dimen/half_margin"
                 android:text="@string/cast"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/overview_text_view" />
+                app:layout_constraintTop_toBottomOf="@+id/divider_two" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cast_list"
-                creditsList="@{viewModel.movieDetails.cast}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/half_margin"
                 android:orientation="horizontal"
+                app:creditsList="@{viewModel.movieDetails.cast}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -184,25 +212,28 @@
 
             <TextView
                 android:id="@+id/crew_text_view"
+                style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/half_margin"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/crew"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cast_list" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/crew_list"
-                creditsList="@{viewModel.movieDetails.crew}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/half_margin"
                 android:orientation="horizontal"
+                app:creditsList="@{viewModel.movieDetails.crew}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/crew_text_view"
                 tools:listitem="@layout/credits_list_item" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

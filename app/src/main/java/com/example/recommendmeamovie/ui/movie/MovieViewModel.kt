@@ -25,11 +25,10 @@ class MovieViewModel(private val movieId : Long) : ViewModel() {
         get() = _year
 
     private val _genres = Transformations.map(_movieDetails) { details ->
-        details.genres?.let {  Utils.getGenreString(it) }
+        details.genres
     }
-    val genres : LiveData<String>
+    val genres : LiveData<String?>
         get() = _genres
-
 
     private val _director = Transformations.map(_movieDetails) { details ->
         details.crew?.first {
@@ -44,7 +43,6 @@ class MovieViewModel(private val movieId : Long) : ViewModel() {
             getMovieDetails()
         }
     }
-
 
     private suspend fun getMovieDetails() {
         withContext(Dispatchers.IO) {

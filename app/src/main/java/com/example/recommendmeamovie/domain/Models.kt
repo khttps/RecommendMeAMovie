@@ -14,7 +14,7 @@ data class MovieDetails(
     val title: String,
     val overview: String,
     val runtime: Int,
-    val genres: List<Genre>?,
+    val genres: String?,
     val cast: List<Credit>?,
     val crew: List<Credit>?,
     val poster: String?,

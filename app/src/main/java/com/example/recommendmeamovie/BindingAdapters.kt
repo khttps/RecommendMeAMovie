@@ -5,8 +5,9 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recommendmeamovie.domain.Credit
 import com.example.recommendmeamovie.domain.Movie
-import com.example.recommendmeamovie.ui.main.MovieAdapter
-import com.example.recommendmeamovie.ui.movie.CreditsAdapter
+import com.example.recommendmeamovie.adapters.MovieAdapter
+import com.example.recommendmeamovie.adapters.CreditsAdapter
+import com.example.recommendmeamovie.utils.Utils
 import com.squareup.picasso.Picasso
 
 const val IMAGE_URL = "https://image.tmdb.org/t/p/w185"
@@ -27,10 +28,11 @@ fun setCreditsList(recyclerView: RecyclerView, credits: List<Credit>?) {
 
 @BindingAdapter("poster")
 fun setPoster(imageView : ImageView, path : String?) {
-    Picasso
-        .get()
-        .load(IMAGE_URL + path)
-        .placeholder(R.drawable.loading_animation)
-        .error(R.drawable.ic_broken_image)
-        .into(imageView)
+    Utils.bindImage(path, imageView, R.drawable.ic_broken_image)
+
+}
+
+@BindingAdapter("profile")
+fun setProfile(imageView : ImageView, path : String?) {
+    Utils.bindImage(path, imageView, R.drawable.ic_placeholder)
 }

@@ -13,5 +13,6 @@
     <string name="top_rated">Top Rated</string>
     <string name="select">Select</string>
     <string name="runtime">%1$d minutes</string>
+    <string name="nothing_to_see_here">Nothing to see here</string>
 
 </resources>

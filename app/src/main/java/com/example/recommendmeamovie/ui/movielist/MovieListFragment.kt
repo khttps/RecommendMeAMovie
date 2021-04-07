@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.recommendmeamovie.MainActivity
+import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.databinding.MovieListFragmentBinding
 import com.example.recommendmeamovie.domain.Movie
-import com.example.recommendmeamovie.ui.main.MainFragmentDirections
-import com.example.recommendmeamovie.ui.main.MovieAdapter
-import com.example.recommendmeamovie.ui.movie.MovieFragmentArgs
+import com.example.recommendmeamovie.adapters.MovieAdapter
 
 class MovieListFragment : Fragment(), MovieAdapter.OnMovieClickListener {
 
@@ -26,8 +26,10 @@ class MovieListFragment : Fragment(), MovieAdapter.OnMovieClickListener {
         val binding = MovieListFragmentBinding.inflate(inflater)
         val args: MovieListFragmentArgs by navArgs()
 
-        val viewModelFactory = MovieListViewModelFactory(args.query)
+        val viewModelFactory = MovieListViewModelFactory(args.query ?: "")
         viewModel = ViewModelProvider(this, viewModelFactory).get(MovieListViewModel::class.java)
+
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.search)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this

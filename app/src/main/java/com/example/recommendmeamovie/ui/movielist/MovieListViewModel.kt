@@ -2,7 +2,7 @@ package com.example.recommendmeamovie.ui.movielist
 
 import androidx.lifecycle.*
 import com.example.recommendmeamovie.domain.Movie
-import com.example.recommendmeamovie.repositories.MovieRepository
+import com.example.recommendmeamovie.repositories.SearchResultsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -10,11 +10,15 @@ import java.lang.IllegalArgumentException
 
 class MovieListViewModel(val query: String) : ViewModel() {
 
-    private val movieRepository = MovieRepository()
+    private val searchResultsRepository = SearchResultsRepository()
 
     private val _list = MutableLiveData<List<Movie>>()
     val list : LiveData<List<Movie>>
         get() = _list
+
+    private val _empty = MutableLiveData<Boolean>()
+    val empty : LiveData<Boolean>
+        get() = _empty
 
     private val _eventNavigateToMovie = MutableLiveData<Movie?>()
     val eventNavigateToMovie : LiveData<Movie?>
@@ -22,9 +26,15 @@ class MovieListViewModel(val query: String) : ViewModel() {
 
 
     init {
-        viewModelScope.launch {
-            getSearchResults(query)
+        _empty.value = false
+
+        if (query.isNotEmpty()) {
+            viewModelScope.launch {
+                getSearchResults(query)
+            }
         }
+        _empty.value = list.value.isNullOrEmpty()
+
     }
 
     fun navigateToMovie(movie : Movie) {
@@ -38,7 +48,7 @@ class MovieListViewModel(val query: String) : ViewModel() {
     private suspend fun getSearchResults(query: String) {
         withContext(Dispatchers.IO) {
             _list.postValue(
-                movieRepository.getSearchResults(query)
+                searchResultsRepository.getSearchResults(query)
             )
         }
 

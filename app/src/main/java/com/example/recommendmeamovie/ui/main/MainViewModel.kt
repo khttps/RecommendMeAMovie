@@ -22,6 +22,13 @@ class MainViewModel : ViewModel() {
     val topRatedMovies : LiveData<List<Movie>>
         get() = _topRatedMovies
 
+    private val _popularLoaded = MutableLiveData<Boolean>()
+    val popularLoaded : LiveData<Boolean>
+        get() = _popularLoaded
+
+    private val _topRatedLoaded = MutableLiveData<Boolean>()
+    val topRatedLoaded : LiveData<Boolean>
+        get() = _topRatedLoaded
 
     private val _eventNavigateToRecommend = MutableLiveData<Boolean>()
     val eventNavigateToRecommend : LiveData<Boolean>
@@ -61,9 +68,13 @@ class MainViewModel : ViewModel() {
                 movieRepository.getPopularMovies()
             )
 
+            _popularLoaded.postValue( true)
+
             _topRatedMovies.postValue(
                 movieRepository.getTopRatedMovies()
             )
+
+            _topRatedLoaded.postValue(true)
         }
     }
 

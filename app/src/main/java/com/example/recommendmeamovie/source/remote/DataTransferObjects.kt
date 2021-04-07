@@ -2,6 +2,7 @@ package com.example.recommendmeamovie.source.remote
 import com.example.recommendmeamovie.domain.Credit
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.domain.MovieDetails
+import com.example.recommendmeamovie.utils.Utils
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -72,7 +73,7 @@ fun NetworkMovieDetails.asDomainModel() : MovieDetails {
         title,
         overview,
         runtime,
-        genres,
+        Utils.getGenreString(genres),
         credits.cast?.asCastDomainModel(),
         credits.crew?.asCrewDomainModel(),
         poster,

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.example.recommendmeamovie.MainActivity
+import com.example.recommendmeamovie.adapters.CreditsAdapter
 import com.example.recommendmeamovie.databinding.MovieFragmentBinding
 
 class MovieFragment : Fragment() {

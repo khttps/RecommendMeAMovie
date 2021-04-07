@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout  xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -11,17 +12,25 @@
 
     <LinearLayout
         android:paddingHorizontal="8dp"
-        android:layout_width="@dimen/list_item_dimen"
+        android:layout_width="@dimen/list_item_height"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/credits_profile"
-            poster="@{credit.picture}"
-            android:layout_width="@dimen/list_item_dimen"
-            android:layout_height="@dimen/list_item_dimen"
-            android:layout_gravity="center_horizontal"
-            android:scaleType="centerCrop"/>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="60dp">
+            <ImageView
+                android:id="@+id/credits_profile"
+                profile="@{credit.picture}"
+                tools:src="@drawable/ic_placeholder"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
 
         <TextView
             android:id="@+id/credits_name"

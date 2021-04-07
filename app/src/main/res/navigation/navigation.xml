@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.recommendmeamovie.ui.main.MainFragment"
-        android:label="@string/app_name"
+        android:label="Discover"
         tools:layout="@layout/main_fragment">
         <action
             android:id="@+id/action_mainFragment_to_recommendFragment"
@@ -46,11 +46,12 @@
     <fragment
         android:id="@+id/movieListFragment"
         android:name="com.example.recommendmeamovie.ui.movielist.MovieListFragment"
-        android:label="List"
         tools:layout="@layout/movie_list_fragment" >
         <argument
             android:name="query"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
         <action
             android:id="@+id/action_movieListFragment_to_movieFragment"
             app:destination="@id/movieFragment" />

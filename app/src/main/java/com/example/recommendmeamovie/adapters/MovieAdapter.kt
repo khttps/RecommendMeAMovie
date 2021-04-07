@@ -1,4 +1,4 @@
-package com.example.recommendmeamovie.ui.main
+package com.example.recommendmeamovie.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +15,9 @@ import com.example.recommendmeamovie.utils.Utils
 import com.squareup.picasso.Picasso
 
 
-class MovieAdapter(private val listener : OnMovieClickListener, private val tag : String) : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(ListItemCallbacks()) {
+class MovieAdapter(private val listener : OnMovieClickListener, private val tag : String) : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(
+    ListItemCallbacks()
+) {
 
     companion object {
         const val MAIN_LIST = "main"
@@ -47,12 +49,7 @@ class MovieAdapter(private val listener : OnMovieClickListener, private val tag 
 
             val posterImageView = itemView.findViewById<ImageView>(R.id.poster_image_view)
 
-            Picasso
-                .get()
-                .load(IMAGE_URL + movie.poster)
-                .placeholder(R.drawable.loading_animation)
-                .error(R.drawable.ic_broken_image)
-                .into(posterImageView)
+            Utils.bindImage(movie.poster, posterImageView, R.drawable.ic_broken_image)
 
             if (tag == MOVIE_LIST) {
                 itemView.findViewById<TextView>(R.id.name_text_view).text = movie.title
