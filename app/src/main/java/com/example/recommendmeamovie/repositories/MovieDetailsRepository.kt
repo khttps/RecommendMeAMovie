@@ -9,7 +9,7 @@ class MovieDetailsRepository {
 
     private val remoteDataSource = MovieService.retrofitService
 
-    suspend fun getMovieDetails(id : Long) : MovieDetails {
+    suspend fun getMovieDetails(id: Long): MovieDetails {
         return remoteDataSource.getMovieDetails(id, BuildConfig.API_KEY).asDomainModel()
     }
 

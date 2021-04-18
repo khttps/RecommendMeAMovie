@@ -16,7 +16,9 @@ class MovieListViewModel(val query: String) : ViewModel() {
     val list : LiveData<List<Movie>>
         get() = _list
 
-    private val _empty = MutableLiveData<Boolean>()
+    private val _empty = Transformations.map(_list) {
+        it.isNullOrEmpty()
+    }
     val empty : LiveData<Boolean>
         get() = _empty
 
@@ -26,14 +28,14 @@ class MovieListViewModel(val query: String) : ViewModel() {
 
 
     init {
-        _empty.value = false
 
         if (query.isNotEmpty()) {
             viewModelScope.launch {
                 getSearchResults(query)
             }
+        } else {
+            _list.value = emptyList()
         }
-        _empty.value = list.value.isNullOrEmpty()
 
     }
 

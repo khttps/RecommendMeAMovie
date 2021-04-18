@@ -15,6 +15,7 @@ class MovieFragment : Fragment() {
 
     private lateinit var viewModel: MovieViewModel
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
