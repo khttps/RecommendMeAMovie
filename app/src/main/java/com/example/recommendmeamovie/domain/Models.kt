@@ -1,7 +1,5 @@
 package com.example.recommendmeamovie.domain
 
-import com.example.recommendmeamovie.source.remote.Genre
-
 data class Movie(
     val id : Long,
     val title : String,
