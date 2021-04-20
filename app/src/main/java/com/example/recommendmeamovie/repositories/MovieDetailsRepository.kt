@@ -3,15 +3,20 @@ package com.example.recommendmeamovie.repositories
 import com.example.recommendmeamovie.BuildConfig
 import com.example.recommendmeamovie.domain.MovieDetails
 import com.example.recommendmeamovie.source.remote.MovieApiService
-import com.example.recommendmeamovie.source.remote.asDomainModel
+import com.example.recommendmeamovie.source.remote.NetworkMovieDetailsMapper
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @ViewModelScoped
-class MovieDetailsRepository @Inject constructor(private val remoteDataSource : MovieApiService) {
+class MovieDetailsRepository
+@Inject constructor(
+    private val movieService : MovieApiService,
+    private val networkMovieDetailsMapper: NetworkMovieDetailsMapper
+    ) {
 
     suspend fun getMovieDetails(id: Long): MovieDetails {
-        return remoteDataSource.getMovieDetails(id, BuildConfig.API_KEY).asDomainModel()
+        val movieDetails =  movieService.getMovieDetails(id, BuildConfig.API_KEY)
+        return networkMovieDetailsMapper.map(movieDetails)
     }
 
 
