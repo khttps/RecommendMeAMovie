@@ -8,7 +8,6 @@ import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.adapters.MovieAdapter
 import com.example.recommendmeamovie.adapters.CreditsAdapter
 import com.example.recommendmeamovie.utils.Utils
-import com.squareup.picasso.Picasso
 
 const val IMAGE_URL = "https://image.tmdb.org/t/p/w185"
 

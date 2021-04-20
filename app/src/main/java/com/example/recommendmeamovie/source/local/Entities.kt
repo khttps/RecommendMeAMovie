@@ -4,17 +4,13 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-//import androidx.room.ColumnInfo
-//import androidx.room.Entity
-//import androidx.room.PrimaryKey
-
 @Entity(tableName = "movies")
 data class MovieEntity (
     @PrimaryKey(autoGenerate = false) val id: Long,
     val title: String,
     @ColumnInfo(name = "poster_path") val poster: String?,
     @ColumnInfo(name = "release_date") val releaseDate: String?,
-    @ColumnInfo(name = "movie_type") val movieType: MovieType
+    @ColumnInfo(name = "movie_type") val movieType: String
 )
 
 //@Entity (tableName = "movies_details")

@@ -1,19 +1,18 @@
 package com.example.recommendmeamovie.source.local
 
 import com.example.recommendmeamovie.domain.Movie
-import com.example.recommendmeamovie.utils.EntityMapper
-import javax.inject.Inject
 
-class MovieEntityMapper
-@Inject constructor() : EntityMapper<MovieEntity, Movie> {
-    override fun map(entity: MovieEntity): Movie {
-        return Movie(
-            id = entity.id,
-            title = entity.title,
-            poster = entity.poster,
-            releaseDate = entity.releaseDate
+fun List<MovieEntity>.asDomain() : List<Movie> {
+
+    return map {
+        Movie(
+            it.id,
+            it.title,
+            it.poster,
+            it.releaseDate
         )
     }
+
 }
 
 //class MovieEntityDetailsMapper

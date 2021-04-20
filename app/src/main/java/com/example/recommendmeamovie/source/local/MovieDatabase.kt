@@ -6,8 +6,7 @@ import androidx.room.TypeConverters
 import javax.inject.Inject
 
 
-@Database (entities = [MovieEntity::class/*, MovieDetailsEntity::class, CreditEntity::class*/], version = 1, exportSchema = false)
-@TypeConverters(Converters::class)
+@Database (entities = [MovieEntity::class/*, MovieDetailsEntity::class, CreditEntity::class*/], version = 2, exportSchema = false)
 abstract class MovieDatabase : RoomDatabase() {
 
     companion object {
@@ -15,6 +14,5 @@ abstract class MovieDatabase : RoomDatabase() {
     }
 
     abstract val movieDao : MovieDao
-
 
 }

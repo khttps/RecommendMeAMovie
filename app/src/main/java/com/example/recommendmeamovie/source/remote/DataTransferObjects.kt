@@ -54,3 +54,4 @@ data class Crew(
     val job: String,
     @Json(name = "profile_path") val picture : String?
 )
+
