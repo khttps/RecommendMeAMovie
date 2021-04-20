@@ -5,22 +5,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.recommendmeamovie.adapters.MovieAdapter
 import com.example.recommendmeamovie.databinding.MainFragmentBinding
 import com.example.recommendmeamovie.domain.Movie
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainFragment : Fragment(), MovieAdapter.OnMovieClickListener {
 
-    lateinit var viewModel : MainViewModel
+    private val viewModel : MainViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
         val binding = MainFragmentBinding.inflate(inflater)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this

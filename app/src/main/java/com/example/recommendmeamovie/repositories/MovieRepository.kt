@@ -2,24 +2,42 @@ package com.example.recommendmeamovie.repositories
 
 import com.example.recommendmeamovie.BuildConfig
 import com.example.recommendmeamovie.domain.Movie
-import com.example.recommendmeamovie.source.remote.MovieService
-import com.example.recommendmeamovie.source.remote.asDomainModel
+import com.example.recommendmeamovie.source.local.MovieDao
+import com.example.recommendmeamovie.source.local.asDomain
+import com.example.recommendmeamovie.source.remote.MovieApiService
+import com.example.recommendmeamovie.source.remote.asEntity
+import dagger.hilt.android.scopes.ViewModelScoped
+import javax.inject.Inject
 
-class MovieRepository {
+@ViewModelScoped
+class MovieRepository
+@Inject constructor(
+    private val movieService : MovieApiService,
+    private val movieDao: MovieDao) {
 
     companion object {
         private const val POPULAR_FILTER = "popular"
         private const val TOP_RATED_FILTER = "top_rated"
     }
 
-    private val remoteDataSource = MovieService.retrofitService
+    suspend fun getPopularMovies(): List<Movie>? {
 
-    suspend fun getPopularMovies(): List<Movie> {
-        return remoteDataSource.getMovies(POPULAR_FILTER, BuildConfig.API_KEY).asDomainModel()
+        val popularMovies = movieService.getMovies(POPULAR_FILTER, BuildConfig.API_KEY)
+        movieDao.addMovieList(popularMovies.asEntity(POPULAR_FILTER))
+
+        return movieDao.getMovies(POPULAR_FILTER).asDomain()
+
     }
 
-    suspend fun getTopRatedMovies(): List<Movie> {
-        return remoteDataSource.getMovies(TOP_RATED_FILTER, BuildConfig.API_KEY).asDomainModel()
+    suspend fun getTopRatedMovies(): List<Movie>? {
+
+        val topRatedMovies = movieService.getMovies(TOP_RATED_FILTER, BuildConfig.API_KEY)
+        movieDao.addMovieList(topRatedMovies.asEntity(TOP_RATED_FILTER))
+
+        return movieDao.getMovies(TOP_RATED_FILTER).asDomain()
+
     }
+
+
 
 }
