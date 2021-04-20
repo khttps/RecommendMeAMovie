@@ -1,18 +1,27 @@
 package com.example.recommendmeamovie.ui.movie
 
+import android.os.Bundle
 import androidx.lifecycle.*
 import com.example.recommendmeamovie.domain.Credit
 import com.example.recommendmeamovie.domain.MovieDetails
 import com.example.recommendmeamovie.repositories.MovieDetailsRepository
 import com.example.recommendmeamovie.utils.Utils
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.IllegalArgumentException
+import javax.inject.Inject
 
-class MovieViewModel(private val movieId : Long) : ViewModel() {
+@HiltViewModel
+class MovieViewModel
+@Inject constructor(private val movieDetailsRepository: MovieDetailsRepository,
+                    private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
-    private val movieDetailsRepository = MovieDetailsRepository()
+    private val movieId
+        get() = savedStateHandle
+            .get<Bundle>("args")
+            ?.getLong("movieId")
 
     private val _movieDetails = MutableLiveData<MovieDetails>()
     val movieDetails : LiveData<MovieDetails>
@@ -47,19 +56,9 @@ class MovieViewModel(private val movieId : Long) : ViewModel() {
     private suspend fun getMovieDetails() {
         withContext(Dispatchers.IO) {
             _movieDetails.postValue(
-                movieDetailsRepository.getMovieDetails(movieId)
+                movieId?.let { movieDetailsRepository.getMovieDetails(it) }
             )
         }
-    }
-
-}
-
-class MovieViewModelFactory(private val movieId: Long) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MovieViewModel::class.java))
-            return MovieViewModel(movieId) as T
-
-        throw IllegalArgumentException("Unrecognized ViewModel")
     }
 
 }

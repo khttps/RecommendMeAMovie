@@ -3,7 +3,6 @@ plugins {
     id "kotlin-android"
     id "kotlin-kapt"
     id "androidx.navigation.safeargs.kotlin"
-    id "kotlin-android-extensions"
     id "dagger.hilt.android.plugin"
 }
 
@@ -97,6 +96,8 @@ dependencies {
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation 'androidx.hilt:hilt-navigation-fragment:1.0.0-beta01'
+
 
     // Moshi
     implementation "com.squareup.moshi:moshi-kotlin:1.11.0"

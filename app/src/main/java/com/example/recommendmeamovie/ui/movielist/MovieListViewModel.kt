@@ -1,16 +1,23 @@
 package com.example.recommendmeamovie.ui.movielist
 
+import android.os.Bundle
 import androidx.lifecycle.*
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.repositories.SearchResultsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.IllegalArgumentException
+import javax.inject.Inject
 
-class MovieListViewModel(val query: String) : ViewModel() {
+@HiltViewModel
+class MovieListViewModel
+@Inject constructor(private val searchResultsRepository: SearchResultsRepository,
+                    private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
-    private val searchResultsRepository = SearchResultsRepository()
+    private val query get() = savedStateHandle
+        .get<Bundle>("args")
+        ?.getString("query")
 
     private val _list = MutableLiveData<List<Movie>>()
     val list : LiveData<List<Movie>>
@@ -29,13 +36,12 @@ class MovieListViewModel(val query: String) : ViewModel() {
 
     init {
 
-        if (query.isNotEmpty()) {
+        if (!query.isNullOrEmpty()) {
             viewModelScope.launch {
-                getSearchResults(query)
+                getSearchResults(query!!)
             }
-        } else {
+        } else
             _list.value = emptyList()
-        }
 
     }
 
@@ -53,18 +59,7 @@ class MovieListViewModel(val query: String) : ViewModel() {
                 searchResultsRepository.getSearchResults(query)
             )
         }
-
     }
 
-
-}
-
-class MovieListViewModelFactory(private val query: String) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MovieListViewModel::class.java))
-            return MovieListViewModel(query) as T
-
-        throw IllegalArgumentException("Unrecognized ViewModel")
-    }
 
 }

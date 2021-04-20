@@ -1,18 +1,16 @@
 package com.example.recommendmeamovie.ui.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.repositories.MovieRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
-
-    private val movieRepository = MovieRepository()
+@HiltViewModel
+class MainViewModel @Inject constructor(private val movieRepository: MovieRepository, private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val _popularMovies = MutableLiveData<List<Movie>>()
     val popularMovies : LiveData<List<Movie>>

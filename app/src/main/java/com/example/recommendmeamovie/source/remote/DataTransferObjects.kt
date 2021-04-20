@@ -1,8 +1,8 @@
 package com.example.recommendmeamovie.source.remote
-//import com.example.recommendmeamovie.domain.Credit
-//import com.example.recommendmeamovie.domain.Movie
-//import com.example.recommendmeamovie.domain.MovieDetails
-//import com.example.recommendmeamovie.utils.Utils
+import com.example.recommendmeamovie.domain.Credit
+import com.example.recommendmeamovie.domain.Movie
+import com.example.recommendmeamovie.domain.MovieDetails
+import com.example.recommendmeamovie.utils.Utils
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -60,36 +60,36 @@ data class Crew(
 )
 
 
-//fun MoviesContainer.asDomainModel() : List<Movie> {
-//    return results.map {
-//        Movie(it.id, it.title, it.poster, it.releaseDate)
-//    }
-//
-//}
-//
-//fun NetworkMovieDetails.asDomainModel() : MovieDetails {
-//    return MovieDetails(
-//        id,
-//        title,
-//        overview,
-//        runtime,
-//        Utils.getGenreString(genres),
-//        credits.cast?.asCastDomainModel(),
-//        credits.crew?.asCrewDomainModel(),
-//        poster,
-//        releaseDate,
-//        voteAverage
-//    )
-//}
-//
-//fun List<Cast>.asCastDomainModel() : List<Credit> {
-//    return this.map {
-//        Credit(it.name, it.character, it.picture)
-//    }
-//}
-//
-//fun List<Crew>.asCrewDomainModel() : List<Credit> {
-//    return this.map {
-//        Credit(it.name, it.job, it.picture)
-//    }
-//}
+fun MoviesContainer.asDomainModel() : List<Movie> {
+    return results.map {
+        Movie(it.id, it.title, it.poster, it.releaseDate)
+    }
+
+}
+
+fun NetworkMovieDetails.asDomainModel() : MovieDetails {
+    return MovieDetails(
+        id,
+        title,
+        overview,
+        runtime,
+        Utils.getGenreString(genres),
+        credits.cast?.asCastDomainModel(),
+        credits.crew?.asCrewDomainModel(),
+        poster,
+        releaseDate,
+        voteAverage
+    )
+}
+
+fun List<Cast>.asCastDomainModel() : List<Credit> {
+    return this.map {
+        Credit(it.name, it.character, it.picture)
+    }
+}
+
+fun List<Crew>.asCrewDomainModel() : List<Credit> {
+    return this.map {
+        Credit(it.name, it.job, it.picture)
+    }
+}
