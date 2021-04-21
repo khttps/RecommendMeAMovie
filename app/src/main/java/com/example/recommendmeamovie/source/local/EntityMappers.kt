@@ -6,10 +6,10 @@ fun List<MovieEntity>.asDomain() : List<Movie> {
 
     return map {
         Movie(
-            it.id,
-            it.title,
-            it.poster,
-            it.releaseDate
+            id = it.id,
+            title = it.title,
+            poster = it.poster,
+            releaseDate = it.releaseDate
         )
     }
 

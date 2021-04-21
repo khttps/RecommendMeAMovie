@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.recommendmeamovie.databinding.CreditsListItemBinding
 import com.example.recommendmeamovie.domain.Credit
 
+
 class CreditsAdapter : ListAdapter<Credit, CreditsAdapter.CreditViewHolder>(ListItemCallbacks()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditViewHolder {

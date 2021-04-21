@@ -2,18 +2,17 @@ package com.example.recommendmeamovie.ui.movie
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.ui.MainActivity
 import com.example.recommendmeamovie.adapters.CreditsAdapter
 import com.example.recommendmeamovie.databinding.MovieFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MovieFragment : Fragment() {
+class MovieFragment : Fragment(R.layout.movie_fragment) {
 
     private val navArgs : MovieFragmentArgs by navArgs()
 
@@ -22,10 +21,10 @@ class MovieFragment : Fragment() {
             .apply { putBundle("args", args) })
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val binding = MovieFragmentBinding.inflate(inflater)
+        val binding = MovieFragmentBinding.bind(view)
         val viewModel: MovieViewModel by viewModels()
 
         (activity as MainActivity).supportActionBar?.title = navArgs.movieName
@@ -36,7 +35,6 @@ class MovieFragment : Fragment() {
         binding.castList.adapter = CreditsAdapter()
         binding.crewList.adapter = CreditsAdapter()
 
-        return binding.root
     }
 
 }

@@ -1,12 +1,8 @@
 package com.example.recommendmeamovie.ui.recommend
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.databinding.RecommendFragmentBinding
 
@@ -15,19 +11,15 @@ data class Preference(
     val choices: Map<String, String>
 )
 
-class RecommendFragment : Fragment() {
+class RecommendFragment : Fragment(R.layout.recommend_fragment) {
 
     private lateinit var viewModel: RecommendViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        val binding = RecommendFragmentBinding.inflate(inflater)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val binding = RecommendFragmentBinding.bind(view)
 
 
-        return binding.root
     }
 
 }

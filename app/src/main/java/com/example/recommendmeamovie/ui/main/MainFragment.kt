@@ -1,27 +1,29 @@
 package com.example.recommendmeamovie.ui.main
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.recommendmeamovie.NavigationDirections
+import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.adapters.MovieAdapter
 import com.example.recommendmeamovie.databinding.MainFragmentBinding
 import com.example.recommendmeamovie.domain.Movie
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment(), MovieAdapter.OnMovieClickListener {
+class MainFragment : Fragment(R.layout.main_fragment), MovieAdapter.OnMovieClickListener {
 
     private val viewModel : MainViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
-
-        val binding = MainFragmentBinding.inflate(inflater)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val binding = MainFragmentBinding.bind(view)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -43,12 +45,21 @@ class MainFragment : Fragment(), MovieAdapter.OnMovieClickListener {
             }
         })
 
-        return binding.root
+        setHasOptionsMenu(true)
     }
 
     override fun onMovieClick(movie: Movie) {
         viewModel.navigateToMovie(movie)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu, menu)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_search_click)
+            findNavController().navigate(NavigationDirections.actionGlobalMovieListFragment())
+
+        return true
+    }
 }

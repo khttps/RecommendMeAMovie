@@ -48,11 +48,6 @@
         android:name="com.example.recommendmeamovie.ui.movielist.MovieListFragment"
         android:label="@string/search"
         tools:layout="@layout/movie_list_fragment">
-        <argument
-            android:name="query"
-            android:defaultValue="@null"
-            app:argType="string"
-            app:nullable="true" />
         <action
             android:id="@+id/action_movieListFragment_to_movieFragment"
             app:destination="@id/movieFragment" />

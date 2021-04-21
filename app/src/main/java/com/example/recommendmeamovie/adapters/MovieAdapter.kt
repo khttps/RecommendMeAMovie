@@ -8,11 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recommendmeamovie.IMAGE_URL
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.utils.Utils
-import com.squareup.picasso.Picasso
 
 
 class MovieAdapter(private val listener : OnMovieClickListener, private val tag : String) : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(

@@ -1,6 +1,5 @@
 package com.example.recommendmeamovie.ui.movielist
 
-import android.os.Bundle
 import androidx.lifecycle.*
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.repositories.SearchResultsRepository
@@ -14,10 +13,6 @@ import javax.inject.Inject
 class MovieListViewModel
 @Inject constructor(private val searchResultsRepository: SearchResultsRepository,
                     private val savedStateHandle: SavedStateHandle) : ViewModel() {
-
-    private val query get() = savedStateHandle
-        .get<Bundle>("args")
-        ?.getString("query")
 
     private val _list = MutableLiveData<List<Movie>>()
     val list : LiveData<List<Movie>>
@@ -34,17 +29,6 @@ class MovieListViewModel
         get() = _eventNavigateToMovie
 
 
-    init {
-
-        if (!query.isNullOrEmpty()) {
-            viewModelScope.launch {
-                getSearchResults(query!!)
-            }
-        } else
-            _list.value = emptyList()
-
-    }
-
     fun navigateToMovie(movie : Movie) {
         _eventNavigateToMovie.value = movie
     }
@@ -58,6 +42,12 @@ class MovieListViewModel
             _list.postValue(
                 searchResultsRepository.getSearchResults(query)
             )
+        }
+    }
+
+    fun executeQuery(query: String) {
+        viewModelScope.launch {
+            getSearchResults(query)
         }
     }
 

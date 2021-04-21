@@ -1,23 +1,22 @@
 package com.example.recommendmeamovie.ui.movielist
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.example.recommendmeamovie.ui.MainActivity
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.databinding.MovieListFragmentBinding
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.adapters.MovieAdapter
+import com.example.recommendmeamovie.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MovieListFragment : Fragment(), MovieAdapter.OnMovieClickListener {
+class MovieListFragment : Fragment(R.layout.movie_list_fragment), MovieAdapter.OnMovieClickListener {
 
     private val viewModel : MovieListViewModel by viewModels()
 
@@ -26,12 +25,9 @@ class MovieListFragment : Fragment(), MovieAdapter.OnMovieClickListener {
             .apply { putBundle("args", args) })
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        val binding = MovieListFragmentBinding.inflate(inflater)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val binding = MovieListFragmentBinding.bind(view)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -45,7 +41,7 @@ class MovieListFragment : Fragment(), MovieAdapter.OnMovieClickListener {
             }
         })
 
-        return binding.root
+        setHasOptionsMenu(true)
     }
 
     override fun onMovieClick(movie: Movie) {
@@ -53,5 +49,35 @@ class MovieListFragment : Fragment(), MovieAdapter.OnMovieClickListener {
     }
 
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.search_menu, menu)
+
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as SearchView
+
+        searchView.isIconified = false
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Utils.hideKeyboard(requireActivity())
+                return true
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                if (query.isNullOrBlank())
+                    return false
+
+                viewModel.executeQuery(query)
+                return true
+            }
+        })
+
+        searchView.setOnCloseListener {
+            findNavController().navigateUp()
+            return@setOnCloseListener true
+        }
+
+    }
 
 }

@@ -1,13 +1,13 @@
-package com.example.recommendmeamovie
+package com.example.recommendmeamovie.utils
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.domain.Credit
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.adapters.MovieAdapter
 import com.example.recommendmeamovie.adapters.CreditsAdapter
-import com.example.recommendmeamovie.utils.Utils
 
 const val IMAGE_URL = "https://image.tmdb.org/t/p/w185"
 
