@@ -1,22 +1,28 @@
 package com.example.recommendmeamovie.ui.movie
 
+import android.app.NotificationManager
+import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.*
 import com.example.recommendmeamovie.domain.Credit
 import com.example.recommendmeamovie.domain.MovieDetails
-import com.example.recommendmeamovie.repositories.MovieDetailsRepository
-import com.example.recommendmeamovie.utils.Utils
+import com.example.recommendmeamovie.repository.MovieDetailsRepository
+import com.example.recommendmeamovie.util.Utils
+import com.example.recommendmeamovie.util.sendNotification
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel
 @Inject constructor(private val movieDetailsRepository: MovieDetailsRepository,
+                    private val notificationManager: NotificationManager,
+                    @ApplicationContext private val applicationContext: Context,
                     private val savedStateHandle: SavedStateHandle) : ViewModel() {
+
 
     private val movieId
         get() = savedStateHandle
@@ -48,6 +54,7 @@ class MovieViewModel
         get() = _director
 
     init {
+        println("ViewModel $movieId")
         viewModelScope.launch {
             getMovieDetails()
         }
@@ -58,6 +65,15 @@ class MovieViewModel
             _movieDetails.postValue(
                 movieId?.let { movieDetailsRepository.getMovieDetails(it) }
             )
+        }
+    }
+
+    fun scheduleNotification() {
+
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _movieDetails.value?.let { notificationManager.sendNotification(applicationContext, it) }
+            }
         }
     }
 

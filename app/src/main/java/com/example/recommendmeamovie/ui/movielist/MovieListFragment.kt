@@ -11,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.databinding.MovieListFragmentBinding
 import com.example.recommendmeamovie.domain.Movie
-import com.example.recommendmeamovie.adapters.MovieAdapter
-import com.example.recommendmeamovie.utils.Utils
+import com.example.recommendmeamovie.adapter.MovieAdapter
+import com.example.recommendmeamovie.util.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

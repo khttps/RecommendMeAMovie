@@ -1,21 +1,19 @@
 package com.example.recommendmeamovie.ui
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
 
-import android.widget.SearchView
-import android.widget.SearchView.OnQueryTextListener
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
-import com.example.recommendmeamovie.NavigationDirections
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.databinding.ActivityMainBinding
-import com.example.recommendmeamovie.utils.Utils
+import com.example.recommendmeamovie.util.Utils
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -24,13 +22,21 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    @Inject
+    lateinit var notificationChannel: NotificationChannel
+
+    @Inject
+    lateinit var notificationManager: NotificationManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.toolbar)
+
         setupNavigationDrawer()
+        createNotificationChannel()
     }
 
     private fun setupNavigationDrawer() {
@@ -40,9 +46,14 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, _, _ ->
             Utils.hideKeyboard(this)
         }
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            notificationManager.createNotificationChannel(notificationChannel)
     }
 
     override fun onSupportNavigateUp(): Boolean {

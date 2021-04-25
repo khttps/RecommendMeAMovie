@@ -98,11 +98,14 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
     implementation 'androidx.hilt:hilt-navigation-fragment:1.0.0-beta01'
 
-
     // Moshi
     implementation "com.squareup.moshi:moshi-kotlin:1.11.0"
 
     // Picasso
     implementation "com.squareup.picasso:picasso:2.71828"
+
+    // Work Manager
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+
 
 }

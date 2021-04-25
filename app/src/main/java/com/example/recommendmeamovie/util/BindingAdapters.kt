@@ -1,4 +1,4 @@
-package com.example.recommendmeamovie.utils
+package com.example.recommendmeamovie.util
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -6,10 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.domain.Credit
 import com.example.recommendmeamovie.domain.Movie
-import com.example.recommendmeamovie.adapters.MovieAdapter
-import com.example.recommendmeamovie.adapters.CreditsAdapter
-
-const val IMAGE_URL = "https://image.tmdb.org/t/p/w185"
+import com.example.recommendmeamovie.adapter.MovieAdapter
+import com.example.recommendmeamovie.adapter.CreditsAdapter
 
 @BindingAdapter("movieList")
 fun setMovieList(recyclerView: RecyclerView, movies: List<Movie>?) {

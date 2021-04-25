@@ -1,4 +1,4 @@
-package com.example.recommendmeamovie.adapters
+package com.example.recommendmeamovie.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

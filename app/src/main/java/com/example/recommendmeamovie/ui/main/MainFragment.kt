@@ -6,12 +6,11 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.recommendmeamovie.NavigationDirections
 import com.example.recommendmeamovie.R
-import com.example.recommendmeamovie.adapters.MovieAdapter
+import com.example.recommendmeamovie.adapter.MovieAdapter
 import com.example.recommendmeamovie.databinding.MainFragmentBinding
 import com.example.recommendmeamovie.domain.Movie
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,7 +58,6 @@ class MainFragment : Fragment(R.layout.main_fragment), MovieAdapter.OnMovieClick
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_search_click)
             findNavController().navigate(NavigationDirections.actionGlobalMovieListFragment())
-
         return true
     }
 }

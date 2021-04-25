@@ -8,6 +8,7 @@ buildscript {
         retrofit_version = "2.9.0"
         room_version = "2.2.6"
         hilt_version = "2.34.1-beta"
+        work_version = "2.5.0"
     }
 
     repositories {
@@ -19,6 +20,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+
     }
 }
 

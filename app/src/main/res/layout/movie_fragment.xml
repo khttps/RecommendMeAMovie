@@ -151,6 +151,7 @@
                     android:layout_height="@dimen/button_dimen_alt"
                     android:layout_marginEnd="@dimen/half_margin"
                     android:padding="0dp"
+                    android:onClick="@{() -> viewModel.scheduleNotification()}"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_watched"
                     app:layout_constraintEnd_toEndOf="parent"
