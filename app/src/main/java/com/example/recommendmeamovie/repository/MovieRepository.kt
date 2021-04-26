@@ -7,9 +7,12 @@ import com.example.recommendmeamovie.source.local.asDomain
 import com.example.recommendmeamovie.source.remote.MovieApiService
 import com.example.recommendmeamovie.source.remote.asEntity
 import dagger.hilt.android.scopes.ViewModelScoped
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@ViewModelScoped
+@Singleton
 class MovieRepository
 @Inject constructor(
     private val movieService : MovieApiService,
@@ -21,23 +24,21 @@ class MovieRepository
     }
 
     suspend fun getPopularMovies(): List<Movie>? {
-
-        val popularMovies = movieService.getMovies(POPULAR_FILTER, BuildConfig.API_KEY)
-        movieDao.addMovieList(popularMovies.asEntity(POPULAR_FILTER))
-
         return movieDao.getMovies(POPULAR_FILTER).asDomain()
-
     }
 
     suspend fun getTopRatedMovies(): List<Movie>? {
-
-        val topRatedMovies = movieService.getMovies(TOP_RATED_FILTER, BuildConfig.API_KEY)
-        movieDao.addMovieList(topRatedMovies.asEntity(TOP_RATED_FILTER))
-
         return movieDao.getMovies(TOP_RATED_FILTER).asDomain()
-
     }
 
+    suspend fun refreshCacheData() {
+        withContext(Dispatchers.IO) {
+            val popularMovies = movieService.getMovies(POPULAR_FILTER, BuildConfig.API_KEY)
+            movieDao.addMovieList(popularMovies.asEntity(POPULAR_FILTER))
 
+            val topRatedMovies = movieService.getMovies(TOP_RATED_FILTER, BuildConfig.API_KEY)
+            movieDao.addMovieList(topRatedMovies.asEntity(TOP_RATED_FILTER))
+        }
+    }
 
 }

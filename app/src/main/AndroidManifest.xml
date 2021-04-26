@@ -16,7 +16,7 @@
         <receiver
             android:name=".receiver.DismissReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
         <receiver
             android:name=".receiver.WatchedReceiver"
             android:enabled="true"

@@ -4,7 +4,6 @@ plugins {
     id "kotlin-kapt"
     id "androidx.navigation.safeargs.kotlin"
     id "dagger.hilt.android.plugin"
-    id 'kotlin-parcelize'
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
@@ -97,9 +96,9 @@ dependencies {
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
-    implementation 'androidx.hilt:hilt-navigation-fragment:1.0.0-beta01'
-    implementation 'androidx.hilt:hilt-work:1.0.0-beta01'
-    kapt 'androidx.hilt:hilt-compiler:1.0.0-beta01'
+    implementation "androidx.hilt:hilt-navigation-fragment:$hilt_extensions"
+    implementation "androidx.hilt:hilt-work:$hilt_extensions"
+    kapt "androidx.hilt:hilt-compiler:$hilt_extensions"
 
     // Moshi
     implementation "com.squareup.moshi:moshi-kotlin:1.11.0"
@@ -109,6 +108,5 @@ dependencies {
 
     // Work Manager
     implementation "androidx.work:work-runtime-ktx:$work_version"
-
 
 }

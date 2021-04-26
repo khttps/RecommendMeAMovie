@@ -1,8 +1,5 @@
 package com.example.recommendmeamovie.domain
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
 data class Movie(
     val id : Long,
     val title : String,
@@ -10,7 +7,6 @@ data class Movie(
     val releaseDate : String?
 )
 
-@Parcelize
 data class MovieDetails(
     val id: Long,
     val title: String,
@@ -22,11 +18,10 @@ data class MovieDetails(
     val poster: String?,
     val releaseDate: String,
     val voteAverage: Double
-) : Parcelable
+)
 
-@Parcelize
 data class Credit (
     val name : String,
     val role : String,
     val picture : String?
-    ) : Parcelable
+    )

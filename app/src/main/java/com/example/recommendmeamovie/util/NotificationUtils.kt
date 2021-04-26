@@ -10,10 +10,8 @@ import androidx.core.app.NotificationCompat
 import androidx.navigation.NavDeepLinkBuilder
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.domain.Movie
-import com.example.recommendmeamovie.domain.MovieDetails
 import com.example.recommendmeamovie.receiver.WatchedReceiver
 import com.example.recommendmeamovie.ui.MainActivity
-import com.example.recommendmeamovie.ui.movie.MovieFragmentArgs
 import com.squareup.picasso.Picasso
 
 
