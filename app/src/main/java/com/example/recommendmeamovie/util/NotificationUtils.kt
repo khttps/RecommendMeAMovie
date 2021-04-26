@@ -9,6 +9,7 @@ import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.navigation.NavDeepLinkBuilder
 import com.example.recommendmeamovie.R
+import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.domain.MovieDetails
 import com.example.recommendmeamovie.receiver.WatchedReceiver
 import com.example.recommendmeamovie.ui.MainActivity
@@ -24,7 +25,7 @@ private val REQUEST_CODE = 0
 private val FLAGS = 0
 
 
-fun NotificationManager.sendNotification(context: Context, movie: MovieDetails) {
+fun NotificationManager.sendNotification(context: Context, movie: Movie) {
 
     val bundle = Bundle().apply {
             putString("movieName", movie.title)
@@ -43,6 +44,10 @@ fun NotificationManager.sendNotification(context: Context, movie: MovieDetails) 
     val watchedIntent = Intent(context, WatchedReceiver::class.java)
     val watchedPendingIntent = PendingIntent.getBroadcast(context, REQUEST_CODE, watchedIntent, FLAGS)
 
+    // Add movie to watched list when action is clicked
+    val dismissIntent = Intent(context, WatchedReceiver::class.java)
+    val dismissPendingIntent = PendingIntent.getBroadcast(context, 1, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
     // Movie Poster as Icon
     val largeIcon: Bitmap = Picasso.get().load(IMAGE_URL + movie.poster).get()
 
@@ -55,6 +60,7 @@ fun NotificationManager.sendNotification(context: Context, movie: MovieDetails) 
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         .setContentIntent(contentIntent)
         .addAction(R.drawable.ic_checkmark, "Yes, I've Seen It", watchedPendingIntent)
+        .addAction(R.drawable.ic_dismiss, "No, Leave Me Alone", dismissPendingIntent)
         .setAutoCancel(true)
 
     notify(NOTIFICATION_ID, builder.build())

@@ -1,19 +1,25 @@
 package com.example.recommendmeamovie.ui.movie
 
+import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.*
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.recommendmeamovie.domain.Credit
 import com.example.recommendmeamovie.domain.MovieDetails
 import com.example.recommendmeamovie.repository.MovieDetailsRepository
 import com.example.recommendmeamovie.util.Utils
 import com.example.recommendmeamovie.util.sendNotification
+import com.example.recommendmeamovie.work.NotificationWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -68,12 +74,22 @@ class MovieViewModel
         }
     }
 
+    @SuppressLint("RestrictedApi")
     fun scheduleNotification() {
 
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                _movieDetails.value?.let { notificationManager.sendNotification(applicationContext, it) }
-            }
+        val data = Data.Builder().apply {
+            put("movieId", movieId)
+            put("movieName", _movieDetails.value?.title)
+            put("moviePoster", _movieDetails.value?.poster)
+        }.build()
+
+        val notificationWorkRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+            .setInputData(data)
+            .setInitialDelay(1L, TimeUnit.DAYS)
+            .build()
+
+        viewModelScope.launch(Dispatchers.IO) {
+            WorkManager.getInstance(applicationContext).enqueue(notificationWorkRequest)
         }
     }
 
