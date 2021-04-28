@@ -17,6 +17,7 @@ object MovieServiceModule {
 
     private const val BASE_URL = "https://api.themoviedb.org"
 
+
     @Provides
     fun provideMoshi() : Moshi {
         return Moshi

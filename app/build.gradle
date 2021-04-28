@@ -100,6 +100,8 @@ dependencies {
     implementation "androidx.hilt:hilt-work:$hilt_extensions"
     kapt "androidx.hilt:hilt-compiler:$hilt_extensions"
 
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+
     // Moshi
     implementation "com.squareup.moshi:moshi-kotlin:1.11.0"
 

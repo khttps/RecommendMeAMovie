@@ -12,7 +12,6 @@ import com.example.recommendmeamovie.domain.Credit
 import com.example.recommendmeamovie.domain.MovieDetails
 import com.example.recommendmeamovie.repository.MovieDetailsRepository
 import com.example.recommendmeamovie.util.Utils
-import com.example.recommendmeamovie.util.sendNotification
 import com.example.recommendmeamovie.work.NotificationWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -23,11 +22,11 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel
-@Inject constructor(private val movieDetailsRepository: MovieDetailsRepository,
-                    private val notificationManager: NotificationManager,
-                    @ApplicationContext private val applicationContext: Context,
-                    private val savedStateHandle: SavedStateHandle) : ViewModel() {
+class MovieViewModel @Inject constructor(
+    private val movieDetailsRepository: MovieDetailsRepository,
+    private val notificationManager: NotificationManager,
+    @ApplicationContext private val applicationContext: Context,
+    private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
 
     private val movieId
@@ -38,6 +37,10 @@ class MovieViewModel
     private val _movieDetails = MutableLiveData<MovieDetails>()
     val movieDetails : LiveData<MovieDetails>
         get() = _movieDetails
+
+    private val _empty = MutableLiveData<Boolean>()
+    val empty : LiveData<Boolean>
+        get() = _empty
 
     private val _year = Transformations.map(_movieDetails) {
         Utils.getReleaseYear(it.releaseDate)
@@ -60,10 +63,15 @@ class MovieViewModel
         get() = _director
 
     init {
-        println("ViewModel $movieId")
-        viewModelScope.launch {
-            getMovieDetails()
+
+        if (Utils.isConnected(applicationContext)) {
+            viewModelScope.launch {
+                getMovieDetails()
+            }
+        } else {
+            _empty.value = true
         }
+
     }
 
     private suspend fun getMovieDetails() {
@@ -92,5 +100,4 @@ class MovieViewModel
             WorkManager.getInstance(applicationContext).enqueue(notificationWorkRequest)
         }
     }
-
 }

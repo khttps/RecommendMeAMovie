@@ -1,5 +1,7 @@
 package com.example.recommendmeamovie.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import com.example.recommendmeamovie.BuildConfig
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.source.local.MovieDao
@@ -23,21 +25,20 @@ class MovieRepository
         private const val TOP_RATED_FILTER = "top_rated"
     }
 
-    suspend fun getPopularMovies(): List<Movie>? {
-        return movieDao.getMovies(POPULAR_FILTER).asDomain()
+    val popularMovies = movieDao.getMovies(POPULAR_FILTER).map {
+        it.asDomain()
     }
-
-    suspend fun getTopRatedMovies(): List<Movie>? {
-        return movieDao.getMovies(TOP_RATED_FILTER).asDomain()
+    val topRatedMovies = movieDao.getMovies(TOP_RATED_FILTER).map {
+        it.asDomain()
     }
 
     suspend fun refreshCacheData() {
         withContext(Dispatchers.IO) {
-            val popularMovies = movieService.getMovies(POPULAR_FILTER, BuildConfig.API_KEY)
-            movieDao.addMovieList(popularMovies.asEntity(POPULAR_FILTER))
+            val popularMoviesCache = movieService.getMovies(POPULAR_FILTER, BuildConfig.API_KEY)
+            movieDao.addMovieList(popularMoviesCache.asEntity(POPULAR_FILTER))
 
-            val topRatedMovies = movieService.getMovies(TOP_RATED_FILTER, BuildConfig.API_KEY)
-            movieDao.addMovieList(topRatedMovies.asEntity(TOP_RATED_FILTER))
+            val topRatedMoviesCache = movieService.getMovies(TOP_RATED_FILTER, BuildConfig.API_KEY)
+            movieDao.addMovieList(topRatedMoviesCache.asEntity(TOP_RATED_FILTER))
         }
     }
 

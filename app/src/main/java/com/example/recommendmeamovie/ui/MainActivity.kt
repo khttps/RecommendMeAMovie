@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.databinding.ActivityMainBinding
+import com.example.recommendmeamovie.databinding.ActivityMainNoConnectionBinding
 import com.example.recommendmeamovie.util.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

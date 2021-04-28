@@ -25,7 +25,7 @@ fun setCreditsList(recyclerView: RecyclerView, credits: List<Credit>?) {
 
 @BindingAdapter("poster")
 fun setPoster(imageView : ImageView, path : String?) {
-    Utils.bindImage(path, imageView, R.drawable.ic_broken_image)
+    Utils.bindImage(path, imageView, 0)
 
 }
 

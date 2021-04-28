@@ -1,5 +1,6 @@
 package com.example.recommendmeamovie.source.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -15,7 +16,7 @@ interface MovieDao {
     suspend fun addMovie(movie : MovieEntity)
 
     @Query("SELECT * FROM movies WHERE movie_type = :filter")
-    suspend fun getMovies(filter : String) : List<MovieEntity>
+    fun getMovies(filter : String) : LiveData<List<MovieEntity>>
 
 
 }

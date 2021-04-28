@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.main_fragment), MovieAdapter.OnMovieClickListener {
 
-    private val viewModel : MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,7 +39,12 @@ class MainFragment : Fragment(R.layout.main_fragment), MovieAdapter.OnMovieClick
 
         viewModel.eventNavigateToMovie.observe(viewLifecycleOwner, {
             if (it != null) {
-                findNavController().navigate(MainFragmentDirections.actionMainFragmentToMovieFragment(it.id, it.title))
+                findNavController().navigate(
+                    MainFragmentDirections.actionMainFragmentToMovieFragment(
+                        it.id,
+                        it.title
+                    )
+                )
                 viewModel.navigateToMovieCompleted()
             }
         })

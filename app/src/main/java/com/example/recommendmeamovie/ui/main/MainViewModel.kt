@@ -10,39 +10,30 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val movieRepository: MovieRepository, private val savedStateHandle: SavedStateHandle) : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val movieRepository: MovieRepository,
+    private val savedStateHandle: SavedStateHandle
+    ): ViewModel() {
 
-    private val _popularMovies = MutableLiveData<List<Movie>>()
-    val popularMovies : LiveData<List<Movie>>
-        get() = _popularMovies
+    val popularMovies = movieRepository.popularMovies
+    val topRatedMovies = movieRepository.topRatedMovies
 
-    private val _topRatedMovies = MutableLiveData<List<Movie>>()
-    val topRatedMovies : LiveData<List<Movie>>
-        get() = _topRatedMovies
+    val popularLoaded = Transformations.map(popularMovies) {
+        it.isNotEmpty()
+    }
 
-    private val _popularLoaded = MutableLiveData<Boolean>()
-    val popularLoaded : LiveData<Boolean>
-        get() = _popularLoaded
-
-    private val _topRatedLoaded = MutableLiveData<Boolean>()
-    val topRatedLoaded : LiveData<Boolean>
-        get() = _topRatedLoaded
+    val topRatedLoaded = Transformations.map(topRatedMovies) {
+        it.isNotEmpty()
+    }
 
     private val _eventNavigateToRecommend = MutableLiveData<Boolean>()
     val eventNavigateToRecommend : LiveData<Boolean>
         get() = _eventNavigateToRecommend
 
-
     private val _eventNavigateToMovie = MutableLiveData<Movie?>()
     val eventNavigateToMovie : LiveData<Movie?>
         get() = _eventNavigateToMovie
 
-
-    init {
-        viewModelScope.launch {
-            getMoviePreviews()
-        }
-    }
 
     fun navigateToRecommend() {
         _eventNavigateToRecommend.value = true
@@ -59,22 +50,5 @@ class MainViewModel @Inject constructor(private val movieRepository: MovieReposi
     fun navigateToMovieCompleted() {
         _eventNavigateToMovie.value = null
     }
-
-    private suspend fun getMoviePreviews() {
-        withContext(Dispatchers.IO) {
-            _popularMovies.postValue(
-                movieRepository.getPopularMovies()
-            )
-
-            _popularLoaded.postValue( true)
-
-            _topRatedMovies.postValue(
-                movieRepository.getTopRatedMovies()
-            )
-
-            _topRatedLoaded.postValue(true)
-        }
-    }
-
 
 }

@@ -33,5 +33,4 @@ class MovieFragment : Fragment(R.layout.movie_fragment) {
         binding.castList.adapter = CreditsAdapter()
         binding.crewList.adapter = CreditsAdapter()
     }
-
 }

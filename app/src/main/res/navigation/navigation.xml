@@ -11,10 +11,16 @@
         tools:layout="@layout/main_fragment">
         <action
             android:id="@+id/action_mainFragment_to_recommendFragment"
-            app:destination="@id/recommendFragment" />
+            app:destination="@id/recommendFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_mainFragment_to_movieFragment"
-            app:destination="@id/movieFragment" />
+            app:destination="@id/movieFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/recommendFragment"
@@ -23,19 +29,13 @@
         tools:layout="@layout/recommend_fragment">
         <action
             android:id="@+id/action_recommendFragment_to_movieFragment"
-            app:destination="@id/movieFragment" />
-        <action
-            android:id="@+id/action_recommendFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/movieFragment"
+            app:popUpTo="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieFragment"
         android:name="com.example.recommendmeamovie.ui.movie.MovieFragment"
         tools:layout="@layout/movie_fragment">
-        <action
-            android:id="@+id/action_movieFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/mainFragment" />
         <argument
             android:name="movieId"
             app:argType="long" />
@@ -50,7 +50,10 @@
         tools:layout="@layout/movie_list_fragment">
         <action
             android:id="@+id/action_movieListFragment_to_movieFragment"
-            app:destination="@id/movieFragment" />
+            app:destination="@id/movieFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/mainFragment" />
     </fragment>
     <action
         android:id="@+id/action_global_movieListFragment"

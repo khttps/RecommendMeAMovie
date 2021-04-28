@@ -10,6 +10,7 @@ buildscript {
         hilt_version = "2.34.1-beta"
         hilt_extensions = "1.0.0-beta01"
         work_version = "2.5.0"
+        paging_version = "2.1.2"
     }
 
     repositories {
