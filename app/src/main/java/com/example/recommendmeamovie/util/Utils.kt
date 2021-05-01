@@ -16,15 +16,11 @@ object Utils {
 
     fun getGenreString(genres : List<Genre>?) : String {
         if (genres != null) {
-            return genres.joinToString(separator = ", ", transform = {
+            return genres.take(2).joinToString(separator = ", ", transform = {
                 it.name
             })
         }
         return ""
-    }
-
-    fun getReleaseYear(releaseDate : String) : String {
-        return releaseDate.substringBefore("-")
     }
 
     fun bindImage(imagePath : String?, imageView : ImageView, errorResId : Int) {

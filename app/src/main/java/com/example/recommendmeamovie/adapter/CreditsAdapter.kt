@@ -14,7 +14,6 @@ class CreditsAdapter : ListAdapter<Credit, CreditsAdapter.CreditViewHolder>(List
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return CreditViewHolder(CreditsListItemBinding.inflate(inflater))
-
     }
 
     override fun onBindViewHolder(holder: CreditViewHolder, position: Int) {
@@ -22,13 +21,11 @@ class CreditsAdapter : ListAdapter<Credit, CreditsAdapter.CreditViewHolder>(List
         holder.bind(credit)
     }
 
-
     class CreditViewHolder(val binding: CreditsListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(credit : Credit) {
             binding.credit = credit
         }
-
     }
 
     class ListItemCallbacks : DiffUtil.ItemCallback<Credit>() {

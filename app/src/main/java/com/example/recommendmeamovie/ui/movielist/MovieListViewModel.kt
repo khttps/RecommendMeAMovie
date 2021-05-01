@@ -5,6 +5,7 @@ import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.repository.SearchResultsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -18,11 +19,9 @@ class MovieListViewModel
     val list : LiveData<List<Movie>>
         get() = _list
 
-    private val _empty = Transformations.map(_list) {
+    val empty = Transformations.map(_list) {
         it.isNullOrEmpty()
     }
-    val empty : LiveData<Boolean>
-        get() = _empty
 
     private val _eventNavigateToMovie = MutableLiveData<Movie?>()
     val eventNavigateToMovie : LiveData<Movie?>
@@ -39,9 +38,9 @@ class MovieListViewModel
 
     private suspend fun getSearchResults(query: String) {
         withContext(Dispatchers.IO) {
-            _list.postValue(
-                searchResultsRepository.getSearchResults(query)
-            )
+            searchResultsRepository.getSearchResults(query).collect {
+                _list.postValue(it)
+            }
         }
     }
 

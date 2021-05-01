@@ -5,8 +5,6 @@ import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,8 +13,8 @@ class MainViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
     ): ViewModel() {
 
-    val popularMovies = movieRepository.popularMovies
-    val topRatedMovies = movieRepository.topRatedMovies
+    val popularMovies = movieRepository.popularMovies.asLiveData(Dispatchers.IO)
+    val topRatedMovies = movieRepository.topRatedMovies.asLiveData(Dispatchers.IO)
 
     val popularLoaded = Transformations.map(popularMovies) {
         it.isNotEmpty()

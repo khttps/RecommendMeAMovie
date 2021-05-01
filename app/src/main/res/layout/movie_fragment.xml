@@ -104,7 +104,7 @@
                     android:id="@+id/genre_text_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.genres}"
+                    android:text="@{viewModel.movieDetails.genres}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/linearLayout"

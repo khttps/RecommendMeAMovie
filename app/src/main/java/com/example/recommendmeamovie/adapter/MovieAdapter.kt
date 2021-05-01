@@ -29,7 +29,9 @@ class MovieAdapter(private val listener : OnMovieClickListener, private val tag 
             when (tag) {
                 MAIN_LIST -> R.layout.main_list_item
                 else -> R.layout.movie_list_item
-            }, parent, false
+            },
+            parent,
+            false
         ))
     }
 
@@ -46,12 +48,16 @@ class MovieAdapter(private val listener : OnMovieClickListener, private val tag 
             this.movie = movie
 
             val posterImageView = itemView.findViewById<ImageView>(R.id.poster_image_view)
-
             Utils.bindImage(movie.poster, posterImageView, R.drawable.ic_broken_image)
 
-            if (tag == MOVIE_LIST) {
-                itemView.findViewById<TextView>(R.id.name_text_view).text = movie.title
-                itemView.findViewById<TextView>(R.id.year_text_view).text = Utils.getReleaseYear(movie.releaseDate ?: "")
+            val name = itemView.findViewById<TextView>(R.id.name_text_view)
+            name?.let {
+                it.text = movie.title
+            }
+
+            val releaseYear = itemView.findViewById<TextView>(R.id.year_text_view)
+            releaseYear?.let {
+                it.text = movie.releaseDate?.substringBefore("-")
             }
         }
 
@@ -79,5 +85,4 @@ class MovieAdapter(private val listener : OnMovieClickListener, private val tag 
     interface OnMovieClickListener {
         fun onMovieClick(movie : Movie)
     }
-
 }

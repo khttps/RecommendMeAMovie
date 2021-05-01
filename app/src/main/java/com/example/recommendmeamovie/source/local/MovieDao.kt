@@ -1,10 +1,10 @@
 package com.example.recommendmeamovie.source.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
@@ -16,7 +16,7 @@ interface MovieDao {
     suspend fun addMovie(movie : MovieEntity)
 
     @Query("SELECT * FROM movies WHERE movie_type = :filter")
-    fun getMovies(filter : String) : LiveData<List<MovieEntity>>
+    fun getMovies(filter : String) : Flow<List<MovieEntity>>
 
 
 }

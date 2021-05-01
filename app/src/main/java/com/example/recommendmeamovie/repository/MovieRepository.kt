@@ -1,15 +1,16 @@
 package com.example.recommendmeamovie.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.example.recommendmeamovie.BuildConfig
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.source.local.MovieDao
 import com.example.recommendmeamovie.source.local.asDomain
 import com.example.recommendmeamovie.source.remote.MovieApiService
 import com.example.recommendmeamovie.source.remote.asEntity
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -25,10 +26,11 @@ class MovieRepository
         private const val TOP_RATED_FILTER = "top_rated"
     }
 
-    val popularMovies = movieDao.getMovies(POPULAR_FILTER).map {
+    val popularMovies = movieDao.getMovies(POPULAR_FILTER).flowOn(Dispatchers.IO).map {
         it.asDomain()
     }
-    val topRatedMovies = movieDao.getMovies(TOP_RATED_FILTER).map {
+
+    val topRatedMovies = movieDao.getMovies(TOP_RATED_FILTER).flowOn(Dispatchers.IO).map {
         it.asDomain()
     }
 
@@ -41,5 +43,4 @@ class MovieRepository
             movieDao.addMovieList(topRatedMoviesCache.asEntity(TOP_RATED_FILTER))
         }
     }
-
 }

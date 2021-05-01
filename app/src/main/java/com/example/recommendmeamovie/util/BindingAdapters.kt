@@ -8,6 +8,8 @@ import com.example.recommendmeamovie.domain.Credit
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.adapter.MovieAdapter
 import com.example.recommendmeamovie.adapter.CreditsAdapter
+import com.squareup.picasso.Picasso
+
 
 @BindingAdapter("movieList")
 fun setMovieList(recyclerView: RecyclerView, movies: List<Movie>?) {
@@ -22,11 +24,9 @@ fun setCreditsList(recyclerView: RecyclerView, credits: List<Credit>?) {
     adapter.submitList(credits)
 }
 
-
 @BindingAdapter("poster")
 fun setPoster(imageView : ImageView, path : String?) {
     Utils.bindImage(path, imageView, 0)
-
 }
 
 @BindingAdapter("profile")
