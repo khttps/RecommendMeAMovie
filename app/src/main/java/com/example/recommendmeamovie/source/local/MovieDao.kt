@@ -16,7 +16,7 @@ interface MovieDao {
     suspend fun addMovie(movie : MovieEntity)
 
     @Query("SELECT * FROM movies WHERE movie_type = :filter")
-    fun getMovies(filter : String) : Flow<List<MovieEntity>>
+    fun getMovies(filter : String) : List<MovieEntity>
 
 
 }

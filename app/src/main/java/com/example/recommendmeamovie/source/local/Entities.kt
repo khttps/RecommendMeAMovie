@@ -13,6 +13,13 @@ data class MovieEntity (
     @ColumnInfo(name = "movie_type") val movieType: String
 )
 
+//@Entity(tableName = "questions")
+//data class QuestionEntity(
+//    @PrimaryKey(autoGenerate = false) val id: Int,
+//    val question : String,
+//    val choices : List<String>?
+//    )
+
 //@Entity (tableName = "movies_details")
 //data class MovieDetailsEntity(
 //    @PrimaryKey (autoGenerate = false) val id: Long,

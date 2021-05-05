@@ -25,3 +25,8 @@ data class Credit (
     val role : String,
     val picture : String?
     )
+
+data class Question (
+    val questionText : String,
+    val choices : List<String>
+    )

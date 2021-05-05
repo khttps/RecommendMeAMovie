@@ -12,16 +12,11 @@ import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.receiver.WatchedReceiver
 import com.example.recommendmeamovie.ui.MainActivity
+import com.example.recommendmeamovie.util.Constants.FLAGS
+import com.example.recommendmeamovie.util.Constants.IMAGE_URL
+import com.example.recommendmeamovie.util.Constants.NOTIFICATION_ID
+import com.example.recommendmeamovie.util.Constants.REQUEST_CODE
 import com.squareup.picasso.Picasso
-
-
-private const val IMAGE_URL = "https://image.tmdb.org/t/p/w185"
-
-// Notification ID.
-private val NOTIFICATION_ID = 0
-private val REQUEST_CODE = 0
-private val FLAGS = 0
-
 
 fun NotificationManager.sendNotification(context: Context, movie: Movie) {
 

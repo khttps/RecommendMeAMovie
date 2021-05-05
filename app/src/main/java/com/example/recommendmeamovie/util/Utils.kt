@@ -8,11 +8,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.source.remote.Genre
+import com.example.recommendmeamovie.util.Constants.IMAGE_URL
 import com.squareup.picasso.Picasso
 
 object Utils {
-
-    private const val IMAGE_URL = "https://image.tmdb.org/t/p/w185"
 
     fun getGenreString(genres : List<Genre>?) : String {
         if (genres != null) {

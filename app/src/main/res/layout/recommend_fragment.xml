@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.recommend.RecommendFragment">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.recommendmeamovie.ui.recommend.RecommendViewModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,6 +18,7 @@
         <TextView
             android:id="@+id/preference_question"
             android:layout_width="wrap_content"
+            android:text="@{viewModel.currentQuestion.questionText}"
             style="@style/TextAppearance.AppCompat.Headline"
             tools:text="What are you in the mood for?"
             android:layout_height="wrap_content"/>

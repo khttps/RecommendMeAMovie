@@ -14,7 +14,7 @@ class SearchResultsRepository
 @Inject constructor(private val movieService : MovieApiService) {
 
     suspend fun getSearchResults(query: String): Flow<List<Movie>> = flow {
-        val searchResults = movieService.getSearchResults(query, BuildConfig.API_KEY)
+        val searchResults = movieService.getSearchResults(query)
         emit(searchResults.asDomain())
     }
 }

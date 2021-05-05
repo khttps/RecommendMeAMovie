@@ -1,16 +1,12 @@
 package com.example.recommendmeamovie.repository
 
 import com.example.recommendmeamovie.BuildConfig
-import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.source.local.MovieDao
 import com.example.recommendmeamovie.source.local.asDomain
 import com.example.recommendmeamovie.source.remote.MovieApiService
 import com.example.recommendmeamovie.source.remote.asEntity
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,20 +22,22 @@ class MovieRepository
         private const val TOP_RATED_FILTER = "top_rated"
     }
 
-    val popularMovies = movieDao.getMovies(POPULAR_FILTER).flowOn(Dispatchers.IO).map {
-        it.asDomain()
-    }
+    suspend fun getPopularMovies() = flow {
+        val popularMovies = movieDao.getMovies(POPULAR_FILTER).asDomain()
+        emit(popularMovies)
+    }.flowOn(Dispatchers.IO)
 
-    val topRatedMovies = movieDao.getMovies(TOP_RATED_FILTER).flowOn(Dispatchers.IO).map {
-        it.asDomain()
-    }
+    suspend fun getTopRatedMovies() = flow {
+        val topRatedMovies = movieDao.getMovies(TOP_RATED_FILTER).asDomain()
+        emit(topRatedMovies)
+    }.flowOn(Dispatchers.IO)
 
     suspend fun refreshCacheData() {
         withContext(Dispatchers.IO) {
-            val popularMoviesCache = movieService.getMovies(POPULAR_FILTER, BuildConfig.API_KEY)
+            val popularMoviesCache = movieService.getMovies(POPULAR_FILTER)
             movieDao.addMovieList(popularMoviesCache.asEntity(POPULAR_FILTER))
 
-            val topRatedMoviesCache = movieService.getMovies(TOP_RATED_FILTER, BuildConfig.API_KEY)
+            val topRatedMoviesCache = movieService.getMovies(TOP_RATED_FILTER)
             movieDao.addMovieList(topRatedMoviesCache.asEntity(TOP_RATED_FILTER))
         }
     }

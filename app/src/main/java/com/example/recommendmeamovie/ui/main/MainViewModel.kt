@@ -4,7 +4,8 @@ import androidx.lifecycle.*
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -13,15 +14,29 @@ class MainViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
     ): ViewModel() {
 
-    val popularMovies = movieRepository.popularMovies.asLiveData(Dispatchers.IO)
-    val topRatedMovies = movieRepository.topRatedMovies.asLiveData(Dispatchers.IO)
+    private val _popularMovies = MutableLiveData<List<Movie>>()
+    val popularMovies : LiveData<List<Movie>>
+        get() = _popularMovies
 
-    val popularLoaded = Transformations.map(popularMovies) {
+    private val _topRatedMovies = MutableLiveData<List<Movie>>()
+    val topRatedMovies : LiveData<List<Movie>>
+        get() = _topRatedMovies
+
+    val popularLoaded = Transformations.map(_popularMovies) {
         it.isNotEmpty()
     }
 
-    val topRatedLoaded = Transformations.map(topRatedMovies) {
+    val topRatedLoaded = Transformations.map(_topRatedMovies) {
         it.isNotEmpty()
+    }
+
+    init {
+        viewModelScope.launch {
+            movieRepository.apply {
+                getPopularMovies().collect { _popularMovies.postValue(it) }
+                getTopRatedMovies().collect { _topRatedMovies.postValue(it) }
+            }
+        }
     }
 
     private val _eventNavigateToRecommend = MutableLiveData<Boolean>()
