@@ -17,7 +17,7 @@ class MovieDetailsRepository
     private val movieService : MovieApiService) {
 
     fun getMovieDetails(id: Long) : Flow<MovieDetails> = flow {
-        val movieDetails =  movieService.getMovieDetails(id, BuildConfig.API_KEY)
+        val movieDetails =  movieService.getMovieDetails(id)
         emit(movieDetails.asDomain())
     }
 

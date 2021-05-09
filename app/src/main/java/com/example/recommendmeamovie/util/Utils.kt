@@ -2,26 +2,13 @@ package com.example.recommendmeamovie.util
 
 import android.app.Activity
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import com.example.recommendmeamovie.R
-import com.example.recommendmeamovie.source.remote.Genre
+import com.example.recommendmeamovie.util.Constants.IMAGE_URL
 import com.squareup.picasso.Picasso
 
 object Utils {
-
-    private const val IMAGE_URL = "https://image.tmdb.org/t/p/w185"
-
-    fun getGenreString(genres : List<Genre>?) : String {
-        if (genres != null) {
-            return genres.take(2).joinToString(separator = ", ", transform = {
-                it.name
-            })
-        }
-        return ""
-    }
 
     fun bindImage(imagePath : String?, imageView : ImageView, errorResId : Int) {
         Picasso
@@ -45,16 +32,5 @@ object Utils {
                 currentFocusedView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         }
     }
-
-    fun isConnected(context : Context): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
-        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
-
-        return activeNetwork != null && isConnected
-    }
-
 
 }

@@ -1,6 +1,5 @@
 package com.example.recommendmeamovie.repository
 
-import com.example.recommendmeamovie.BuildConfig
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.source.remote.MovieApiService
 import com.example.recommendmeamovie.source.remote.asDomain
@@ -14,7 +13,7 @@ class SearchResultsRepository
 @Inject constructor(private val movieService : MovieApiService) {
 
     suspend fun getSearchResults(query: String): Flow<List<Movie>> = flow {
-        val searchResults = movieService.getSearchResults(query, BuildConfig.API_KEY)
+        val searchResults = movieService.getSearchResults(query)
         emit(searchResults.asDomain())
     }
 }

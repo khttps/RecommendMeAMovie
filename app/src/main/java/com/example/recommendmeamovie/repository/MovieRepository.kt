@@ -1,14 +1,10 @@
 package com.example.recommendmeamovie.repository
 
-import com.example.recommendmeamovie.BuildConfig
-import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.source.local.MovieDao
 import com.example.recommendmeamovie.source.local.asDomain
 import com.example.recommendmeamovie.source.remote.MovieApiService
 import com.example.recommendmeamovie.source.remote.asEntity
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -36,10 +32,10 @@ class MovieRepository
 
     suspend fun refreshCacheData() {
         withContext(Dispatchers.IO) {
-            val popularMoviesCache = movieService.getMovies(POPULAR_FILTER, BuildConfig.API_KEY)
+            val popularMoviesCache = movieService.getMovies(POPULAR_FILTER)
             movieDao.addMovieList(popularMoviesCache.asEntity(POPULAR_FILTER))
 
-            val topRatedMoviesCache = movieService.getMovies(TOP_RATED_FILTER, BuildConfig.API_KEY)
+            val topRatedMoviesCache = movieService.getMovies(TOP_RATED_FILTER)
             movieDao.addMovieList(topRatedMoviesCache.asEntity(TOP_RATED_FILTER))
         }
     }

@@ -37,7 +37,10 @@ fun NetworkMovieDetails.asDomain() : MovieDetails {
         title = title,
         overview = overview,
         runtime = runtime,
-        genres = Utils.getGenreString(genres),
+        genres = genres?.take(2)?.joinToString(
+            separator = ", ",
+            transform = { it.name }
+        ) ?: "",
         cast = credits.cast?.asCastDomain(),
         crew = credits.crew?.asCrewDomain(),
         poster = poster,

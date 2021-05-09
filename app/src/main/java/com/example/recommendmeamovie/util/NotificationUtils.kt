@@ -14,15 +14,6 @@ import com.example.recommendmeamovie.receiver.WatchedReceiver
 import com.example.recommendmeamovie.ui.MainActivity
 import com.squareup.picasso.Picasso
 
-
-private const val IMAGE_URL = "https://image.tmdb.org/t/p/w185"
-
-// Notification ID.
-private val NOTIFICATION_ID = 0
-private val REQUEST_CODE = 0
-private val FLAGS = 0
-
-
 fun NotificationManager.sendNotification(context: Context, movie: Movie) {
 
     val bundle = Bundle().apply {
@@ -40,14 +31,24 @@ fun NotificationManager.sendNotification(context: Context, movie: Movie) {
 
     // Add movie to watched list when action is clicked
     val watchedIntent = Intent(context, WatchedReceiver::class.java)
-    val watchedPendingIntent = PendingIntent.getBroadcast(context, REQUEST_CODE, watchedIntent, FLAGS)
+    val watchedPendingIntent = PendingIntent.getBroadcast(
+            context,
+            Constants.WATCHED_REQUEST_CODE,
+            watchedIntent,
+            Constants.FLAGS
+        )
 
     // Add movie to watched list when action is clicked
     val dismissIntent = Intent(context, WatchedReceiver::class.java)
-    val dismissPendingIntent = PendingIntent.getBroadcast(context, 1, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+    val dismissPendingIntent = PendingIntent.getBroadcast(
+        context,
+        Constants.DISMISS_REQUEST_CODE,
+        dismissIntent,
+        PendingIntent.FLAG_UPDATE_CURRENT
+    )
 
     // Movie Poster as Icon
-    val largeIcon: Bitmap = Picasso.get().load(IMAGE_URL + movie.poster).get()
+    val largeIcon: Bitmap = Picasso.get().load(Constants.IMAGE_URL + movie.poster).get()
 
     val builder = NotificationCompat
         .Builder(context, context.getString(R.string.channel_id))
@@ -61,6 +62,6 @@ fun NotificationManager.sendNotification(context: Context, movie: Movie) {
         .addAction(R.drawable.ic_dismiss, "No, Leave Me Alone", dismissPendingIntent)
         .setAutoCancel(true)
 
-    notify(NOTIFICATION_ID, builder.build())
+    notify(Constants.NOTIFICATION_ID, builder.build())
 }
 
