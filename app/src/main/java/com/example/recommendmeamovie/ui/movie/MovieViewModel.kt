@@ -29,27 +29,18 @@ class MovieViewModel @Inject constructor(
 
     private val movieId = savedStateHandle.get<Long>("movieId") ?: 0
 
-    private val _movieDetails = MutableLiveData<MovieDetails>()
-    val movieDetails : LiveData<MovieDetails>
-        get() = _movieDetails
-
-    val empty = Transformations.map(_movieDetails) {
-        it == null
+    val movieDetailsResource = movieDetailsRepository.getMovieDetails(movieId).asLiveData()
+    val movieDetails = Transformations.map(movieDetailsResource) {
+        it.data
     }
 
-    val year = Transformations.map(_movieDetails) {
-        it.releaseDate.substringBefore("-")
+    val year = Transformations.map(movieDetails) {
+        it?.releaseDate?.substringBefore("-")
     }
 
-    val director = Transformations.map(_movieDetails) { details ->
-        details.crew?.first {
+    val director = Transformations.map(movieDetails) { details ->
+        details?.crew?.first {
             it.role.equals("Director", true)
-        }
-    }
-
-    init {
-        viewModelScope.launch {
-            loadMovieDetails()
         }
     }
 
@@ -67,13 +58,5 @@ class MovieViewModel @Inject constructor(
             .build()
 
         WorkManager.getInstance(applicationContext).enqueue(notificationWorkRequest)
-    }
-
-    private suspend fun loadMovieDetails() {
-        withContext(Dispatchers.IO) {
-            movieDetailsRepository.getMovieDetails(movieId).collect {
-                _movieDetails.postValue(it)
-            }
-        }
     }
 }

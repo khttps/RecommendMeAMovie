@@ -6,12 +6,14 @@ import android.view.MenuInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.databinding.MovieListFragmentBinding
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.adapter.MovieAdapter
+import com.example.recommendmeamovie.util.Resource
 import com.example.recommendmeamovie.util.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,26 +22,35 @@ class MovieListFragment : Fragment(R.layout.movie_list_fragment), MovieAdapter.O
 
     private val viewModel : MovieListViewModel by viewModels()
 
-    override fun setArguments(args: Bundle?) {
-        super.setArguments(Bundle(args)
-            .apply { putBundle("args", args) })
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = MovieListFragmentBinding.bind(view)
 
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
+        val movieAdapter = MovieAdapter(this@MovieListFragment, MovieAdapter.MOVIE_LIST)
+        binding.rvSearchResults.adapter = movieAdapter
 
-        binding.list.adapter = MovieAdapter(this, MovieAdapter.MOVIE_LIST)
+        viewModel.listResource.observe(viewLifecycleOwner) { results ->
+            binding.apply {
+                pbLoading.isVisible = results is Resource.Loading
+                rvSearchResults.isVisible = results is Resource.Success
+                tvError.isVisible = results is Resource.Error || (results is Resource.Success && results.data.isNullOrEmpty())
+                tvError.text = when(results) {
+                    is Resource.Error -> {
+                        results.error?.localizedMessage
+                    }
+                    else -> getString(R.string.nothing_to_see_here)
+                }
+            }
 
-        viewModel.eventNavigateToMovie.observe(viewLifecycleOwner, {
+            movieAdapter.submitList(results.data)
+        }
+
+        viewModel.eventNavigateToMovie.observe(viewLifecycleOwner) {
             if (it != null) {
                 findNavController().navigate(MovieListFragmentDirections.actionMovieListFragmentToMovieFragment(it.id, it.title))
                 viewModel.navigateToMovieCompleted()
             }
-        })
+        }
 
         setHasOptionsMenu(true)
     }
@@ -48,7 +59,6 @@ class MovieListFragment : Fragment(R.layout.movie_list_fragment), MovieAdapter.O
         viewModel.navigateToMovie(movie)
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_menu, menu)
 
@@ -56,7 +66,6 @@ class MovieListFragment : Fragment(R.layout.movie_list_fragment), MovieAdapter.O
         val searchView = searchItem.actionView as SearchView
 
         searchView.isIconified = false
-
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -68,7 +77,7 @@ class MovieListFragment : Fragment(R.layout.movie_list_fragment), MovieAdapter.O
                 if (query.isNullOrBlank())
                     return false
 
-                viewModel.executeQuery(query)
+                viewModel.getSearchResults(query)
                 return true
             }
         })

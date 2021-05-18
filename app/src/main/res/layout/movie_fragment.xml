@@ -5,7 +5,9 @@
     tools:context=".ui.movie.MovieFragment">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.recommendmeamovie.ui.movie.MovieViewModel" />
@@ -14,14 +16,44 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0">
+
+            <ProgressBar
+                android:id="@+id/pb_loading"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/tv_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:textAlignment="center"
+                android:visibility="invisible"
+                tools:text="Error Message"
+                tools:visibility="visible" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/container"
+                android:id="@+id/cl_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewModel.empty ? View.GONE : View.VISIBLE}"
-                android:padding="@dimen/default_margin">
+                android:visibility="invisible"
+                tools:visibility="visible"
+                android:paddingVertical="@dimen/default_margin"
+                android:clipToPadding="false">
 
                 <ImageView
                     android:id="@+id/poster_image_view"
@@ -30,6 +62,7 @@
                     android:background="@color/semi_transparent_grey"
                     android:contentDescription="@string/movie_poster"
                     android:padding="@dimen/unit_dimen"
+                    android:layout_marginStart="@dimen/default_margin"
                     android:scaleType="fitXY"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -117,8 +150,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin"
-                    android:orientation="horizontal"
                     android:gravity="center"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/title_text_view"
                     app:layout_constraintTop_toBottomOf="@+id/genre_text_view">
@@ -141,8 +174,8 @@
                         android:layout_width="@dimen/button_dimen_alt"
                         android:layout_height="@dimen/button_dimen_alt"
                         android:layout_marginEnd="@dimen/half_margin"
-                        android:padding="0dp"
                         android:onClick="@{() -> viewModel.scheduleNotification()}"
+                        android:padding="0dp"
                         android:scaleType="fitCenter"
                         android:src="@drawable/ic_watchlist"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -175,6 +208,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/half_margin"
+                    android:layout_marginHorizontal="@dimen/default_margin"
                     android:text="@{viewModel.movieDetails.overview}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -197,6 +231,8 @@
                     android:layout_marginVertical="@dimen/half_margin"
                     android:text="@string/cast"
                     android:textColor="@color/white"
+                    android:layout_marginStart="@dimen/default_margin"
+
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider_two" />
 
@@ -206,6 +242,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/half_margin"
                     android:clipToPadding="false"
+                    android:paddingHorizontal="@dimen/default_margin"
                     android:orientation="horizontal"
                     app:creditsList="@{viewModel.movieDetails.cast}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -219,7 +256,7 @@
                     style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/half_margin"
+                    android:layout_marginStart="@dimen/default_margin"
                     android:layout_marginTop="@dimen/default_margin"
                     android:text="@string/crew"
                     android:textColor="@color/white"
@@ -231,8 +268,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/half_margin"
-                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/default_margin"
                     android:clipToPadding="false"
+                    android:orientation="horizontal"
                     app:creditsList="@{viewModel.movieDetails.crew}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -241,6 +279,11 @@
                     tools:listitem="@layout/credits_list_item" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </RelativeLayout>
+
+
     </ScrollView>
 
 </layout>
