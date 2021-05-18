@@ -15,11 +15,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class RecommendFragment : Fragment(R.layout.recommend_fragment) {
 
     @Inject
     lateinit var movieDatabase: MovieDatabase
+    private val viewModel: RecommendViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,13 +39,11 @@ class RecommendFragment : Fragment(R.layout.recommend_fragment) {
         }
 
         binding.preferenceQuestion.text = liveData.value.toString()
-
-
-
-
+        binding.viewModel = viewModel
 
 
     }
+
 
 }
 

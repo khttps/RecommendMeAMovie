@@ -2,6 +2,7 @@
 <resources  xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes">
 
     <string-array name="genres_names">
+        <item>Doesn't Matter</item>
         <item>Action</item>
         <item>Animation</item>
         <item>Comedy</item>

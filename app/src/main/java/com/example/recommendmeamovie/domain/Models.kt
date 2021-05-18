@@ -30,3 +30,4 @@ data class Question (
     val questionText : String,
     val choices : Map<String, String>
 )
+

@@ -30,4 +30,5 @@ class SearchResultsRepository
             emit(Resource.Error(throwable, null))
         }
     }.flowOn(Dispatchers.IO)
+    
 }

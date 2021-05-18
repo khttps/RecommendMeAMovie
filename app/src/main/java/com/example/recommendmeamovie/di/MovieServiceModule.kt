@@ -15,7 +15,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 @Module
 @InstallIn(SingletonComponent::class)
 object MovieServiceModule {
-
     @Provides
     fun provideMoshi() : Moshi {
         return Moshi

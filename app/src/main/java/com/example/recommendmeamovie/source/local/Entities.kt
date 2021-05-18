@@ -17,3 +17,4 @@ data class QuestionEntity(
     val question : String,
     val choices : Map<String, String>
     )
+

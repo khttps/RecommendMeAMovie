@@ -12,6 +12,10 @@ import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.receiver.WatchedReceiver
 import com.example.recommendmeamovie.ui.MainActivity
+import com.example.recommendmeamovie.util.Constants.FLAGS
+import com.example.recommendmeamovie.util.Constants.IMAGE_URL
+import com.example.recommendmeamovie.util.Constants.NOTIFICATION_ID
+import com.example.recommendmeamovie.util.Constants.REQUEST_CODE
 import com.squareup.picasso.Picasso
 
 fun NotificationManager.sendNotification(context: Context, movie: Movie) {

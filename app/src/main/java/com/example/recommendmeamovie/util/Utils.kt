@@ -9,7 +9,7 @@ import com.example.recommendmeamovie.util.Constants.IMAGE_URL
 import com.squareup.picasso.Picasso
 
 object Utils {
-
+  
     fun bindImage(imagePath : String?, imageView : ImageView, errorResId : Int) {
         Picasso
             .get()

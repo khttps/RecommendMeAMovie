@@ -26,7 +26,7 @@ class MovieRepository
         private const val POPULAR_FILTER = "popular"
         private const val TOP_RATED_FILTER = "top_rated"
     }
-
+    
     val popularMovies = getCachedMovies(POPULAR_FILTER)
 
     val topRatedMovies = getCachedMovies(TOP_RATED_FILTER)

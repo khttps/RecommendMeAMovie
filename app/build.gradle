@@ -23,6 +23,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        buildConfigField ("String", "API_KEY", tmdbAPIKey)
 
         buildConfigField ("String", "API_KEY", tmdbAPIKey)
         testInstrumentationRunner "com.example.recommendmeamovie.HiltTestRunner"
@@ -42,6 +43,7 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+
     }
 
     buildFeatures {
@@ -129,6 +131,7 @@ dependencies {
     androidTestImplementation "com.google.truth:truth:1.1.2"
     androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3'
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+
 
     // Instrumented Testing with Hilt
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"

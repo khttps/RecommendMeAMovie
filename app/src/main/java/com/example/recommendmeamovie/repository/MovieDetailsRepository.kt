@@ -5,10 +5,8 @@ import com.example.recommendmeamovie.source.remote.MovieApiService
 import com.example.recommendmeamovie.source.remote.asDomain
 import com.example.recommendmeamovie.util.Resource
 import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 @ViewModelScoped
@@ -18,7 +16,6 @@ class MovieDetailsRepository
 ) {
 
     fun getMovieDetails(id: Long) =  flow<Resource<MovieDetails>> {
-
         emit(Resource.Loading(null))
 
         try {
