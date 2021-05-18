@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.recommendmeamovie.source.local.MovieDao
 import com.example.recommendmeamovie.source.local.MovieDatabase
+import com.example.recommendmeamovie.source.local.QuestionDao
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -25,14 +26,16 @@ object DatabaseModule {
             MovieDatabase::class.java,
             MovieDatabase.DATABASE_NAME
         )
-            .fallbackToDestructiveMigration()
-            .build()
+        .fallbackToDestructiveMigration()
+        .build()
     }
 
     @Provides
-    fun provideDao(movieDatabase: MovieDatabase) : MovieDao {
-        return movieDatabase.movieDao
+    fun provideQuestionDao(movieDatabase: MovieDatabase) : QuestionDao {
+        return movieDatabase.questionDao
     }
+
+
 
 
 

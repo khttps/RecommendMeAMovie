@@ -1,80 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".ui.main.MainFragment">
 
-    <data>
-        <import type="android.view.View" />
+    <Button
+        android:id="@+id/bt_recommend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="100dp"
+        android:text="@string/app_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <variable
-            name="viewModel"
-            type="com.example.recommendmeamovie.ui.main.MainViewModel" />
-    </data>
+    <TextView
+        android:id="@+id/tv_popular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:layout_marginTop="16dp"
+        android:text="@string/popular"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_recommend" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_popular"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/recommend_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="100dp"
-            android:onClick="@{() -> viewModel.navigateToRecommend()}"
-            android:text="@string/app_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/popular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:layout_marginTop="16dp"
-            android:text="@string/popular"
-            android:visibility="@{viewModel.popularLoaded ? View.VISIBLE : View.GONE}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recommend_button" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/popular_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/default_margin"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintStart_toStartOf="@+id/popular"
-            app:layout_constraintTop_toBottomOf="@+id/popular"
-            app:movieList="@{viewModel.popularMovies}"
-            tools:listitem="@layout/main_list_item" />
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin"
+        android:clipToPadding="true"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintStart_toStartOf="@+id/tv_popular"
+        app:layout_constraintTop_toBottomOf="@+id/tv_popular"
+        tools:listitem="@layout/main_list_item" />
 
 
-        <TextView
-            android:id="@+id/top_rated"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
-            android:text="@string/top_rated"
-            android:visibility="@{viewModel.topRatedLoaded ? View.VISIBLE : View.GONE}"
-            app:layout_constraintStart_toStartOf="@+id/popular"
-            app:layout_constraintTop_toBottomOf="@+id/popular_list" />
+    <TextView
+        android:id="@+id/tv_top_rated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/top_rated"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/tv_popular"
+        app:layout_constraintTop_toBottomOf="@+id/rv_popular" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/top_rated_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/default_margin"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintStart_toStartOf="@+id/top_rated"
-            app:layout_constraintTop_toBottomOf="@+id/top_rated"
-            app:movieList="@{viewModel.topRatedMovies}"
-            tools:listitem="@layout/main_list_item" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_top_rated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin"
+        android:clipToPadding="true"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintStart_toStartOf="@+id/tv_top_rated"
+        app:layout_constraintTop_toBottomOf="@+id/tv_top_rated"
+        tools:listitem="@layout/main_list_item" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

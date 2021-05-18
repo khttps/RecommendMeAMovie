@@ -1,9 +1,11 @@
 package com.example.recommendmeamovie.repository
 
-import com.example.recommendmeamovie.source.local.MovieDao
-import com.example.recommendmeamovie.source.local.asDomain
+import androidx.room.withTransaction
+import com.example.recommendmeamovie.source.local.MovieDatabase
+import com.example.recommendmeamovie.source.local.asMovieDomain
 import com.example.recommendmeamovie.source.remote.MovieApiService
 import com.example.recommendmeamovie.source.remote.asEntity
+import com.example.recommendmeamovie.util.networkBoundResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -14,21 +16,35 @@ import javax.inject.Singleton
 @Singleton
 class MovieRepository
 @Inject constructor(
-    private val movieService : MovieApiService,
-    private val movieDao: MovieDao) {
+    private val movieService: MovieApiService,
+    private val movieDatabase: MovieDatabase
+) {
+
+    private val movieDao = movieDatabase.movieDao
 
     companion object {
         private const val POPULAR_FILTER = "popular"
         private const val TOP_RATED_FILTER = "top_rated"
     }
 
-    val popularMovies = movieDao.getMovies(POPULAR_FILTER).flowOn(Dispatchers.IO).map {
-        it.asDomain()
-    }
+    val popularMovies = getCachedMovies(POPULAR_FILTER)
 
-    val topRatedMovies = movieDao.getMovies(TOP_RATED_FILTER).flowOn(Dispatchers.IO).map {
-        it.asDomain()
-    }
+    val topRatedMovies = getCachedMovies(TOP_RATED_FILTER)
+
+    private fun getCachedMovies(filter : String) = networkBoundResource(
+        query = {
+            movieDao.getMovies(filter).map { it.asMovieDomain() }
+        },
+        fetch = {
+            movieService.getMovies(filter)
+        },
+        saveFetchResult = {
+            movieDatabase.withTransaction {
+                movieDao.deleteMovies(filter)
+                movieDao.addMovieList(it.asEntity(filter))
+            }
+        }
+    )
 
     suspend fun refreshCacheData() {
         withContext(Dispatchers.IO) {

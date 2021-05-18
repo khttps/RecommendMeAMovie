@@ -15,6 +15,9 @@
         <item>Thriller</item>
         <item>War</item>
         <item>Western</item>
+
+
+
     </string-array>
 
     <string-array name="genres_ids">

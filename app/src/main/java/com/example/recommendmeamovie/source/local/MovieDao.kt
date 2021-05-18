@@ -18,5 +18,8 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE movie_type = :filter")
     fun getMovies(filter : String) : Flow<List<MovieEntity>>
 
+    @Query("DELETE FROM movies WHERE movie_type = :filter")
+    fun deleteMovies(filter: String)
+
 
 }

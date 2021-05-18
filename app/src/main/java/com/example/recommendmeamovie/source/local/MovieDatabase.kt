@@ -3,16 +3,17 @@ package com.example.recommendmeamovie.source.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import javax.inject.Inject
+import com.example.recommendmeamovie.domain.Question
 
-
-@Database (entities = [MovieEntity::class/*, MovieDetailsEntity::class, CreditEntity::class*/], version = 2, exportSchema = false)
+@Database(entities = [MovieEntity::class, QuestionEntity::class], version = 7, exportSchema = false)
+@TypeConverters(Converter::class)
 abstract class MovieDatabase : RoomDatabase() {
+
+    abstract val movieDao : MovieDao
+    abstract val questionDao : QuestionDao
 
     companion object {
         const val DATABASE_NAME = "movie-db"
     }
-
-    abstract val movieDao : MovieDao
 
 }

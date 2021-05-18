@@ -4,7 +4,6 @@ import com.example.recommendmeamovie.domain.Credit
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.domain.MovieDetails
 import com.example.recommendmeamovie.source.local.MovieEntity
-import com.example.recommendmeamovie.util.Utils
 
 fun MoviesContainer.asDomain() : List<Movie> {
     return results.map {

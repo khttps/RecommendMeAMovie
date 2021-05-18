@@ -10,6 +10,7 @@ import com.example.recommendmeamovie.util.sendNotification
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
+
 @HiltWorker
 class NotificationWorker @AssistedInject constructor(
     @Assisted applicationContext: Context,

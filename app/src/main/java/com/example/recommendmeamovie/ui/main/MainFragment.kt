@@ -4,52 +4,80 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recommendmeamovie.NavigationDirections
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.adapter.MovieAdapter
 import com.example.recommendmeamovie.databinding.MainFragmentBinding
 import com.example.recommendmeamovie.domain.Movie
+import com.example.recommendmeamovie.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.main_fragment), MovieAdapter.OnMovieClickListener {
 
     private val viewModel: MainViewModel by viewModels()
+    private lateinit var binding : MainFragmentBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = MainFragmentBinding.bind(view)
 
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
-
-        binding.popularList.adapter = MovieAdapter(this, MovieAdapter.MAIN_LIST)
-        binding.topRatedList.adapter = MovieAdapter(this, MovieAdapter.MAIN_LIST)
-
-        viewModel.eventNavigateToRecommend.observe(this.viewLifecycleOwner, {
-            if (it) {
-                findNavController().navigate(MainFragmentDirections.actionMainFragmentToRecommendFragment())
-                viewModel.navigateToRecommendCompleted()
+        binding = MainFragmentBinding.bind(view).apply {
+            btRecommend.setOnClickListener {
+                viewModel.navigateToRecommend()
             }
-        })
 
-        viewModel.eventNavigateToMovie.observe(viewLifecycleOwner, {
-            if (it != null) {
-                findNavController().navigate(
-                    MainFragmentDirections.actionMainFragmentToMovieFragment(
-                        it.id,
-                        it.title
-                    )
-                )
-                viewModel.navigateToMovieCompleted()
-            }
-        })
+            rvPopular.adapter = MovieAdapter(this@MainFragment, MovieAdapter.MAIN_LIST)
+            rvTopRated.adapter = MovieAdapter(this@MainFragment, MovieAdapter.MAIN_LIST)
+        }
 
+        subscribeObservers()
         setHasOptionsMenu(true)
+    }
+
+    private fun subscribeObservers() {
+        viewModel.apply {
+
+            popularMovies.observe(viewLifecycleOwner) { movies ->
+                binding.apply {
+                    tvPopular.isVisible = movies !is Resource.Loading
+                    (rvPopular.adapter as MovieAdapter).submitList(movies.data)
+                }
+            }
+
+            topRatedMovies.observe(viewLifecycleOwner) { movies ->
+                binding.apply {
+                    tvTopRated.isVisible = movies !is Resource.Loading
+                    (rvTopRated.adapter as MovieAdapter).submitList(movies.data)
+                }
+            }
+
+            eventNavigateToRecommend.observe(viewLifecycleOwner) {
+                if (it) {
+                    findNavController().navigate(MainFragmentDirections.actionMainFragmentToRecommendFragment())
+                    viewModel.navigateToRecommendCompleted()
+                }
+            }
+
+            eventNavigateToMovie.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    findNavController().navigate(
+                        MainFragmentDirections.actionMainFragmentToMovieFragment(
+                            it.id,
+                            it.title
+                        )
+                    )
+                    viewModel.navigateToMovieCompleted()
+                }
+            }
+        }
+
     }
 
     override fun onMovieClick(movie: Movie) {

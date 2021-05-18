@@ -24,15 +24,10 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieViewModel @Inject constructor(
     private val movieDetailsRepository: MovieDetailsRepository,
-    private val notificationManager: NotificationManager,
     @ApplicationContext private val applicationContext: Context,
     private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
-
-    private val movieId
-        get() = savedStateHandle
-            .get<Bundle>("args")
-            ?.getLong("movieId") ?: 0
+    private val movieId = savedStateHandle.get<Long>("movieId") ?: 0
 
     private val _movieDetails = MutableLiveData<MovieDetails>()
     val movieDetails : LiveData<MovieDetails>

@@ -9,20 +9,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val movieRepository: MovieRepository,
+    movieRepository: MovieRepository,
     private val savedStateHandle: SavedStateHandle
     ): ViewModel() {
 
-    val popularMovies = movieRepository.popularMovies.asLiveData(Dispatchers.IO)
-    val topRatedMovies = movieRepository.topRatedMovies.asLiveData(Dispatchers.IO)
-
-    val popularLoaded = Transformations.map(popularMovies) {
-        it.isNotEmpty()
-    }
-
-    val topRatedLoaded = Transformations.map(topRatedMovies) {
-        it.isNotEmpty()
-    }
+    val popularMovies = movieRepository.popularMovies.asLiveData()
+    val topRatedMovies = movieRepository.topRatedMovies.asLiveData()
 
     private val _eventNavigateToRecommend = MutableLiveData<Boolean>()
     val eventNavigateToRecommend : LiveData<Boolean>

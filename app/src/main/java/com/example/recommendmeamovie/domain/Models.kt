@@ -28,5 +28,5 @@ data class Credit (
 
 data class Question (
     val questionText : String,
-    val choices : List<String>
+    val choices : Map<String, String>
 )
