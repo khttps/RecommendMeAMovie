@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/profile"/>
     <item android:title="@string/your_movies" android:id="@id/movieListFragment"/>
     <item android:title="@string/watchlist" android:id="@id/movieListFragment"/>
+    <item android:title="@string/search"/>
+    <item android:title="@string/sign_out"/>
 </menu>
