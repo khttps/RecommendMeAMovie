@@ -42,7 +42,6 @@ class QuestionDaoTest {
     fun setup() {
         hiltRule.inject()
         questionDao = database.questionDao
-        movieDao = database.movieDao
     }
 
     @After

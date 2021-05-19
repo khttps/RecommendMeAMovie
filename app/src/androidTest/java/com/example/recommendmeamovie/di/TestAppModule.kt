@@ -18,13 +18,11 @@ object TestAppModule {
     @Provides
     @Named("test_db")
     fun provideInMemoryDb(@ApplicationContext context: Context) =
-        Room.databaseBuilder(
+        Room.inMemoryDatabaseBuilder(
             context,
-            MovieDatabase::class.java,
-            MovieDatabase.DATABASE_NAME
+            MovieDatabase::class.java
         )
             .allowMainThreadQueries()
-            .fallbackToDestructiveMigration()
             .build()
 
 }
