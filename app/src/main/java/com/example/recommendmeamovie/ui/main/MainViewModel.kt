@@ -3,25 +3,25 @@ package com.example.recommendmeamovie.ui.main
 import androidx.lifecycle.*
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.repository.MovieRepository
+import com.example.recommendmeamovie.repository.MovieRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     movieRepository: MovieRepository,
     private val savedStateHandle: SavedStateHandle
-    ): ViewModel() {
+) : ViewModel() {
 
-    val popularMovies = movieRepository.popularMovies.asLiveData()
-    val topRatedMovies = movieRepository.topRatedMovies.asLiveData()
+    val popularMovies = movieRepository.getPopularMovies().asLiveData()
+    val topRatedMovies = movieRepository.getTopRatedMovies().asLiveData()
 
     private val _eventNavigateToRecommend = MutableLiveData<Boolean>()
-    val eventNavigateToRecommend : LiveData<Boolean>
+    val eventNavigateToRecommend: LiveData<Boolean>
         get() = _eventNavigateToRecommend
 
     private val _eventNavigateToMovie = MutableLiveData<Movie?>()
-    val eventNavigateToMovie : LiveData<Movie?>
+    val eventNavigateToMovie: LiveData<Movie?>
         get() = _eventNavigateToMovie
 
 
@@ -33,7 +33,7 @@ class MainViewModel @Inject constructor(
         _eventNavigateToRecommend.value = false
     }
 
-    fun navigateToMovie(movie : Movie) {
+    fun navigateToMovie(movie: Movie) {
         _eventNavigateToMovie.value = movie
     }
 

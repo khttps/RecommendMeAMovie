@@ -1,24 +1,15 @@
 package com.example.recommendmeamovie.ui.movie
 
-import android.annotation.SuppressLint
-import android.app.NotificationManager
 import android.content.Context
-import android.os.Bundle
-import androidx.lifecycle.*
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import com.example.recommendmeamovie.domain.Credit
-import com.example.recommendmeamovie.domain.MovieDetails
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.work.workDataOf
 import com.example.recommendmeamovie.repository.MovieDetailsRepository
-import com.example.recommendmeamovie.work.NotificationWorker
+import com.example.recommendmeamovie.util.scheduleNotification
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,19 +35,13 @@ class MovieViewModel @Inject constructor(
         }
     }
 
-    @SuppressLint("RestrictedApi")
-    fun scheduleNotification() {
-        val data = Data.Builder().apply {
-            put("movieId", movieId)
-            put("movieName", movieDetails.value?.title)
-            put("moviePoster", movieDetails.value?.poster)
-        }.build()
+    fun scheduleMovieNotification() {
+        val data = workDataOf(
+            "movieId" to movieId,
+            "movieName" to movieDetails.value?.title,
+            "moviePoster" to movieDetails.value?.poster
+        )
 
-        val notificationWorkRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .setInputData(data)
-            .setInitialDelay(3L, TimeUnit.SECONDS)
-            .build()
-
-        WorkManager.getInstance(applicationContext).enqueue(notificationWorkRequest)
+        scheduleNotification(data, applicationContext)
     }
 }

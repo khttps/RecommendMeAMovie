@@ -14,11 +14,10 @@
     <string name="select">Select</string>
     <string name="runtime">%1$d minutes</string>
     <string name="nothing_to_see_here">Nothing to see here</string>
-    <string name="channel_name">Recommendation</string>
+    <string name="channel_name">Recommend</string>
     <string name="channel_description">Manages recommendation reminder</string>
     <string name="channel_id">watchlist-channel</string>
-    <string name="notification_title">Recommendation Reminder</string>\
-    <string name="notification_text">"Have you watched %1$s yet?"</string>
+    <string name="notification_title">"Have you seen %1$s yet?"</string>
     <string name="no_internet_connection">No Internet Connection</string>
     <string name="sign_in">Sign In</string>
     <string name="profile">Profile</string>

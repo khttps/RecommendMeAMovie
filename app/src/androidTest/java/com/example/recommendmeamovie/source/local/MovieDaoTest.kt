@@ -1,4 +1,3 @@
-
 package com.example.recommendmeamovie.source.local
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -14,6 +13,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
+import javax.inject.Named
 
 @SmallTest
 @HiltAndroidTest
@@ -27,7 +27,8 @@ class MovieDaoTest {
     val instantExecutorRule = InstantTaskExecutorRule()
 
     @Inject
-    lateinit var movieDatabase : MovieDatabase
+    @Named("test-db")
+    lateinit var movieDatabase: MovieDatabase
     private lateinit var movieDao: MovieDao
 
     @Before
@@ -38,8 +39,8 @@ class MovieDaoTest {
     }
 
     @Test
-    fun insertAndRead() = runBlockingTest{
-        val movieEntity = MovieEntity(0, "Chungking Express","", "1994-9-26", "top_rated")
+    fun insertAndRead() = runBlockingTest {
+        val movieEntity = MovieEntity(0, "Chungking Express", "", "1994-9-26", "top_rated")
         movieDao.addMovie(movieEntity)
 
         val movies = movieDao.getMovies("top_rated").first()
@@ -48,7 +49,7 @@ class MovieDaoTest {
     }
 
     @Test
-    fun insertListAndRead() = runBlockingTest{
+    fun insertListAndRead() = runBlockingTest {
         val movieList = listOf(
             MovieEntity(0, "Zack Snyder's Justice League", "", "2021-3-18", "popular"),
             MovieEntity(1, "Parasite", "", "2019-5-30", "popular"),
@@ -57,16 +58,13 @@ class MovieDaoTest {
         movieDao.addMovieList(movieList)
 
         val movies = movieDao.getMovies("popular").first()
-
-
         assertThat(movies).containsAtLeastElementsIn(movieList)
-
     }
 
 
     @Test
-    fun deleteAndRead() = runBlockingTest{
-        val movieEntity = MovieEntity(0, "Chungking Express","", "1994-9-26", "top_rated")
+    fun deleteAndRead() = runBlockingTest {
+        val movieEntity = MovieEntity(0, "Chungking Express", "", "1994-9-26", "top_rated")
         movieDao.addMovie(movieEntity)
 
         movieDao.deleteMovies("top_rated")
@@ -79,7 +77,6 @@ class MovieDaoTest {
 
     @After
     fun teardown() {
-        movieDatabase.clearAllTables()
         movieDatabase.close()
     }
 

@@ -14,7 +14,7 @@ class QuestionRepositoryImpl @Inject constructor(
     ) : QuestionRepository {
 
     override fun getAllQuestions(): LiveData<List<Question>> {
-        return questionDao.observeAllQuestions().map { it.asQuestionDomain() }
+        TODO("Not yet implemented")
     }
 
 }

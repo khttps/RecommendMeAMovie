@@ -3,6 +3,7 @@ package com.example.recommendmeamovie.work
 import android.app.NotificationManager
 import android.content.Context
 import androidx.hilt.work.HiltWorker
+import androidx.work.Data
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.recommendmeamovie.domain.Movie
@@ -11,12 +12,15 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
 
+
 @HiltWorker
 class NotificationWorker @AssistedInject constructor(
     @Assisted applicationContext: Context,
     @Assisted workerParameters: WorkerParameters,
     private val notificationManager: NotificationManager
 ) : Worker(applicationContext, workerParameters) {
+
+
 
     override fun doWork(): Result {
 
