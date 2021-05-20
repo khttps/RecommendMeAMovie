@@ -9,13 +9,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recommendmeamovie.NavigationDirections
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.adapter.MovieAdapter
 import com.example.recommendmeamovie.databinding.MainFragmentBinding
 import com.example.recommendmeamovie.domain.Movie
+import com.example.recommendmeamovie.util.EventObserver
 import com.example.recommendmeamovie.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,42 +41,34 @@ class MainFragment : Fragment(R.layout.main_fragment), MovieAdapter.OnMovieClick
     }
 
     private fun subscribeObservers() {
-        viewModel.apply {
-
-            popularMovies.observe(viewLifecycleOwner) { movies ->
-                binding.apply {
-                    tvPopular.isVisible = movies !is Resource.Loading
-                    (rvPopular.adapter as MovieAdapter).submitList(movies.data)
-                }
-            }
-
-            topRatedMovies.observe(viewLifecycleOwner) { movies ->
-                binding.apply {
-                    tvTopRated.isVisible = movies !is Resource.Loading
-                    (rvTopRated.adapter as MovieAdapter).submitList(movies.data)
-                }
-            }
-
-            eventNavigateToRecommend.observe(viewLifecycleOwner) {
-                if (it) {
-                    findNavController().navigate(MainFragmentDirections.actionMainFragmentToRecommendFragment())
-                    viewModel.navigateToRecommendCompleted()
-                }
-            }
-
-            eventNavigateToMovie.observe(viewLifecycleOwner) {
-                if (it != null) {
-                    findNavController().navigate(
-                        MainFragmentDirections.actionMainFragmentToMovieFragment(
-                            it.id,
-                            it.title
-                        )
-                    )
-                    viewModel.navigateToMovieCompleted()
-                }
+        viewModel.popularMovies.observe(viewLifecycleOwner) { movies ->
+            binding.apply {
+                tvPopular.isVisible = movies !is Resource.Loading
+                (rvPopular.adapter as MovieAdapter).submitList(movies.data)
             }
         }
 
+        viewModel.topRatedMovies.observe(viewLifecycleOwner) { movies ->
+            binding.apply {
+                tvTopRated.isVisible = movies !is Resource.Loading
+                (rvTopRated.adapter as MovieAdapter).submitList(movies.data)
+            }
+        }
+
+        viewModel.eventNavigateToRecommend.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(
+                MainFragmentDirections.actionMainFragmentToRecommendFragment()
+            )
+        })
+
+        viewModel.eventNavigateToMovie.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(
+                MainFragmentDirections.actionMainFragmentToMovieFragment(
+                    it.id,
+                    it.title
+                )
+            )
+        })
     }
 
     override fun onMovieClick(movie: Movie) {

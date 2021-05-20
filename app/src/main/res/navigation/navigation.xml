@@ -14,13 +14,11 @@
             app:destination="@id/recommendFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim" />
         <action
             android:id="@+id/action_mainFragment_to_movieFragment"
             app:destination="@id/movieFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/recommendFragment"
@@ -52,7 +50,6 @@
             android:id="@+id/action_movieListFragment_to_movieFragment"
             app:destination="@id/movieFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/mainFragment" />
     </fragment>
     <action

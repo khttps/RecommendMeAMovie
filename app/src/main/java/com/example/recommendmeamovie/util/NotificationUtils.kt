@@ -69,12 +69,12 @@ fun NotificationManager.sendNotification(context: Context, movie: Movie) {
     notify(Constants.NOTIFICATION_ID, builder.build())
 }
 
-fun scheduleNotification(data: Data, context: Context) {
+fun WorkManager.scheduleNotification(data: Data) {
     val notificationWorkRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
         .setInputData(data)
         .setInitialDelay(3L /*1L*/, TimeUnit.SECONDS/*TimeUnit.DAYS*/)
         .build()
 
-    WorkManager.getInstance(context).enqueue(notificationWorkRequest)
+    enqueue(notificationWorkRequest)
 }
 

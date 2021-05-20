@@ -3,6 +3,7 @@ package com.example.recommendmeamovie.ui.movielist
 import androidx.lifecycle.*
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.repository.SearchResultsRepository
+import com.example.recommendmeamovie.util.Event
 import com.example.recommendmeamovie.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,17 +24,13 @@ class MovieListViewModel
         it.data
     }
 
-    private val _eventNavigateToMovie = MutableLiveData<Movie?>()
-    val eventNavigateToMovie : LiveData<Movie?>
+    private val _eventNavigateToMovie = MutableLiveData<Event<Movie>>()
+    val eventNavigateToMovie : LiveData<Event<Movie>>
         get() = _eventNavigateToMovie
 
 
     fun navigateToMovie(movie : Movie) {
-        _eventNavigateToMovie.value = movie
-    }
-
-    fun navigateToMovieCompleted() {
-        _eventNavigateToMovie.value = null
+        _eventNavigateToMovie.value = Event(movie)
     }
 
     fun getSearchResults(query: String) {

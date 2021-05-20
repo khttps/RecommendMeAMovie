@@ -13,6 +13,7 @@ import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.databinding.MovieListFragmentBinding
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.adapter.MovieAdapter
+import com.example.recommendmeamovie.util.EventObserver
 import com.example.recommendmeamovie.util.Resource
 import com.example.recommendmeamovie.util.Utils
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,27 +31,28 @@ class MovieListFragment : Fragment(R.layout.movie_list_fragment), MovieAdapter.O
         binding.rvSearchResults.adapter = movieAdapter
 
         viewModel.listResource.observe(viewLifecycleOwner) { results ->
-            binding.apply {
-                pbLoading.isVisible = results is Resource.Loading
-                rvSearchResults.isVisible = results is Resource.Success
-                tvError.isVisible = results is Resource.Error || (results is Resource.Success && results.data.isNullOrEmpty())
-                tvError.text = when(results) {
-                    is Resource.Error -> {
-                        results.error?.localizedMessage
-                    }
-                    else -> getString(R.string.nothing_to_see_here)
+            binding.pbLoading.isVisible = results is Resource.Loading
+            binding.rvSearchResults.isVisible = results is Resource.Success
+            binding.tvError.isVisible = results is Resource.Error || (results is Resource.Success && results.data.isNullOrEmpty())
+
+            binding.tvError.text = when(results) {
+                is Resource.Error -> {
+                    results.error?.localizedMessage
                 }
+                else -> getString(R.string.nothing_to_see_here)
             }
 
             movieAdapter.submitList(results.data)
         }
 
-        viewModel.eventNavigateToMovie.observe(viewLifecycleOwner) {
-            if (it != null) {
-                findNavController().navigate(MovieListFragmentDirections.actionMovieListFragmentToMovieFragment(it.id, it.title))
-                viewModel.navigateToMovieCompleted()
-            }
-        }
+        viewModel.eventNavigateToMovie.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(
+                MovieListFragmentDirections.actionMovieListFragmentToMovieFragment(
+                    it.id,
+                    it.title
+                )
+            )
+        })
 
         setHasOptionsMenu(true)
     }

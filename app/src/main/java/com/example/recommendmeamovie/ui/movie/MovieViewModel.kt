@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.example.recommendmeamovie.repository.MovieDetailsRepository
 import com.example.recommendmeamovie.util.scheduleNotification
@@ -42,6 +43,6 @@ class MovieViewModel @Inject constructor(
             "moviePoster" to movieDetails.value?.poster
         )
 
-        scheduleNotification(data, applicationContext)
+        WorkManager.getInstance(applicationContext).scheduleNotification(data)
     }
 }

@@ -72,17 +72,17 @@
                 <TextView
                     android:id="@+id/title_text_view"
                     style="@style/TextAppearance.AppCompat.Headline"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginHorizontal="@dimen/default_margin"
                     android:text="@{viewModel.movieDetails.title}"
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.092"
                     app:layout_constraintStart_toEndOf="@+id/poster_image_view"
                     app:layout_constraintTop_toTopOf="@+id/poster_image_view"
-                    app:layout_constraintWidth_default="wrap"
-                    tools:text="Citizen Kane " />
+                    app:layout_constrainedWidth="true"
+                    tools:text="Citizen Kane" />
 
                 <TextView
                     android:id="@+id/directed_by"
@@ -95,15 +95,16 @@
                 <TextView
                     android:id="@+id/director_text_view"
                     style="@style/TextAppearance.AppCompat.Subhead"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.director.name}"
                     android:textColor="@color/white"
+                    android:layout_marginEnd="@dimen/half_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/directed_by"
                     app:layout_constraintTop_toBottomOf="@+id/directed_by"
-                    app:layout_constraintWidth_default="wrap"
+                    app:layout_constrainedWidth="true"
                     tools:text="Orson Welles" />
 
                 <LinearLayout
@@ -135,14 +136,15 @@
 
                 <TextView
                     android:id="@+id/genre_text_view"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/half_margin"
                     android:text="@{viewModel.movieDetails.genres}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/linearLayout"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                    app:layout_constraintWidth_default="wrap"
+                    app:layout_constrainedWidth="true"
                     tools:text="Drama/Mystery" />
 
                 <LinearLayout
@@ -175,7 +177,6 @@
                         android:layout_height="@dimen/button_dimen_alt"
                         android:layout_marginEnd="@dimen/half_margin"
                         android:onClick="@{() -> viewModel.scheduleMovieNotification()}"
-                        android:padding="0dp"
                         android:scaleType="fitCenter"
                         android:src="@drawable/ic_watchlist"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -186,7 +187,6 @@
                         android:layout_width="@dimen/button_dimen_alt"
                         android:layout_height="@dimen/button_dimen_alt"
                         android:layout_marginEnd="@dimen/half_margin"
-                        android:padding="0dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/ic_watched"
                         app:layout_constraintEnd_toEndOf="parent"

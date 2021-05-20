@@ -3,7 +3,7 @@ package com.example.recommendmeamovie.ui.main
 import androidx.lifecycle.*
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.repository.MovieRepository
-import com.example.recommendmeamovie.repository.MovieRepositoryImpl
+import com.example.recommendmeamovie.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,29 +16,21 @@ class MainViewModel @Inject constructor(
     val popularMovies = movieRepository.getPopularMovies().asLiveData()
     val topRatedMovies = movieRepository.getTopRatedMovies().asLiveData()
 
-    private val _eventNavigateToRecommend = MutableLiveData<Boolean>()
-    val eventNavigateToRecommend: LiveData<Boolean>
+    private val _eventNavigateToRecommend = MutableLiveData<Event<Unit>>()
+    val eventNavigateToRecommend: LiveData<Event<Unit>>
         get() = _eventNavigateToRecommend
 
-    private val _eventNavigateToMovie = MutableLiveData<Movie?>()
-    val eventNavigateToMovie: LiveData<Movie?>
+    private val _eventNavigateToMovie = MutableLiveData<Event<Movie>>()
+    val eventNavigateToMovie: LiveData<Event<Movie>>
         get() = _eventNavigateToMovie
 
 
     fun navigateToRecommend() {
-        _eventNavigateToRecommend.value = true
-    }
-
-    fun navigateToRecommendCompleted() {
-        _eventNavigateToRecommend.value = false
+        _eventNavigateToRecommend.value = Event(Unit)
     }
 
     fun navigateToMovie(movie: Movie) {
-        _eventNavigateToMovie.value = movie
-    }
-
-    fun navigateToMovieCompleted() {
-        _eventNavigateToMovie.value = null
+        _eventNavigateToMovie.value = Event(movie)
     }
 
 }
