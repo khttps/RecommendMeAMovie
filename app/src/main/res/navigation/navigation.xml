@@ -6,17 +6,17 @@
     app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.recommendmeamovie.ui.main.MainFragment"
+        android:name="com.example.recommendmeamovie.ui.discover.DiscoverFragment"
         android:label="Discover"
-        tools:layout="@layout/main_fragment">
+        tools:layout="@layout/discover_fragment">
         <action
-            android:id="@+id/action_mainFragment_to_recommendFragment"
+            android:id="@+id/action_discoverFragment_to_recommendFragment"
             app:destination="@id/recommendFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim" />
         <action
-            android:id="@+id/action_mainFragment_to_movieFragment"
+            android:id="@+id/action_discoverFragment_to_movieFragment"
             app:destination="@id/movieFragment"
             app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
@@ -42,19 +42,19 @@
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/movieListFragment"
-        android:name="com.example.recommendmeamovie.ui.movielist.MovieListFragment"
+        android:id="@+id/searchFragment"
+        android:name="com.example.recommendmeamovie.ui.search.SearchFragment"
         android:label="@string/search"
-        tools:layout="@layout/movie_list_fragment">
+        tools:layout="@layout/search_fragment">
         <action
-            android:id="@+id/action_movieListFragment_to_movieFragment"
+            android:id="@+id/action_searchFragment_to_movieFragment"
             app:destination="@id/movieFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:popUpTo="@id/mainFragment" />
     </fragment>
     <action
         android:id="@+id/action_global_movieListFragment"
-        app:destination="@id/movieListFragment"
+        app:destination="@id/searchFragment"
         app:launchSingleTop="true"
         app:popUpTo="@id/mainFragment"
         app:popUpToInclusive="false" />

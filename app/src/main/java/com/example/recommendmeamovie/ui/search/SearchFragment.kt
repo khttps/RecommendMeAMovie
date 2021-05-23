@@ -1,41 +1,42 @@
-package com.example.recommendmeamovie.ui.movielist
+package com.example.recommendmeamovie.ui.search
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.SearchView
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.recommendmeamovie.R
-import com.example.recommendmeamovie.databinding.MovieListFragmentBinding
-import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.adapter.MovieAdapter
+import com.example.recommendmeamovie.databinding.SearchFragmentBinding
+import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.util.EventObserver
 import com.example.recommendmeamovie.util.Resource
 import com.example.recommendmeamovie.util.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MovieListFragment : Fragment(R.layout.movie_list_fragment), MovieAdapter.OnMovieClickListener {
+class SearchFragment : Fragment(R.layout.search_fragment), MovieAdapter.OnMovieClickListener {
 
-    private val viewModel : MovieListViewModel by viewModels()
+    private val viewModel: SearchViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = MovieListFragmentBinding.bind(view)
+        val binding = SearchFragmentBinding.bind(view)
 
-        val movieAdapter = MovieAdapter(this@MovieListFragment, MovieAdapter.MOVIE_LIST)
+        val movieAdapter = MovieAdapter(this@SearchFragment, MovieAdapter.MOVIE_LIST)
         binding.rvSearchResults.adapter = movieAdapter
 
         viewModel.listResource.observe(viewLifecycleOwner) { results ->
             binding.pbLoading.isVisible = results is Resource.Loading
             binding.rvSearchResults.isVisible = results is Resource.Success
-            binding.tvError.isVisible = results is Resource.Error || (results is Resource.Success && results.data.isNullOrEmpty())
+            binding.tvError.isVisible =
+                results is Resource.Error || (results is Resource.Success && results.data.isNullOrEmpty())
 
-            binding.tvError.text = when(results) {
+            binding.tvError.text = when (results) {
                 is Resource.Error -> {
                     results.error?.localizedMessage
                 }
@@ -47,7 +48,7 @@ class MovieListFragment : Fragment(R.layout.movie_list_fragment), MovieAdapter.O
 
         viewModel.eventNavigateToMovie.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(
-                MovieListFragmentDirections.actionMovieListFragmentToMovieFragment(
+                SearchFragmentDirections.actionSearchFragmentToMovieFragment(
                     it.id,
                     it.title
                 )

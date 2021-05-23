@@ -27,7 +27,7 @@ class MovieAdapter(private val listener : OnMovieClickListener, private val tag 
 
         return MovieViewHolder(inflater.inflate(
             when (tag) {
-                MAIN_LIST -> R.layout.main_list_item
+                MAIN_LIST -> R.layout.discover_list_item
                 else -> R.layout.movie_list_item
             },
             parent,

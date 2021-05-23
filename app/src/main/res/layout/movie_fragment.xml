@@ -21,11 +21,11 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0">
+            android:layout_height="wrap_content">
 
             <ProgressBar
                 android:id="@+id/pb_loading"
+                android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,16 +41,16 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:text="@{viewModel.movieDetailsResource.error.localizedMessage}"
                 android:textAlignment="center"
-                android:visibility="invisible"
-                tools:text="Error Message"
+                android:visibility="@{viewModel.loadingFailed ? View.VISIBLE : View.GONE}"                tools:text="Error Message"
                 tools:visibility="visible" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
+                android:visibility="@{viewModel.movieLoaded ? View.VISIBLE : View.INVISIBLE}"
                 tools:visibility="visible"
                 android:paddingVertical="@dimen/default_margin"
                 android:clipToPadding="false">
@@ -180,7 +180,8 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/ic_watchlist"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/genre_text_view" />
+                        app:layout_constraintTop_toBottomOf="@+id/genre_text_view"
+                        android:contentDescription="@string/add_to_watchlist_description" />
 
                     <ImageView
                         android:id="@+id/add_to_your_films_button"
@@ -190,7 +191,8 @@
                         android:scaleType="fitXY"
                         android:src="@drawable/ic_watched"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/genre_text_view" />
+                        app:layout_constraintTop_toBottomOf="@+id/genre_text_view"
+                        android:contentDescription="@string/add_to_watched_description" />
                 </LinearLayout>
 
                 <View

@@ -7,4 +7,5 @@
     android:layout_width="@dimen/list_item_width"
     tools:src="@drawable/ic_broken_image"
     android:scaleType="fitXY"
-    android:layout_height="@dimen/list_item_height" />
+    android:layout_height="@dimen/list_item_height"
+    android:contentDescription="@string/movie_list_item_description" />

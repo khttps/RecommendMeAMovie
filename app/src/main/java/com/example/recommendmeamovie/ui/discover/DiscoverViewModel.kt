@@ -1,4 +1,4 @@
-package com.example.recommendmeamovie.ui.main
+package com.example.recommendmeamovie.ui.discover
 
 import androidx.lifecycle.*
 import com.example.recommendmeamovie.domain.Movie
@@ -8,8 +8,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
-    movieRepository: MovieRepository,
+class DiscoverViewModel @Inject constructor(
+    private val movieRepository: MovieRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 

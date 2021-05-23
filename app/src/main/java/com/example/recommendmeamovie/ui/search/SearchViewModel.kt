@@ -1,4 +1,4 @@
-package com.example.recommendmeamovie.ui.movielist
+package com.example.recommendmeamovie.ui.search
 
 import androidx.lifecycle.*
 import com.example.recommendmeamovie.domain.Movie
@@ -12,12 +12,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieListViewModel
-@Inject constructor(private val searchResultsRepository: SearchResultsRepository,
-                    private val savedStateHandle: SavedStateHandle) : ViewModel() {
+class SearchViewModel @Inject constructor(
+    private val searchResultsRepository: SearchResultsRepository,
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     private val _listResource = MutableLiveData<Resource<List<Movie>>>()
-    val listResource : LiveData<Resource<List<Movie>>>
+    val listResource: LiveData<Resource<List<Movie>>>
         get() = _listResource
 
     val list = Transformations.map(_listResource) {
@@ -25,11 +26,11 @@ class MovieListViewModel
     }
 
     private val _eventNavigateToMovie = MutableLiveData<Event<Movie>>()
-    val eventNavigateToMovie : LiveData<Event<Movie>>
+    val eventNavigateToMovie: LiveData<Event<Movie>>
         get() = _eventNavigateToMovie
 
 
-    fun navigateToMovie(movie : Movie) {
+    fun navigateToMovie(movie: Movie) {
         _eventNavigateToMovie.value = Event(movie)
     }
 
@@ -40,6 +41,5 @@ class MovieListViewModel
             }
         }
     }
-
 
 }

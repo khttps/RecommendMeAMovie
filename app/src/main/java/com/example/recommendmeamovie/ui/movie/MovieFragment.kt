@@ -33,16 +33,6 @@ class MovieFragment : Fragment(R.layout.movie_fragment) {
             castList.adapter = CreditsAdapter()
             crewList.adapter = CreditsAdapter()
 
-            movieViewModel.movieDetailsResource.observe(viewLifecycleOwner) { data ->
-                pbLoading.isVisible = data is Resource.Loading
-                clContainer.isVisible = data is Resource.Success
-                tvError.apply {
-                    isVisible = data is Resource.Error
-                    text = data.error?.localizedMessage ?: "Failed to load movie details"
-                }
-
-            }
-
         }
     }
 

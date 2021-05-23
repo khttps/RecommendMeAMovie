@@ -1,4 +1,4 @@
-package com.example.recommendmeamovie.ui.main
+package com.example.recommendmeamovie.ui.discover
 
 import android.os.Bundle
 import android.view.Menu
@@ -12,28 +12,31 @@ import androidx.navigation.fragment.findNavController
 import com.example.recommendmeamovie.NavigationDirections
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.adapter.MovieAdapter
-import com.example.recommendmeamovie.databinding.MainFragmentBinding
+import com.example.recommendmeamovie.databinding.DiscoverFragmentBinding
 import com.example.recommendmeamovie.domain.Movie
+import com.example.recommendmeamovie.ui.MainActivity
 import com.example.recommendmeamovie.util.EventObserver
 import com.example.recommendmeamovie.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : Fragment(R.layout.main_fragment), MovieAdapter.OnMovieClickListener {
+class DiscoverFragment : Fragment(R.layout.discover_fragment), MovieAdapter.OnMovieClickListener {
 
-    private val viewModel: MainViewModel by viewModels()
-    private lateinit var binding : MainFragmentBinding
+    private val viewModel: DiscoverViewModel by viewModels()
+    private lateinit var binding : DiscoverFragmentBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = MainFragmentBinding.bind(view).apply {
+        (activity as MainActivity).supportActionBar?.title = "Discover"
+
+        binding = DiscoverFragmentBinding.bind(view).apply {
             btRecommend.setOnClickListener {
                 viewModel.navigateToRecommend()
             }
 
-            rvPopular.adapter = MovieAdapter(this@MainFragment, MovieAdapter.MAIN_LIST)
-            rvTopRated.adapter = MovieAdapter(this@MainFragment, MovieAdapter.MAIN_LIST)
+            rvPopular.adapter = MovieAdapter(this@DiscoverFragment, MovieAdapter.MAIN_LIST)
+            rvTopRated.adapter = MovieAdapter(this@DiscoverFragment, MovieAdapter.MAIN_LIST)
         }
 
         subscribeObservers()
@@ -57,13 +60,13 @@ class MainFragment : Fragment(R.layout.main_fragment), MovieAdapter.OnMovieClick
 
         viewModel.eventNavigateToRecommend.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(
-                MainFragmentDirections.actionMainFragmentToRecommendFragment()
+                DiscoverFragmentDirections.actionDiscoverFragmentToRecommendFragment()
             )
         })
 
         viewModel.eventNavigateToMovie.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(
-                MainFragmentDirections.actionMainFragmentToMovieFragment(
+                DiscoverFragmentDirections.actionDiscoverFragmentToMovieFragment(
                     it.id,
                     it.title
                 )

@@ -1,4 +1,4 @@
-package com.example.recommendmeamovie.ui.main
+package com.example.recommendmeamovie.ui.discover
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
@@ -13,12 +13,9 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.mock
-import org.mockito.MockitoAnnotations
 
 @ExperimentalCoroutinesApi
-class MainViewModelTest {
+class DiscoverViewModelTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -26,7 +23,7 @@ class MainViewModelTest {
     @get:Rule
     var mainCoroutineTestRule = MainCoroutineTestRule()
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: DiscoverViewModel
 
     private lateinit var repository: FakeMovieRepository
 
@@ -43,11 +40,11 @@ class MainViewModelTest {
         )
 
         repository = FakeMovieRepository(movies)
-        viewModel = MainViewModel(repository, handle)
+        viewModel = DiscoverViewModel(repository, handle)
     }
 
     @Test
-    fun getMoviesWithNoConnection_returnsResourceError() = runBlockingTest {
+    fun getMovies_noConnection_returnsResourceError() = runBlockingTest {
         repository.setNetworkConnected(false)
 
         val loadingResource = viewModel.popularMovies.getOrAwaitValueTest()
@@ -59,7 +56,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun getMoviesWithNoConnection_returnsResourceSuccess() = runBlockingTest {
+    fun getMovies_connected_returnsResourceSuccess() = runBlockingTest {
         repository.setNetworkConnected(true)
 
         val loadingResource = viewModel.popularMovies.getOrAwaitValueTest()

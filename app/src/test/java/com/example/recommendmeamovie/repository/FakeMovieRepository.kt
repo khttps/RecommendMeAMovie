@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.flow
 
 class FakeMovieRepository(private val movieDataSource : List<Movie>) : MovieRepository {
 
-
     private var isConnected = false
 
     fun setNetworkConnected(value: Boolean) {
