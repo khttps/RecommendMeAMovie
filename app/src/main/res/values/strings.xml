@@ -25,4 +25,5 @@
     <string name="add_to_watchlist_description">Add movie to watchlist button</string>
     <string name="add_to_watched_description">Add movie to your films list</string>
     <string name="movie_list_item_description">Movie list item</string>
+    <string name="recommend_fab_description">Start Movie Recommendation Process</string>
 </resources>

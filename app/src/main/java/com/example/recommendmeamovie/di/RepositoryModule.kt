@@ -1,20 +1,23 @@
 package com.example.recommendmeamovie.di
 
-import com.example.recommendmeamovie.repository.MovieRepository
-import com.example.recommendmeamovie.repository.MovieRepositoryImpl
-import com.example.recommendmeamovie.repository.QuestionRepository
-import com.example.recommendmeamovie.repository.QuestionRepositoryImpl
+import com.example.recommendmeamovie.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.components.ViewModelComponent
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 interface RepositoryModule {
     @Binds
     fun provideQuestionRepository(questionRepositoryImpl: QuestionRepositoryImpl) : QuestionRepository
 
     @Binds
-    fun provideMovieRepository(questionRepositoryImpl: MovieRepositoryImpl) : MovieRepository
+    fun provideMovieRepository(movieRepository: MovieRepositoryImpl) : MovieRepository
+
+    @Binds
+    fun provideMovieDetailsRepository(movieDetailsRepositoryImpl: MovieDetailsRepositoryImpl) : MovieDetailsRepository
+
+    @Binds
+    fun provideSearchResultsRepository(searchResultsRepositoryImpl: SearchRepositoryImpl) : SearchRepository
 }

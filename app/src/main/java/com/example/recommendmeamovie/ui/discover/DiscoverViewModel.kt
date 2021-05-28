@@ -9,12 +9,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
-    private val movieRepository: MovieRepository,
+    private val repository: MovieRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val popularMovies = movieRepository.getPopularMovies().asLiveData()
-    val topRatedMovies = movieRepository.getTopRatedMovies().asLiveData()
+    val popularMovies = repository.getPopularMovies().asLiveData()
+    val topRatedMovies = repository.getTopRatedMovies().asLiveData()
 
     private val _eventNavigateToRecommend = MutableLiveData<Event<Unit>>()
     val eventNavigateToRecommend: LiveData<Event<Unit>>

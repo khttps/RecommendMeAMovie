@@ -30,7 +30,7 @@ class SearchFragment : Fragment(R.layout.search_fragment), MovieAdapter.OnMovieC
         val movieAdapter = MovieAdapter(this@SearchFragment, MovieAdapter.MOVIE_LIST)
         binding.rvSearchResults.adapter = movieAdapter
 
-        viewModel.listResource.observe(viewLifecycleOwner) { results ->
+        viewModel.searchResults.observe(viewLifecycleOwner) { results ->
             binding.pbLoading.isVisible = results is Resource.Loading
             binding.rvSearchResults.isVisible = results is Resource.Success
             binding.tvError.isVisible =

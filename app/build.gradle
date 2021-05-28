@@ -27,93 +27,84 @@ android {
         buildConfigField ("String", "API_KEY", tmdbAPIKey)
         testInstrumentationRunner "com.example.recommendmeamovie.HiltTestRunner"
     }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
     buildFeatures {
         dataBinding true
         viewBinding true
     }
-
     kapt {
         correctErrorTypes true
     }
-
     packagingOptions {
         exclude 'META-INF/AL2.0'
         exclude 'META-INF/LGPL2.1'
     }
-
-    testOptions {
-        unitTests.returnDefaultValues = true
+    testOptions.unitTests {
+        returnDefaultValues = true
+        includeAndroidResources = true
     }
 }
 
 dependencies {
 
     // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "androidx.core:core-ktx:1.3.2"
+    implementation "androidx.core:core-ktx:1.5.0"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
 
     // Support Libraries
-    implementation "androidx.appcompat:appcompat:1.2.0"
+    implementation "androidx.appcompat:appcompat:1.3.0"
     implementation "com.google.android.material:material:1.3.0"
     implementation "androidx.constraintlayout:constraintlayout:2.0.4"
     implementation "androidx.recyclerview:recyclerview:1.2.0"
 
     // LiveData and ViewModel
-    def lifecycle_version = "2.3.1"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    def lifecycle = "2.3.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle"
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation"
 
     // Retrofit
-    def retrofit_version = "2.9.0"
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    def retrofit = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit"
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
 
     // Room
-    def room_version = "2.3.0"
-    implementation "androidx.room:room-runtime:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    def room = "2.3.0"
+    implementation "androidx.room:room-runtime:$room"
+    implementation "androidx.room:room-ktx:$room"
+    kapt "androidx.room:room-compiler:$room"
 
     // Coroutines
-    def coroutines_version = "1.4.3"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    def coroutines = "1.4.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
     // Hilt
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation "com.google.dagger:hilt-android:$hilt_ver"
+    kapt "com.google.dagger:hilt-compiler:$hilt_ver"
 
     // Hilt Extensions
-    def hilt_extensions = "1.0.0"
-    implementation "androidx.hilt:hilt-navigation-fragment:$hilt_extensions"
-    implementation "androidx.hilt:hilt-work:$hilt_extensions"
-    kapt "androidx.hilt:hilt-compiler:$hilt_extensions"
-
-
+    def hilt_ext = "1.0.0"
+    implementation "androidx.hilt:hilt-navigation-fragment:$hilt_ext"
+    implementation "androidx.hilt:hilt-work:$hilt_ext"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+    kapt "androidx.hilt:hilt-compiler:$hilt_ext"
 
     // Moshi
     implementation "com.squareup.moshi:moshi-kotlin:1.11.0"
@@ -122,20 +113,18 @@ dependencies {
     implementation "com.squareup.picasso:picasso:2.71828"
 
     // Work Manager
-    def work_version = "2.5.0"
-    implementation "androidx.work:work-runtime-ktx:$work_version"
-    androidTestImplementation "androidx.work:work-testing:$work_version"
-
+    def work = "2.5.0"
+    implementation "androidx.work:work-runtime-ktx:$work"
+    androidTestImplementation "androidx.work:work-testing:$work"
 
     // Unit Testing
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'androidx.test:core:1.3.0'
-    testImplementation 'org.mockito:mockito-core:2.21.0'
-    testImplementation 'org.mockito:mockito-inline:2.13.0'
-    testImplementation "com.google.truth:truth:1.1.2"
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3'
     testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "org.robolectric:robolectric:4.5.1"
 
+    // Coroutines Testing
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
 
     // Instrumented Unit Testing
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -143,13 +132,12 @@ dependencies {
     androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3'
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
 
-    // Google Truth Test
-    androidTestImplementation "com.google.truth:truth:1.1.2"
+    // Google Truth for Test Assertions
+    def truth = "1.1.2"
+    testImplementation "com.google.truth:truth:$truth"
+    androidTestImplementation "com.google.truth:truth:$truth"
 
-    // Turbine for Flow Testing
-    androidTestImplementation 'app.cash.turbine:turbine:0.5.1'
-
-    // Instrumented Testing with Hilt
-    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+    // Testing with Hilt
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_ver"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_ver"
 }

@@ -6,11 +6,12 @@ import com.example.recommendmeamovie.source.local.asMovieDomain
 import com.example.recommendmeamovie.source.remote.MovieApiService
 import com.example.recommendmeamovie.source.remote.asEntity
 import com.example.recommendmeamovie.util.networkBoundResource
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
+@ViewModelScoped
 class MovieRepositoryImpl
 @Inject constructor(
     private val movieService: MovieApiService,

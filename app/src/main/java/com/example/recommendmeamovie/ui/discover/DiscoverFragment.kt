@@ -31,7 +31,7 @@ class DiscoverFragment : Fragment(R.layout.discover_fragment), MovieAdapter.OnMo
         (activity as MainActivity).supportActionBar?.title = "Discover"
 
         binding = DiscoverFragmentBinding.bind(view).apply {
-            btRecommend.setOnClickListener {
+            fabRecommend.setOnClickListener {
                 viewModel.navigateToRecommend()
             }
 
@@ -66,7 +66,7 @@ class DiscoverFragment : Fragment(R.layout.discover_fragment), MovieAdapter.OnMo
 
         viewModel.eventNavigateToMovie.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(
-                DiscoverFragmentDirections.actionDiscoverFragmentToMovieFragment(
+                DiscoverFragmentDirections.actionDiscoverFragmentToMovieDetailsFragment(
                     it.id,
                     it.title
                 )

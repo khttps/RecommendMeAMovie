@@ -9,7 +9,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RecommendViewModel @Inject constructor(
     val savedStateHandle: SavedStateHandle,
-    private val questionRepository: QuestionRepository
+    private val repository: QuestionRepository
 ) : ViewModel() {
 
 

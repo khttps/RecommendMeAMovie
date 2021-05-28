@@ -16,7 +16,7 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim" />
         <action
-            android:id="@+id/action_discoverFragment_to_movieFragment"
+            android:id="@+id/action_discoverFragment_to_movieDetailsFragment"
             app:destination="@id/movieFragment"
             app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
@@ -26,14 +26,14 @@
         android:label="@string/app_name"
         tools:layout="@layout/recommend_fragment">
         <action
-            android:id="@+id/action_recommendFragment_to_movieFragment"
+            android:id="@+id/action_recommendFragment_to_movieDetailsFragment"
             app:destination="@id/movieFragment"
             app:popUpTo="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieFragment"
-        android:name="com.example.recommendmeamovie.ui.movie.MovieFragment"
-        tools:layout="@layout/movie_fragment">
+        android:name="com.example.recommendmeamovie.ui.movie.MovieDetailsFragment"
+        tools:layout="@layout/movie_details_fragment">
         <argument
             android:name="movieId"
             app:argType="long" />
