@@ -8,11 +8,16 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.navigation.NavDeepLinkBuilder
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.receiver.WatchedReceiver
 import com.example.recommendmeamovie.ui.MainActivity
+import com.example.recommendmeamovie.work.NotificationWorker
 import com.squareup.picasso.Picasso
+import java.util.concurrent.TimeUnit
 
 fun NotificationManager.sendNotification(context: Context, movie: Movie) {
 
@@ -53,15 +58,23 @@ fun NotificationManager.sendNotification(context: Context, movie: Movie) {
     val builder = NotificationCompat
         .Builder(context, context.getString(R.string.channel_id))
         .setSmallIcon(R.drawable.ic_launcher_foreground)
-        .setContentTitle(context.getString(R.string.notification_title))
-        .setContentText(context.getString(R.string.notification_text, movie.title))
+        .setContentTitle(context.getString(R.string.notification_title, movie.title))
         .setLargeIcon(largeIcon)
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         .setContentIntent(contentIntent)
-        .addAction(R.drawable.ic_checkmark, "Yes, I've Seen It", watchedPendingIntent)
+        .addAction(R.drawable.ic_checkmark, "Yes", watchedPendingIntent)
         .addAction(R.drawable.ic_dismiss, "No, Leave Me Alone", dismissPendingIntent)
         .setAutoCancel(true)
 
     notify(Constants.NOTIFICATION_ID, builder.build())
+}
+
+fun WorkManager.scheduleNotification(data: Data) {
+    val notificationWorkRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+        .setInputData(data)
+        .setInitialDelay(3L /*1L*/, TimeUnit.SECONDS/*TimeUnit.DAYS*/)
+        .build()
+
+    enqueue(notificationWorkRequest)
 }
 

@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.recommendmeamovie.domain.Question
 
-@Database(entities = [MovieEntity::class, QuestionEntity::class], version = 7, exportSchema = false)
+@Database(entities = [MovieEntity::class, QuestionEntity::class], version = 1, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class MovieDatabase : RoomDatabase() {
 

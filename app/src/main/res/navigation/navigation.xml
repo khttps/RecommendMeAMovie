@@ -6,21 +6,19 @@
     app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.recommendmeamovie.ui.main.MainFragment"
+        android:name="com.example.recommendmeamovie.ui.discover.DiscoverFragment"
         android:label="Discover"
-        tools:layout="@layout/main_fragment">
+        tools:layout="@layout/discover_fragment">
         <action
-            android:id="@+id/action_mainFragment_to_recommendFragment"
+            android:id="@+id/action_discoverFragment_to_recommendFragment"
             app:destination="@id/recommendFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim" />
         <action
-            android:id="@+id/action_mainFragment_to_movieFragment"
+            android:id="@+id/action_discoverFragment_to_movieDetailsFragment"
             app:destination="@id/movieFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/recommendFragment"
@@ -28,14 +26,14 @@
         android:label="@string/app_name"
         tools:layout="@layout/recommend_fragment">
         <action
-            android:id="@+id/action_recommendFragment_to_movieFragment"
+            android:id="@+id/action_recommendFragment_to_movieDetailsFragment"
             app:destination="@id/movieFragment"
             app:popUpTo="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieFragment"
-        android:name="com.example.recommendmeamovie.ui.movie.MovieFragment"
-        tools:layout="@layout/movie_fragment">
+        android:name="com.example.recommendmeamovie.ui.movie.MovieDetailsFragment"
+        tools:layout="@layout/movie_details_fragment">
         <argument
             android:name="movieId"
             app:argType="long" />
@@ -44,20 +42,19 @@
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/movieListFragment"
-        android:name="com.example.recommendmeamovie.ui.movielist.MovieListFragment"
+        android:id="@+id/searchFragment"
+        android:name="com.example.recommendmeamovie.ui.search.SearchFragment"
         android:label="@string/search"
-        tools:layout="@layout/movie_list_fragment">
+        tools:layout="@layout/search_fragment">
         <action
-            android:id="@+id/action_movieListFragment_to_movieFragment"
+            android:id="@+id/action_searchFragment_to_movieFragment"
             app:destination="@id/movieFragment"
             app:enterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/mainFragment" />
     </fragment>
     <action
         android:id="@+id/action_global_movieListFragment"
-        app:destination="@id/movieListFragment"
+        app:destination="@id/searchFragment"
         app:launchSingleTop="true"
         app:popUpTo="@id/mainFragment"
         app:popUpToInclusive="false" />

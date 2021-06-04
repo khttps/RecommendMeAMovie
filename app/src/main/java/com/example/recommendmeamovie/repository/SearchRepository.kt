@@ -4,9 +4,9 @@ import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.util.Resource
 import kotlinx.coroutines.flow.Flow
 
-interface MovieRepository {
+interface SearchRepository {
 
-    fun getPopularMovies(): Flow<Resource<List<Movie>>>
-    fun getTopRatedMovies(): Flow<Resource<List<Movie>>>
+
+    fun getSearchResults(query: String) : Flow<Resource<List<Movie>>>
 
 }

@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.movie.MovieFragment">
+    tools:context=".ui.movie.MovieDetailsFragment">
 
     <data>
 
@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.recommendmeamovie.ui.movie.MovieViewModel" />
+            type="com.example.recommendmeamovie.ui.movie.MovieDetailsViewModel" />
 
     </data>
 
@@ -21,11 +21,11 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0">
+            android:layout_height="wrap_content">
 
             <ProgressBar
                 android:id="@+id/pb_loading"
+                android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,48 +41,57 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:text="@{viewModel.movieDetails.error.localizedMessage}"
                 android:textAlignment="center"
-                android:visibility="invisible"
-                tools:text="Error Message"
+                android:visibility="@{viewModel.loadingFailed ? View.VISIBLE : View.GONE}"                tools:text="Error Message"
                 tools:visibility="visible" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
+                android:visibility="@{viewModel.movieLoaded ? View.VISIBLE : View.INVISIBLE}"
                 tools:visibility="visible"
                 android:paddingVertical="@dimen/default_margin"
                 android:clipToPadding="false">
 
-                <ImageView
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/poster_image_view"
-                    android:layout_width="138dp"
-                    android:layout_height="200dp"
-                    android:background="@color/semi_transparent_grey"
-                    android:contentDescription="@string/movie_poster"
-                    android:padding="@dimen/unit_dimen"
+                    android:layout_width="wrap_content"
                     android:layout_marginStart="@dimen/default_margin"
-                    android:scaleType="fitXY"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:poster="@{viewModel.movieDetails.poster}"
-                    tools:src="@drawable/ic_broken_image" />
+                    android:layout_height="wrap_content"
+                    app:strokeWidth="@dimen/unit_dimen"
+                    app:strokeColor="@color/semi_transparent_grey"
+                    app:cardCornerRadius="10dp">
+                    <ImageView
+                        android:id="@+id/poster_image"
+                        android:layout_width="133dp"
+                        android:layout_height="200dp"
+                        android:contentDescription="@string/movie_poster"
+                        android:scaleType="fitXY"
+                        app:poster="@{viewModel.movieDetails.data.poster}"
+                        tools:src="@drawable/ic_broken_image" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+
 
                 <TextView
                     android:id="@+id/title_text_view"
                     style="@style/TextAppearance.AppCompat.Headline"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/default_margin"
-                    android:text="@{viewModel.movieDetails.title}"
+                    android:layout_marginHorizontal="@dimen/default_margin"
+                    android:text="@{viewModel.movieDetails.data.title}"
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.092"
                     app:layout_constraintStart_toEndOf="@+id/poster_image_view"
                     app:layout_constraintTop_toTopOf="@+id/poster_image_view"
-                    app:layout_constraintWidth_default="wrap"
-                    tools:text="Citizen Kane " />
+                    app:layout_constrainedWidth="true"
+                    tools:text="Citizen Kane" />
 
                 <TextView
                     android:id="@+id/directed_by"
@@ -95,15 +104,16 @@
                 <TextView
                     android:id="@+id/director_text_view"
                     style="@style/TextAppearance.AppCompat.Subhead"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.director.name}"
                     android:textColor="@color/white"
+                    android:layout_marginEnd="@dimen/half_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/directed_by"
                     app:layout_constraintTop_toBottomOf="@+id/directed_by"
-                    app:layout_constraintWidth_default="wrap"
+                    app:layout_constrainedWidth="true"
                     tools:text="Orson Welles" />
 
                 <LinearLayout
@@ -120,7 +130,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/default_margin"
-                        android:text="@{@string/runtime(viewModel.movieDetails.runtime)}"
+                        android:text="@{@string/runtime(viewModel.movieDetails.data.runtime)}"
                         tools:text="119 minutes" />
 
                     <TextView
@@ -135,14 +145,15 @@
 
                 <TextView
                     android:id="@+id/genre_text_view"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.movieDetails.genres}"
+                    android:layout_marginEnd="@dimen/half_margin"
+                    android:text="@{viewModel.movieDetails.data.genres}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/linearLayout"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                    app:layout_constraintWidth_default="wrap"
+                    app:layout_constrainedWidth="true"
                     tools:text="Drama/Mystery" />
 
                 <LinearLayout
@@ -164,7 +175,7 @@
                         android:background="@drawable/ic_circle"
                         android:contentDescription="@string/vote_average"
                         android:gravity="center"
-                        android:text="@{String.valueOf(viewModel.movieDetails.voteAverage)}"
+                        android:text="@{String.valueOf(viewModel.movieDetails.data.voteAverage)}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/genre_text_view"
                         tools:text="7.5" />
@@ -174,23 +185,23 @@
                         android:layout_width="@dimen/button_dimen_alt"
                         android:layout_height="@dimen/button_dimen_alt"
                         android:layout_marginEnd="@dimen/half_margin"
-                        android:onClick="@{() -> viewModel.scheduleNotification()}"
-                        android:padding="0dp"
+                        android:onClick="@{() -> viewModel.scheduleMovieNotification()}"
                         android:scaleType="fitCenter"
                         android:src="@drawable/ic_watchlist"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/genre_text_view" />
+                        app:layout_constraintTop_toBottomOf="@+id/genre_text_view"
+                        android:contentDescription="@string/add_to_watchlist_description" />
 
                     <ImageView
                         android:id="@+id/add_to_your_films_button"
                         android:layout_width="@dimen/button_dimen_alt"
                         android:layout_height="@dimen/button_dimen_alt"
                         android:layout_marginEnd="@dimen/half_margin"
-                        android:padding="0dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/ic_watched"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/genre_text_view" />
+                        app:layout_constraintTop_toBottomOf="@+id/genre_text_view"
+                        android:contentDescription="@string/add_to_watched_description" />
                 </LinearLayout>
 
                 <View
@@ -209,7 +220,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/half_margin"
                     android:layout_marginHorizontal="@dimen/default_margin"
-                    android:text="@{viewModel.movieDetails.overview}"
+                    android:text="@{viewModel.movieDetails.data.overview}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider_one"
@@ -244,7 +255,7 @@
                     android:clipToPadding="false"
                     android:paddingHorizontal="@dimen/default_margin"
                     android:orientation="horizontal"
-                    app:creditsList="@{viewModel.movieDetails.cast}"
+                    app:creditsList="@{viewModel.movieDetails.data.cast}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -271,7 +282,7 @@
                     android:paddingHorizontal="@dimen/default_margin"
                     android:clipToPadding="false"
                     android:orientation="horizontal"
-                    app:creditsList="@{viewModel.movieDetails.crew}"
+                    app:creditsList="@{viewModel.movieDetails.data.crew}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

@@ -18,30 +18,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class RecommendFragment : Fragment(R.layout.recommend_fragment) {
 
-    @Inject
-    lateinit var movieDatabase: MovieDatabase
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = RecommendFragmentBinding.bind(view)
         val viewModel: RecommendViewModel by viewModels()
-
-        val liveData = MutableLiveData<List<QuestionEntity>>()
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            liveData.postValue(
-                movieDatabase.questionDao.getQuestions()
-            )
-        }
-
-        binding.preferenceQuestion.text = liveData.value.toString()
-
-
-
-
-
 
     }
 
