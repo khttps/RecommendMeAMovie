@@ -1,6 +1,7 @@
-package com.example.recommendmeamovie.repository
+package com.example.recommendmeamovie.repository.impl
 
 import com.example.recommendmeamovie.domain.Movie
+import com.example.recommendmeamovie.repository.SearchRepository
 import com.example.recommendmeamovie.source.remote.MovieApiService
 import com.example.recommendmeamovie.source.remote.asDomain
 import com.example.recommendmeamovie.util.Resource

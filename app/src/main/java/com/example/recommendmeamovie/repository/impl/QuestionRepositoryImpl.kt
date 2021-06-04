@@ -1,13 +1,11 @@
-package com.example.recommendmeamovie.repository
+package com.example.recommendmeamovie.repository.impl
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.example.recommendmeamovie.domain.Question
+import com.example.recommendmeamovie.repository.QuestionRepository
 import com.example.recommendmeamovie.source.local.QuestionDao
-import com.example.recommendmeamovie.source.local.asQuestionDomain
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @ViewModelScoped
 class QuestionRepositoryImpl @Inject constructor(

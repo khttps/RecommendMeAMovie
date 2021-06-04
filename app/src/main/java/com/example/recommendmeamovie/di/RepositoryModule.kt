@@ -1,6 +1,10 @@
 package com.example.recommendmeamovie.di
 
 import com.example.recommendmeamovie.repository.*
+import com.example.recommendmeamovie.repository.impl.MovieDetailsRepositoryImpl
+import com.example.recommendmeamovie.repository.impl.MovieRepositoryImpl
+import com.example.recommendmeamovie.repository.impl.QuestionRepositoryImpl
+import com.example.recommendmeamovie.repository.impl.SearchRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -1,6 +1,7 @@
-package com.example.recommendmeamovie.repository
+package com.example.recommendmeamovie.repository.impl
 
 import androidx.room.withTransaction
+import com.example.recommendmeamovie.repository.MovieRepository
 import com.example.recommendmeamovie.source.local.MovieDatabase
 import com.example.recommendmeamovie.source.local.asMovieDomain
 import com.example.recommendmeamovie.source.remote.MovieApiService
@@ -9,7 +10,6 @@ import com.example.recommendmeamovie.util.networkBoundResource
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @ViewModelScoped
 class MovieRepositoryImpl
