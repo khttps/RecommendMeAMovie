@@ -13,10 +13,8 @@
         android:layout_margin="@dimen/default_margin"
         android:text="@string/popular"
         style="@style/TextAppearance.AppCompat.Title.Inverse"
-        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_popular"
@@ -37,13 +35,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/TextAppearance.AppCompat.Title.Inverse"
-
         android:layout_marginVertical="@dimen/default_margin"
         android:text="@string/top_rated"
-        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/tv_popular"
-        app:layout_constraintTop_toBottomOf="@+id/rv_popular"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_popular" />
 
 
     <androidx.recyclerview.widget.RecyclerView

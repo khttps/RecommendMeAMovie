@@ -35,5 +35,10 @@ interface MovieApiService {
         @Query("api_key") key: String = API_KEY
     ): NetworkMovieDetails
 
+    @GET("3/authentication/token/new")
+    suspend fun getToken(
+        @Query("api_key") key: String = API_KEY,
+    ): NetworkToken
+
 }
 

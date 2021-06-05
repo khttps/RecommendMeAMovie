@@ -5,13 +5,11 @@
     tools:context=".ui.movie.MovieDetailsFragment">
 
     <data>
-
         <import type="android.view.View" />
 
         <variable
             name="viewModel"
             type="com.example.recommendmeamovie.ui.movie.MovieDetailsViewModel" />
-
     </data>
 
     <ScrollView
@@ -73,10 +71,7 @@
                         android:scaleType="fitXY"
                         app:poster="@{viewModel.movieDetails.data.poster}"
                         tools:src="@drawable/ic_broken_image" />
-
                 </com.google.android.material.card.MaterialCardView>
-
-
 
                 <TextView
                     android:id="@+id/title_text_view"

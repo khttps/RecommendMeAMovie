@@ -56,3 +56,9 @@ data class Crew(
     @Json(name = "profile_path") val picture : String?
 )
 
+@JsonClass(generateAdapter = true)
+data class NetworkToken(
+    val success: Boolean,
+    @Json(name = "request_token") val requestToken: String
+)
+

@@ -58,4 +58,9 @@
         app:launchSingleTop="true"
         app:popUpTo="@id/mainFragment"
         app:popUpToInclusive="false" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.recommendmeamovie.ui.login.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment" />
 </navigation>

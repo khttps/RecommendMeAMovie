@@ -21,5 +21,4 @@ interface MovieDao {
     @Query("DELETE FROM movies WHERE movie_type = :filter")
     fun deleteMovies(filter: String)
 
-
 }
