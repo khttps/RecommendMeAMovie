@@ -1,9 +1,7 @@
 package com.example.recommendmeamovie.source.remote
 
 import com.example.recommendmeamovie.BuildConfig.API_KEY
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface MovieApiService {
 
@@ -39,6 +37,13 @@ interface MovieApiService {
     suspend fun getToken(
         @Query("api_key") key: String = API_KEY,
     ): NetworkToken
+
+    @FormUrlEncoded
+    @POST("3/authentication/session/new")
+    suspend fun createSession(
+        @Query("api_key") key: String = API_KEY,
+        @Field("request_token") token: String
+    ): NetworkSession
 
 }
 

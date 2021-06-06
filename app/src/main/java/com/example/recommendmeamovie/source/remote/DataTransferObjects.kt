@@ -62,3 +62,9 @@ data class NetworkToken(
     @Json(name = "request_token") val requestToken: String
 )
 
+@JsonClass(generateAdapter = true)
+data class NetworkSession(
+    val success: Boolean,
+    @Json(name = "session_id") val sessionId: String
+)
+
