@@ -71,6 +71,20 @@ fun NotificationManager.sendNotification(context: Context, movie: Movie) {
     notify(Constants.NOTIFICATION_ID, builder.build())
 }
 
+fun NotificationManager.createRecommendChannel(context: Context) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val channel =  NotificationChannel(
+            context.getString(R.string.channel_id),
+            context.getString(R.string.channel_name),
+            NotificationManager.IMPORTANCE_DEFAULT)
+            .apply {
+                description = context.getString(R.string.channel_description)
+            }
+
+        createNotificationChannel(channel)
+    }
+}
+
 fun WorkManager.scheduleNotification(data: Data) {
     val notificationWorkRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
         .setInputData(data)

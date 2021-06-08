@@ -16,7 +16,7 @@ class MovieDetailsRepositoryImpl @Inject constructor(
 
     override fun getMovieDetails(id: Long) =  flow<Resource<MovieDetails>> {
 
-        emit(Resource.Loading(null))
+        emit(Resource.Loading())
 
         try {
             emit(
@@ -26,7 +26,7 @@ class MovieDetailsRepositoryImpl @Inject constructor(
             )
         } catch (throwable: Throwable) {
             emit(
-                Resource.Error(throwable, null)
+                Resource.Error(throwable = throwable)
             )
         }
 

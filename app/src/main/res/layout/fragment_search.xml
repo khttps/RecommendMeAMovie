@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/movie_list_item" />
+        tools:listitem="@layout/list_item_search" />
 
     <ProgressBar
         android:id="@+id/pb_loading"

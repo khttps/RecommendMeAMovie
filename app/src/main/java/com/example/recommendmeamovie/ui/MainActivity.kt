@@ -3,39 +3,30 @@ package com.example.recommendmeamovie.ui
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.datastore.dataStore
-
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.databinding.ActivityMainBinding
 import com.example.recommendmeamovie.util.Utils
-import com.google.android.material.navigation.NavigationView
+import com.example.recommendmeamovie.util.createRecommendChannel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private val viewModel : MainViewModel by viewModels()
-
-    @Inject
-    lateinit var notificationChannel: NotificationChannel
-
-    @Inject
-    lateinit var notificationManager: NotificationManager
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,21 +35,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        setupNavigationDrawer()
-        createNotificationChannel()
-    }
-
-    private fun setupNavigationDrawer() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-
-        binding.apply {
-            navView.setupWithNavController(navController)
-            navView.setNavigationItemSelectedListener(this@MainActivity)
-            appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
-            toolbar.setupWithNavController(navController, appBarConfiguration)
+        viewModel.loggedIn.observe(this) {
+            it?.let {
+                changeNavMenu(
+                    when(it) {
+                        true -> R.menu.user_menu.also { viewModel.startSession() }
+                        else -> R.menu.guest_menu
+                    }
+                )
+            }
         }
-        
+
+        setupNavigation()
+        createNotificationChannel()
+
         navController.addOnDestinationChangedListener { _, _, _ ->
             Utils.hideKeyboard(this)
         }
@@ -66,31 +56,57 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onResume() {
         super.onResume()
-    }
-
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            notificationManager.createNotificationChannel(notificationChannel)
+        intent.data?.let { viewModel.startSession() }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.sign_in) {
+    private fun setupNavigation() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
 
-            viewModel.url.observe(this@MainActivity) {
-                it?.let {
-                    println("XXX$it")
-                    val intent = Intent(Intent.ACTION_VIEW, it)
-                    startActivity(intent)
-                }
+        binding.apply {
+            navView.setupWithNavController(navController)
+            appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+            toolbar.setupWithNavController(navController, appBarConfiguration)
+        }
 
+        val signOutMenuItem = binding.navView.menu.findItem(R.id.log_out)
+        signOutMenuItem?.apply {
+            setOnMenuItemClickListener {
+                showLogoutDialog()
+                true
             }
         }
-        return true
     }
+
+    private fun createNotificationChannel() {
+        val manager = this@MainActivity.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.createRecommendChannel(this@MainActivity)
+    }
+
+    private fun changeNavMenu(menuRes: Int) {
+        binding.navView.apply {
+            menu.clear()
+            inflateMenu(R.menu.user_menu)
+        }
+    }
+
+    private fun showLogoutDialog() {
+        MaterialAlertDialogBuilder(this@MainActivity)
+            .setTitle(resources.getString(R.string.dialog_title))
+            .setMessage(resources.getString(R.string.supporting_text))
+            .setNegativeButton(resources.getString(R.string.dialog_decline)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton(resources.getString(R.string.dialog_accept)) { dialog, _ ->
+                viewModel.clearSession()
+                dialog.dismiss()
+            }.show()
+    }
+
 }
 
 

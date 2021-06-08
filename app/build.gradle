@@ -122,8 +122,13 @@ dependencies {
     androidTestImplementation "androidx.work:work-testing:$work"
 
     // DataStore
-    implementation  "androidx.datastore:datastore-core:1.0.0-beta01"
+    implementation "androidx.datastore:datastore:1.0.0-beta01"
     implementation  "com.google.protobuf:protobuf-javalite:3.10.0"
+    implementation "androidx.datastore:datastore-preferences:1.0.0-beta01"
+
+
+    // Timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // Unit Testing
     testImplementation 'junit:junit:4.13.2'

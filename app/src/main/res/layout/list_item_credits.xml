@@ -1,54 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout  xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="credit"
             type="com.example.recommendmeamovie.domain.Credit" />
     </data>
 
     <LinearLayout
-        android:paddingHorizontal="@dimen/half_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/half_margin">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="60dp">
+            app:cardCornerRadius="60dp"
+            app:strokeColor="@color/semi_transparent_grey"
+            app:strokeWidth="@dimen/unit_dimen">
+
             <ImageView
                 android:id="@+id/credits_profile"
-                profile="@{credit.picture}"
-                tools:src="@drawable/ic_placeholder"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:layout_gravity="center_horizontal"
-                android:scaleType="centerCrop"/>
-
+                android:scaleType="centerCrop"
+                app:profile="@{credit.picture}"
+                tools:src="@drawable/ic_placeholder" />
         </com.google.android.material.card.MaterialCardView>
-
 
         <TextView
             android:id="@+id/credits_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Paul Thomas Anderson"
             android:ellipsize="end"
-            android:text="@{credit.name}"
+            android:layout_marginTop="@dimen/half_margin"
+            android:gravity="center"
             android:maxLines="1"
-            android:textStyle="bold" />
+            android:text="@{credit.name}"
+            android:textStyle="bold"
+            tools:text="Paul Thomas Anderson" />
 
         <TextView
             android:id="@+id/credits_role"
             android:layout_width="match_parent"
-            tools:text="Screenwriter and Assdasda"
-            android:text="@{credit.role}"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
+            android:gravity="center"
             android:maxLines="1"
-            android:layout_height="wrap_content"/>
+            android:text="@{credit.role}"
+            tools:text="Screenwriter and Assdasda" />
     </LinearLayout>
 </layout>

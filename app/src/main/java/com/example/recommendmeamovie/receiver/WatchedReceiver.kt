@@ -10,10 +10,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class WatchedReceiver : BroadcastReceiver() {
 
-    @Inject
-    lateinit var notificationManager: NotificationManager
-
-    override fun onReceive(p0: Context?, p1: Intent?) {
-        notificationManager.cancelAll()
+    override fun onReceive(context: Context, intent: Intent) {
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.cancelAll()
     }
 }

@@ -33,3 +33,8 @@ data class Question (
     val questionText : String,
     val choices : Map<String, String>
 )
+
+data class Token (
+    val success : Boolean,
+    val requestToken : String
+)

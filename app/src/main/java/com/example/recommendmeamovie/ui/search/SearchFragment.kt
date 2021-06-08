@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.adapter.MovieAdapter
-import com.example.recommendmeamovie.databinding.SearchFragmentBinding
+import com.example.recommendmeamovie.databinding.FragmentSearchBinding
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.util.EventObserver
 import com.example.recommendmeamovie.util.Resource
@@ -19,13 +19,13 @@ import com.example.recommendmeamovie.util.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(R.layout.search_fragment), MovieAdapter.OnMovieClickListener {
+class SearchFragment : Fragment(R.layout.fragment_search), MovieAdapter.OnMovieClickListener {
 
     private val viewModel: SearchViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = SearchFragmentBinding.bind(view)
+        val binding = FragmentSearchBinding.bind(view)
 
         val movieAdapter = MovieAdapter(this@SearchFragment, MovieAdapter.MOVIE_LIST)
         binding.rvSearchResults.adapter = movieAdapter

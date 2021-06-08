@@ -19,7 +19,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_popular"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/list_item_height"
         android:layout_marginTop="@dimen/half_margin"
         android:clipToPadding="false"
         android:orientation="horizontal"
@@ -27,7 +27,7 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintStart_toStartOf="@+id/tv_popular"
         app:layout_constraintTop_toBottomOf="@+id/tv_popular"
-        tools:listitem="@layout/discover_list_item" />
+        tools:listitem="@layout/list_item_discover" />
 
 
     <TextView
@@ -44,7 +44,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_top_rated"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/list_item_height"
         android:layout_marginTop="@dimen/half_margin"
         android:clipToPadding="false"
         android:orientation="horizontal"
@@ -52,7 +52,7 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintStart_toStartOf="@+id/tv_top_rated"
         app:layout_constraintTop_toBottomOf="@+id/tv_top_rated"
-        tools:listitem="@layout/discover_list_item" />
+        tools:listitem="@layout/list_item_discover" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_recommend"

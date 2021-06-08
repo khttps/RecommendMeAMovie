@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-option java_package = "com.example.recommendmeamovie";
-option java_multiple_files = true;
-
-message Token {
-  bool success = 1;
-  string request_token = 2;
-}

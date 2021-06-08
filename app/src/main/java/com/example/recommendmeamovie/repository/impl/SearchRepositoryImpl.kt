@@ -14,7 +14,7 @@ class SearchRepositoryImpl
 @Inject constructor(private val movieService: MovieApiService) : SearchRepository {
 
     override fun getSearchResults(query: String) = flow<Resource<List<Movie>>> {
-        emit(Resource.Loading(null))
+        emit(Resource.Loading())
 
         try {
             emit(
@@ -23,7 +23,7 @@ class SearchRepositoryImpl
                 )
             )
         } catch (throwable: Throwable) {
-            emit(Resource.Error(throwable, null))
+            emit(Resource.Error(throwable = throwable))
         }
     }
 }

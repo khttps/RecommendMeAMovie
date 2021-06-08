@@ -59,7 +59,9 @@ data class Crew(
 @JsonClass(generateAdapter = true)
 data class NetworkToken(
     val success: Boolean,
-    @Json(name = "request_token") val requestToken: String
+    @Json(name = "request_token") val requestToken: String?,
+    @Json(name = "status_message") val statusMessage: String?
+
 )
 
 @JsonClass(generateAdapter = true)

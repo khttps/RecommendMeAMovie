@@ -1,29 +1,57 @@
 <resources>
     <string name="app_name">Recommend Me A Movie</string>
-    <string name="your_movies">Your Movies</string>
-    <string name="watchlist">Watchlist</string>
-    <string name="settings">Settings</string>
-    <string name="directed_by">Directed by</string>
-    <string name="movie_poster">Movie Poster</string>
-    <string name="vote_average">Vote Average</string>
-    <string name="cast">Cast</string>
-    <string name="crew">Crew</string>
-    <string name="search">Search</string>
+
+    <!-- Discover Screen -->
     <string name="popular">Popular</string>
     <string name="top_rated">Top Rated</string>
-    <string name="select">Select</string>
+
+    <!-- Movie Details Screen -->
+    <string name="directed_by">Directed by</string>
+    <string name="cast">Cast</string>
+    <string name="crew">Crew</string>
     <string name="runtime">%1$d minutes</string>
-    <string name="nothing_to_see_here">Nothing to see here</string>
+
+    <!-- Recommend Screen -->
+    <string name="select_button_text">Select</string>
+
+    <!-- Login Screen -->
+    <string name="login_header">Connect your TMDB account to manage your movies more easily</string>
+    <string name="login_details">Manage your watchlist, store your recommendations and many more features</string>
+    <string name="login_button_text">Log In with TMDB</string>
+
+    <!-- Watchlist Notification -->
     <string name="channel_name">Recommend</string>
     <string name="channel_description">Manages recommendation reminder</string>
     <string name="channel_id">watchlist-channel</string>
     <string name="notification_title">"Have you seen %1$s yet?"</string>
+
+    <!-- Error Handling -->
     <string name="no_internet_connection">No Internet Connection</string>
+    <string name="nothing_to_see_here">Nothing to see here</string>
+
+    <!-- Navigation View Items -->
     <string name="sign_in">Sign In</string>
     <string name="profile">Profile</string>
     <string name="sign_out">Sign Out</string>
+    <string name="your_movies">Your Movies</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="search">Search</string>
+
+    <!-- Content Description -->
     <string name="add_to_watchlist_description">Add movie to watchlist button</string>
     <string name="add_to_watched_description">Add movie to your films list</string>
     <string name="movie_list_item_description">Movie list item</string>
     <string name="recommend_fab_description">Start Movie Recommendation Process</string>
+    <string name="movie_poster_description">Movie Poster</string>
+    <string name="vote_average_description">Vote Average</string>
+
+    <!-- Logout Dialog -->
+    <string name="dialog_title">Log out</string>
+    <string name="supporting_text">Are you sure you want to log out from TMDB?</string>
+    <string name="dialog_decline">Cancel</string>
+    <string name="dialog_accept">Yes</string>
+
+    <!-- Nav Header -->
+    <string name="hello_guest">Hello, Guest</string>
+
 </resources>

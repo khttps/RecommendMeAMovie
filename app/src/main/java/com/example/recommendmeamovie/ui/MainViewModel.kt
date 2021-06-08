@@ -1,48 +1,42 @@
 package com.example.recommendmeamovie.ui
 
-import android.net.Uri
 import androidx.lifecycle.*
-import com.example.recommendmeamovie.source.remote.MovieApiService
-import com.example.recommendmeamovie.source.remote.NetworkToken
-import com.example.recommendmeamovie.util.Constants
+import com.example.recommendmeamovie.repository.SessionRepository
 import com.example.recommendmeamovie.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val service: MovieApiService,
+    private val repository: SessionRepository,
     private val savedStateHandle: SavedStateHandle
-) : ViewModel() {
+): ViewModel() {
 
-    private val token = flow<Resource<NetworkToken>> {
-        emit(Resource.Loading())
-        try {
-           emit(Resource.Success(service.getToken()))
+    val loggedIn = repository.loginStatus.asLiveData(Dispatchers.IO)
 
-        } catch (throwable: Throwable) {
-            emit(Resource.Error(throwable))
-        }
-    }.asLiveData(Dispatchers.IO)
+    private val _session = MutableLiveData<Resource<String>>()
+    val session: LiveData<Resource<String>>
+        get() = _session
 
-    val url = Transformations.map(token) {
-        it.data?.let { token ->
-            if (token.success) {
-                getAuthUrl(token.requestToken)
-            } else
-                null
+    fun startSession() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getSessionId().collect {
+                _session.postValue(it)
+            }
         }
     }
 
-    private fun getAuthUrl(token: String) = Uri.Builder()
-        .scheme("https")
-        .authority(Constants.AUTH_URL)
-        .appendPath("authenticate")
-        .appendPath(token)
-        .appendQueryParameter(
-            "redirect_to",
-            Constants.REDIRECT_URI
-        ).build()
+    fun clearSession() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.clearSession()
+        }
+    }
+
+
+
+
 }

@@ -1,20 +1,24 @@
 package com.example.recommendmeamovie.source.datastore
 
+import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import com.example.recommendmeamovie.Session
-import com.google.protobuf.InvalidProtocolBufferException
-import java.io.IOException
+import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
+import com.example.recommendmeamovie.SessionPreferences
 import java.io.InputStream
 import java.io.OutputStream
 
-class SessionSerializer(override val defaultValue: Session) : Serializer<Session> {
-    override suspend fun readFrom(input: InputStream): Session {
+object SessionSerializer : Serializer<SessionPreferences> {
+
+    override val defaultValue: SessionPreferences = SessionPreferences.getDefaultInstance()
+
+    override suspend fun readFrom(input: InputStream): SessionPreferences {
         try {
-            return Session.parseFrom(input)
+            return SessionPreferences.parseFrom(input)
+
         } catch (exception: InvalidProtocolBufferException) {
-            throw Throwable("Cannot read proto.", exception)
+            throw CorruptionException("Cannot read proto.", exception)
         }
     }
 
-    override suspend fun writeTo(t: Session, output: OutputStream) = t.writeTo(output)
+    override suspend fun writeTo(t: SessionPreferences, output: OutputStream) = t.writeTo(output)
 }

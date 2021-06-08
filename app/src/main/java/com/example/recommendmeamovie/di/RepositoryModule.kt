@@ -1,10 +1,7 @@
 package com.example.recommendmeamovie.di
 
 import com.example.recommendmeamovie.repository.*
-import com.example.recommendmeamovie.repository.impl.MovieDetailsRepositoryImpl
-import com.example.recommendmeamovie.repository.impl.MovieRepositoryImpl
-import com.example.recommendmeamovie.repository.impl.QuestionRepositoryImpl
-import com.example.recommendmeamovie.repository.impl.SearchRepositoryImpl
+import com.example.recommendmeamovie.repository.impl.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,14 +11,20 @@ import dagger.hilt.android.components.ViewModelComponent
 @InstallIn(ViewModelComponent::class)
 interface RepositoryModule {
     @Binds
-    fun provideQuestionRepository(questionRepositoryImpl: QuestionRepositoryImpl) : QuestionRepository
+    fun provideQuestionRepository(questionRepositoryImpl: QuestionRepositoryImpl): QuestionRepository
 
     @Binds
-    fun provideMovieRepository(movieRepository: MovieRepositoryImpl) : MovieRepository
+    fun provideMovieRepository(movieRepository: MovieRepositoryImpl): MovieRepository
 
     @Binds
-    fun provideMovieDetailsRepository(movieDetailsRepositoryImpl: MovieDetailsRepositoryImpl) : MovieDetailsRepository
+    fun provideMovieDetailsRepository(movieDetailsRepositoryImpl: MovieDetailsRepositoryImpl): MovieDetailsRepository
 
     @Binds
-    fun provideSearchResultsRepository(searchResultsRepositoryImpl: SearchRepositoryImpl) : SearchRepository
+    fun provideSearchRepository(searchResultsRepositoryImpl: SearchRepositoryImpl): SearchRepository
+
+    @Binds
+    fun provideLoginRepository(loginRepository: LoginRepositoryImpl): LoginRepository
+
+    @Binds
+    fun provideSessionRepository(sessionRepository: SessionRepositoryImpl): SessionRepository
 }
