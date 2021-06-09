@@ -1,10 +1,12 @@
 package com.example.recommendmeamovie.util
 
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.navigation.NavDeepLinkBuilder
@@ -67,6 +69,20 @@ fun NotificationManager.sendNotification(context: Context, movie: Movie) {
         .setAutoCancel(true)
 
     notify(Constants.NOTIFICATION_ID, builder.build())
+}
+
+fun NotificationManager.createRecommendChannel(context: Context) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val channel =  NotificationChannel(
+            context.getString(R.string.channel_id),
+            context.getString(R.string.channel_name),
+            NotificationManager.IMPORTANCE_DEFAULT)
+            .apply {
+                description = context.getString(R.string.channel_description)
+            }
+
+        createNotificationChannel(channel)
+    }
 }
 
 fun WorkManager.scheduleNotification(data: Data) {

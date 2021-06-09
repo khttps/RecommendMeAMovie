@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.recommendmeamovie.NavigationDirections
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.adapter.MovieAdapter
-import com.example.recommendmeamovie.databinding.DiscoverFragmentBinding
+import com.example.recommendmeamovie.databinding.FragmentDiscoverBinding
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.ui.MainActivity
 import com.example.recommendmeamovie.util.EventObserver
@@ -20,17 +20,17 @@ import com.example.recommendmeamovie.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DiscoverFragment : Fragment(R.layout.discover_fragment), MovieAdapter.OnMovieClickListener {
+class DiscoverFragment : Fragment(R.layout.fragment_discover), MovieAdapter.OnMovieClickListener {
 
     private val viewModel: DiscoverViewModel by viewModels()
-    private lateinit var binding : DiscoverFragmentBinding
+    private lateinit var binding : FragmentDiscoverBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as MainActivity).supportActionBar?.title = "Discover"
 
-        binding = DiscoverFragmentBinding.bind(view).apply {
+        binding = FragmentDiscoverBinding.bind(view).apply {
             fabRecommend.setOnClickListener {
                 viewModel.navigateToRecommend()
             }
@@ -46,14 +46,12 @@ class DiscoverFragment : Fragment(R.layout.discover_fragment), MovieAdapter.OnMo
     private fun subscribeObservers() {
         viewModel.popularMovies.observe(viewLifecycleOwner) { movies ->
             binding.apply {
-                tvPopular.isVisible = movies !is Resource.Loading
                 (rvPopular.adapter as MovieAdapter).submitList(movies.data)
             }
         }
 
         viewModel.topRatedMovies.observe(viewLifecycleOwner) { movies ->
             binding.apply {
-                tvTopRated.isVisible = movies !is Resource.Loading
                 (rvTopRated.adapter as MovieAdapter).submitList(movies.data)
             }
         }

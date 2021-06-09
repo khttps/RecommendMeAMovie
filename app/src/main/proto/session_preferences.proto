@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option java_package = "com.example.recommendmeamovie";
+option java_multiple_files = true;
+
+message SessionPreferences {
+
+  string request_token = 1;
+  string session_id = 2;
+  bool is_signed_in = 3;
+
+}

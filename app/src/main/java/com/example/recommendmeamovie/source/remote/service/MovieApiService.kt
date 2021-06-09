@@ -1,11 +1,15 @@
-package com.example.recommendmeamovie.source.remote
+package com.example.recommendmeamovie.source.remote.service
 
 import com.example.recommendmeamovie.BuildConfig.API_KEY
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import com.example.recommendmeamovie.source.remote.dto.MoviesContainer
+import com.example.recommendmeamovie.source.remote.dto.NetworkMovieDetails
+import com.example.recommendmeamovie.source.remote.dto.NetworkSession
+import com.example.recommendmeamovie.source.remote.dto.NetworkToken
+import retrofit2.http.*
 
 interface MovieApiService {
+
+
 
     @GET("3/search/movie")
     suspend fun getSearchResults(
@@ -34,6 +38,18 @@ interface MovieApiService {
         @Path("id") id: Long,
         @Query("api_key") key: String = API_KEY
     ): NetworkMovieDetails
+
+    @GET("3/authentication/token/new")
+    suspend fun getToken(
+        @Query("api_key") key: String = API_KEY,
+    ): NetworkToken
+
+    @FormUrlEncoded
+    @POST("3/authentication/session/new")
+    suspend fun createSession(
+        @Query("api_key") key: String = API_KEY,
+        @Field("request_token") token: String
+    ): NetworkSession
 
 }
 

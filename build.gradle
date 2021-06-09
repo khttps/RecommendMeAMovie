@@ -5,6 +5,7 @@ buildscript {
         kotlin = "1.5.10"
         navigation = "2.3.5"
         hilt_ver = "2.35"
+        kotlin_version = '1.5.10'
     }
 
     repositories {

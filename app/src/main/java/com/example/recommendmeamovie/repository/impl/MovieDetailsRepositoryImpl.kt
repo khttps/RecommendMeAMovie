@@ -2,8 +2,8 @@ package com.example.recommendmeamovie.repository.impl
 
 import com.example.recommendmeamovie.domain.MovieDetails
 import com.example.recommendmeamovie.repository.MovieDetailsRepository
-import com.example.recommendmeamovie.source.remote.MovieApiService
 import com.example.recommendmeamovie.source.remote.asDomain
+import com.example.recommendmeamovie.source.remote.service.MovieApiService
 import com.example.recommendmeamovie.util.Resource
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.flow
@@ -16,7 +16,7 @@ class MovieDetailsRepositoryImpl @Inject constructor(
 
     override fun getMovieDetails(id: Long) =  flow<Resource<MovieDetails>> {
 
-        emit(Resource.Loading(null))
+        emit(Resource.Loading())
 
         try {
             emit(
@@ -26,7 +26,7 @@ class MovieDetailsRepositoryImpl @Inject constructor(
             )
         } catch (throwable: Throwable) {
             emit(
-                Resource.Error(throwable, null)
+                Resource.Error(throwable = throwable)
             )
         }
 

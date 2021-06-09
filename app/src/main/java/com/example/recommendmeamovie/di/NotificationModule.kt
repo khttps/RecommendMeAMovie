@@ -26,7 +26,7 @@ object NotificationModule {
             context.getString(R.string.channel_name),
             NotificationManager.IMPORTANCE_DEFAULT)
             .apply {
-            description = context.getString(R.string.channel_description)
+                description = context.getString(R.string.channel_description)
             }
     }
 

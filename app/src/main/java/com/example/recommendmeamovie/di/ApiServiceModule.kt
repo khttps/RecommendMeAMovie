@@ -1,6 +1,7 @@
 package com.example.recommendmeamovie.di
 
-import com.example.recommendmeamovie.source.remote.MovieApiService
+import com.example.recommendmeamovie.source.remote.service.AccountApiService
+import com.example.recommendmeamovie.source.remote.service.MovieApiService
 import com.example.recommendmeamovie.util.Constants.BASE_URL
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
@@ -14,7 +15,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
-object MovieServiceModule {
+object ApiServiceModule {
 
     @Provides
     fun provideMoshi() : Moshi {
@@ -36,6 +37,11 @@ object MovieServiceModule {
     @Provides
     fun provideMovieService(retrofit : Retrofit) : MovieApiService {
         return retrofit.create(MovieApiService::class.java)
+    }
+
+    @Provides
+    fun provideAccountService(retrofit : Retrofit) : AccountApiService {
+        return retrofit.create(AccountApiService::class.java)
     }
 
 }

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/movie_list_item" />
+        tools:listitem="@layout/list_item_search" />
 
     <ProgressBar
         android:id="@+id/pb_loading"
@@ -28,7 +28,7 @@
         android:layout_gravity="center"
         android:text="@string/nothing_to_see_here"
         android:textAlignment="center"
-        android:layout_margin="@dimen/half_margin"
+        android:layout_margin="@dimen/half_spacing"
         android:textColor="@color/white"
         android:visibility="gone"
         tools:visibility="visible" />

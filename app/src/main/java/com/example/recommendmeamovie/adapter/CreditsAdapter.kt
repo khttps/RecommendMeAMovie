@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recommendmeamovie.databinding.CreditsListItemBinding
+import com.example.recommendmeamovie.databinding.ListItemCreditsBinding
 import com.example.recommendmeamovie.domain.Credit
 
 
@@ -13,7 +13,7 @@ class CreditsAdapter : ListAdapter<Credit, CreditsAdapter.CreditViewHolder>(List
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return CreditViewHolder(CreditsListItemBinding.inflate(inflater))
+        return CreditViewHolder(ListItemCreditsBinding.inflate(inflater))
     }
 
     override fun onBindViewHolder(holder: CreditViewHolder, position: Int) {
@@ -21,7 +21,7 @@ class CreditsAdapter : ListAdapter<Credit, CreditsAdapter.CreditViewHolder>(List
         holder.bind(credit)
     }
 
-    class CreditViewHolder(val binding: CreditsListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class CreditViewHolder(val binding: ListItemCreditsBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(credit : Credit) {
             binding.credit = credit

@@ -1,5 +1,8 @@
 package com.example.recommendmeamovie.domain
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
 data class Movie(
     val id : Long,
     val title : String,
@@ -29,4 +32,9 @@ data class Credit (
 data class Question (
     val questionText : String,
     val choices : Map<String, String>
+)
+
+data class Token (
+    val success : Boolean,
+    val requestToken : String
 )

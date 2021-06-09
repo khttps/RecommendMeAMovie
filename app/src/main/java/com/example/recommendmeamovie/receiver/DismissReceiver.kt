@@ -8,10 +8,8 @@ import javax.inject.Inject
 
 class DismissReceiver : BroadcastReceiver() {
 
-    @Inject
-    lateinit var notificationManager: NotificationManager
-
     override fun onReceive(context: Context, intent: Intent) {
-        notificationManager.cancelAll()
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.cancelAll()
     }
 }

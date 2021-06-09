@@ -8,7 +8,7 @@
         android:id="@+id/mainFragment"
         android:name="com.example.recommendmeamovie.ui.discover.DiscoverFragment"
         android:label="Discover"
-        tools:layout="@layout/discover_fragment">
+        tools:layout="@layout/fragment_discover">
         <action
             android:id="@+id/action_discoverFragment_to_recommendFragment"
             app:destination="@id/recommendFragment"
@@ -24,7 +24,7 @@
         android:id="@+id/recommendFragment"
         android:name="com.example.recommendmeamovie.ui.recommend.RecommendFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/recommend_fragment">
+        tools:layout="@layout/fragment_recommend">
         <action
             android:id="@+id/action_recommendFragment_to_movieDetailsFragment"
             app:destination="@id/movieFragment"
@@ -33,7 +33,7 @@
     <fragment
         android:id="@+id/movieFragment"
         android:name="com.example.recommendmeamovie.ui.movie.MovieDetailsFragment"
-        tools:layout="@layout/movie_details_fragment">
+        tools:layout="@layout/fragment_movie_details">
         <argument
             android:name="movieId"
             app:argType="long" />
@@ -45,7 +45,7 @@
         android:id="@+id/searchFragment"
         android:name="com.example.recommendmeamovie.ui.search.SearchFragment"
         android:label="@string/search"
-        tools:layout="@layout/search_fragment">
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_movieFragment"
             app:destination="@id/movieFragment"
@@ -58,4 +58,13 @@
         app:launchSingleTop="true"
         app:popUpTo="@id/mainFragment"
         app:popUpToInclusive="false" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.recommendmeamovie.ui.login.LoginFragment"
+        android:label="TMDB Login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.example.recommendmeamovie.ui.account.AccountFragment"
+        tools:layout="@layout/fragment_account" />
 </navigation>

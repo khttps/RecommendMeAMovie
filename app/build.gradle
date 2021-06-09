@@ -5,6 +5,8 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     id 'dagger.hilt.android.plugin'
     id 'kotlinx-serialization'
+    id "com.google.protobuf" version "0.8.12"
+
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
@@ -67,7 +69,9 @@ dependencies {
     implementation "androidx.appcompat:appcompat:1.3.0"
     implementation "com.google.android.material:material:1.3.0"
     implementation "androidx.constraintlayout:constraintlayout:2.0.4"
-    implementation "androidx.recyclerview:recyclerview:1.2.0"
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // LiveData and ViewModel
     def lifecycle = "2.3.1"
@@ -117,6 +121,15 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$work"
     androidTestImplementation "androidx.work:work-testing:$work"
 
+    // DataStore
+    implementation "androidx.datastore:datastore:1.0.0-beta01"
+    implementation  "com.google.protobuf:protobuf-javalite:3.10.0"
+    implementation "androidx.datastore:datastore-preferences:1.0.0-beta01"
+
+
+    // Timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
     // Unit Testing
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'androidx.test:core:1.3.0'
@@ -140,4 +153,23 @@ dependencies {
     // Testing with Hilt
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_ver"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_ver"
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.10.0"
+    }
+
+    // Generates the java Protobuf-lite code for the Protobufs in this project. See
+    // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
+    // for more information.
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
+        }
+    }
 }

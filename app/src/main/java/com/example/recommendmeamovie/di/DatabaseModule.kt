@@ -2,18 +2,13 @@ package com.example.recommendmeamovie.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.example.recommendmeamovie.source.local.MovieDao
 import com.example.recommendmeamovie.source.local.MovieDatabase
-import com.example.recommendmeamovie.source.local.QuestionDao
-import dagger.Binds
+import com.example.recommendmeamovie.source.local.dao.QuestionDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
