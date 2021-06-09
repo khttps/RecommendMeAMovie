@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="@dimen/half_margin">
+        android:paddingHorizontal="@dimen/half_spacing">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:layout_marginTop="@dimen/half_margin"
+            android:layout_marginTop="@dimen/half_spacing"
             android:gravity="center"
             android:maxLines="1"
             android:text="@{credit.name}"

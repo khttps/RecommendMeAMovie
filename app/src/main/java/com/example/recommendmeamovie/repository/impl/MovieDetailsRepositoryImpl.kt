@@ -2,8 +2,8 @@ package com.example.recommendmeamovie.repository.impl
 
 import com.example.recommendmeamovie.domain.MovieDetails
 import com.example.recommendmeamovie.repository.MovieDetailsRepository
-import com.example.recommendmeamovie.source.remote.MovieApiService
 import com.example.recommendmeamovie.source.remote.asDomain
+import com.example.recommendmeamovie.source.remote.service.MovieApiService
 import com.example.recommendmeamovie.util.Resource
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.flow

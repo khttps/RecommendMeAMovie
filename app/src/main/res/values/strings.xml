@@ -15,7 +15,7 @@
     <string name="select_button_text">Select</string>
 
     <!-- Login Screen -->
-    <string name="login_header">Connect your TMDB account to manage your movies more easily</string>
+    <string name="login_header">Connect your TMDB account to manage your movies more easily. </string>
     <string name="login_details">Manage your watchlist, store your recommendations and many more features</string>
     <string name="login_button_text">Log In with TMDB</string>
 
@@ -31,8 +31,7 @@
 
     <!-- Navigation View Items -->
     <string name="sign_in">Sign In</string>
-    <string name="profile">Profile</string>
-    <string name="sign_out">Sign Out</string>
+    <string name="account">Account</string>
     <string name="your_movies">Your Movies</string>
     <string name="watchlist">Watchlist</string>
     <string name="search">Search</string>

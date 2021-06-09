@@ -1,9 +1,15 @@
-package com.example.recommendmeamovie.source.remote
+package com.example.recommendmeamovie.source.remote.service
 
 import com.example.recommendmeamovie.BuildConfig.API_KEY
+import com.example.recommendmeamovie.source.remote.dto.MoviesContainer
+import com.example.recommendmeamovie.source.remote.dto.NetworkMovieDetails
+import com.example.recommendmeamovie.source.remote.dto.NetworkSession
+import com.example.recommendmeamovie.source.remote.dto.NetworkToken
 import retrofit2.http.*
 
 interface MovieApiService {
+
+
 
     @GET("3/search/movie")
     suspend fun getSearchResults(

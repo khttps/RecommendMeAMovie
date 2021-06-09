@@ -16,27 +16,12 @@ class MainViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
-    val loggedIn = repository.loginStatus.asLiveData(Dispatchers.IO)
-
-    private val _session = MutableLiveData<Resource<String>>()
-    val session: LiveData<Resource<String>>
-        get() = _session
-
-    fun startSession() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.getSessionId().collect {
-                _session.postValue(it)
-            }
-        }
-    }
+    val session = repository.getSessionId().asLiveData(Dispatchers.IO)
 
     fun clearSession() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.clearSession()
         }
     }
-
-
-
-
+    
 }

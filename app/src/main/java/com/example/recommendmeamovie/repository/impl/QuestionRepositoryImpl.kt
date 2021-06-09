@@ -3,7 +3,7 @@ package com.example.recommendmeamovie.repository.impl
 import androidx.lifecycle.LiveData
 import com.example.recommendmeamovie.domain.Question
 import com.example.recommendmeamovie.repository.QuestionRepository
-import com.example.recommendmeamovie.source.local.QuestionDao
+import com.example.recommendmeamovie.source.local.dao.QuestionDao
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 

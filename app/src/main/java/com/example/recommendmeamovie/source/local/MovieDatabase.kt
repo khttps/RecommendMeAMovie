@@ -3,9 +3,10 @@ package com.example.recommendmeamovie.source.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.recommendmeamovie.domain.Question
+import com.example.recommendmeamovie.source.local.dao.MovieDao
+import com.example.recommendmeamovie.source.local.dao.QuestionDao
 
-@Database(entities = [MovieEntity::class, QuestionEntity::class], version = 1, exportSchema = false)
+@Database(entities = [MovieEntity::class, QuestionEntity::class], version = 2, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class MovieDatabase : RoomDatabase() {
 

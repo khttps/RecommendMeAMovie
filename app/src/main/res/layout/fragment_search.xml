@@ -28,7 +28,7 @@
         android:layout_gravity="center"
         android:text="@string/nothing_to_see_here"
         android:textAlignment="center"
-        android:layout_margin="@dimen/half_margin"
+        android:layout_margin="@dimen/half_spacing"
         android:textColor="@color/white"
         android:visibility="gone"
         tools:visibility="visible" />

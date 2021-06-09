@@ -6,7 +6,7 @@
     tools:context=".ui.login.LoginFragment">
 
     <LinearLayout
-        android:layout_margin="@dimen/default_margin"
+        android:layout_margin="@dimen/default_spacing"
         android:layout_centerInParent="true"
         android:gravity="center"
         android:layout_width="wrap_content"
@@ -21,9 +21,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_spacing"
             android:text="@string/login_header"
-            style="@style/TextAppearance.AppCompat.Title.Inverse" />
+            android:textSize="22sp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
             android:id="@+id/login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_spacing"
             android:text="@string/login_button_text"/>
 
     </LinearLayout>

@@ -1,9 +1,11 @@
 package com.example.recommendmeamovie.source.local
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@Entity(indices=[Index(value = ["title", "poster_path", "release_date", "movie_type"])],tableName = "movies")
-data class MovieEntity (
+@Entity(tableName = "movies")
+data class MovieEntity(
     @PrimaryKey(autoGenerate = false) val id: Long,
     val title: String,
     @ColumnInfo(name = "poster_path") val poster: String?,
@@ -14,6 +16,6 @@ data class MovieEntity (
 @Entity(tableName = "questions")
 data class QuestionEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
-    val question : String,
-    val choices : Map<String, String>
-    )
+    val question: String,
+    val choices: Map<String, String>
+)

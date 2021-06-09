@@ -2,6 +2,10 @@ package com.example.recommendmeamovie.source.remote
 
 import com.example.recommendmeamovie.domain.*
 import com.example.recommendmeamovie.source.local.MovieEntity
+import com.example.recommendmeamovie.source.remote.dto.Cast
+import com.example.recommendmeamovie.source.remote.dto.Crew
+import com.example.recommendmeamovie.source.remote.dto.MoviesContainer
+import com.example.recommendmeamovie.source.remote.dto.NetworkMovieDetails
 
 fun MoviesContainer.asDomain(): List<Movie> = results.map {
     Movie(

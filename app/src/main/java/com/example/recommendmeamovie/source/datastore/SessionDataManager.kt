@@ -17,7 +17,7 @@ private val Context.sessionDataStore by dataStore(
 )
 
 @Singleton
-class DataStoreManager @Inject constructor(@ApplicationContext context: Context) {
+class SessionDataManager @Inject constructor(@ApplicationContext context: Context) {
 
     private val dataStore = context.sessionDataStore
 

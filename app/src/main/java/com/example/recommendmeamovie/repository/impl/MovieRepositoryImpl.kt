@@ -4,7 +4,7 @@ import androidx.room.withTransaction
 import com.example.recommendmeamovie.repository.MovieRepository
 import com.example.recommendmeamovie.source.local.MovieDatabase
 import com.example.recommendmeamovie.source.local.asMovieDomain
-import com.example.recommendmeamovie.source.remote.MovieApiService
+import com.example.recommendmeamovie.source.remote.service.MovieApiService
 import com.example.recommendmeamovie.source.remote.asEntity
 import com.example.recommendmeamovie.util.networkBoundResource
 import dagger.hilt.android.scopes.ViewModelScoped
