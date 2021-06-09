@@ -52,5 +52,6 @@
 
     <!-- Nav Header -->
     <string name="hello_guest">Hello, Guest</string>
+    <string name="log_out">Log out</string>
 
 </resources>

@@ -29,4 +29,11 @@ class AccountViewModel @Inject constructor(
         }
     }
 
+    fun clearSession() {
+        viewModelScope.launch(Dispatchers.IO) {
+            sessionDataManager.clearSession()
+
+        }
+    }
+
 }

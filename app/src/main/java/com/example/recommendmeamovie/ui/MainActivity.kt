@@ -77,18 +77,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLogoutDialog() {
-        MaterialAlertDialogBuilder(this@MainActivity)
-            .setTitle(resources.getString(R.string.dialog_title))
-            .setMessage(resources.getString(R.string.supporting_text))
-            .setNegativeButton(resources.getString(R.string.dialog_decline)) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .setPositiveButton(resources.getString(R.string.dialog_accept)) { dialog, _ ->
-                viewModel.clearSession()
-                dialog.dismiss()
-            }.show()
-    }
+
 
 }
 
