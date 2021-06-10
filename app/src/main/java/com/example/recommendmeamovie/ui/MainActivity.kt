@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
@@ -13,16 +14,21 @@ import com.example.recommendmeamovie.databinding.ActivityMainBinding
 import com.example.recommendmeamovie.util.Resource
 import com.example.recommendmeamovie.util.Utils
 import com.example.recommendmeamovie.util.createRecommendChannel
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var navController: NavController
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var appBarConfiguration: AppBarConfiguration
+
+    private val navController: NavController by lazy {
+        (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
+    }
+
+    private val drawerLayout: DrawerLayout by lazy {
+        binding.drawerLayout
+    }
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -33,6 +39,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
+        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        binding.navigationView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, _, _ ->
+            Utils.hideKeyboard(this)
+        }
+
         viewModel.session.observe(this) {
             changeNavMenu(
                 when(it) {
@@ -42,27 +56,11 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        setupNavigation()
         createNotificationChannel()
-
-        navController.addOnDestinationChangedListener { _, _, _ ->
-            Utils.hideKeyboard(this)
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
-    private fun setupNavigation() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
-
-        binding.apply {
-            navView.setupWithNavController(navController)
-            appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
-            toolbar.setupWithNavController(navController, appBarConfiguration)
-        }
+        return navController.navigateUp(drawerLayout) || super.onSupportNavigateUp()
     }
 
     private fun createNotificationChannel() {
@@ -71,14 +69,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun changeNavMenu(menuRes: Int) {
-        binding.navView.apply {
+        binding.navigationView.apply {
             menu.clear()
             inflateMenu(menuRes)
         }
     }
-
-
-
 }
 
 

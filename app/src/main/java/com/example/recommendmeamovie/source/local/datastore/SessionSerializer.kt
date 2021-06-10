@@ -1,4 +1,4 @@
-package com.example.recommendmeamovie.source.datastore
+package com.example.recommendmeamovie.source.local.datastore
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer

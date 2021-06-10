@@ -1,4 +1,4 @@
-package com.example.recommendmeamovie.source.local
+package com.example.recommendmeamovie.source.local.database
 
 import androidx.room.TypeConverter
 import kotlinx.serialization.decodeFromString

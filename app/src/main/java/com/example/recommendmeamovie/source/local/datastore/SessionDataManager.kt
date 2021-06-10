@@ -1,10 +1,7 @@
-package com.example.recommendmeamovie.source.datastore
+package com.example.recommendmeamovie.source.local.datastore
 
 import android.content.Context
 import androidx.datastore.dataStore
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

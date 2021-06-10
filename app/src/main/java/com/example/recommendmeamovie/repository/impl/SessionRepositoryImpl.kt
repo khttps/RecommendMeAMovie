@@ -1,7 +1,7 @@
 package com.example.recommendmeamovie.repository.impl
 
 import com.example.recommendmeamovie.repository.SessionRepository
-import com.example.recommendmeamovie.source.datastore.SessionDataManager
+import com.example.recommendmeamovie.source.local.datastore.SessionDataManager
 import com.example.recommendmeamovie.source.remote.service.MovieApiService
 import com.example.recommendmeamovie.util.networkBoundResource
 import kotlinx.coroutines.flow.first

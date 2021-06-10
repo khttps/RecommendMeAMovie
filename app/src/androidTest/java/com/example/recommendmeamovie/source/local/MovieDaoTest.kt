@@ -2,7 +2,8 @@ package com.example.recommendmeamovie.source.local
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
-import com.example.recommendmeamovie.source.local.dao.MovieDao
+import com.example.recommendmeamovie.source.local.database.dao.MovieDao
+import com.example.recommendmeamovie.source.local.database.MovieDatabase
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

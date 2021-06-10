@@ -1,10 +1,9 @@
-package com.example.recommendmeamovie.source.datastore
+package com.example.recommendmeamovie.source.local.datastore
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
 import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
 import com.example.recommendmeamovie.Account
-import com.example.recommendmeamovie.SessionPreferences
 import java.io.InputStream
 import java.io.OutputStream
 

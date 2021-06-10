@@ -2,8 +2,7 @@ package com.example.recommendmeamovie.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import com.example.recommendmeamovie.source.local.MovieDatabase
+import com.example.recommendmeamovie.source.local.database.MovieDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

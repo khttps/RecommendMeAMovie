@@ -29,17 +29,15 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_popular"
         tools:listitem="@layout/list_item_discover" />
 
-
     <TextView
         android:id="@+id/tv_top_rated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
         android:layout_marginVertical="@dimen/default_spacing"
         android:text="@string/top_rated"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/tv_popular"
         app:layout_constraintTop_toBottomOf="@+id/rv_popular" />
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_top_rated"
@@ -60,11 +58,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_spacing"
         android:clickable="true"
+        android:contentDescription="@string/recommend_fab_description"
+        android:focusable="true"
         android:src="@drawable/ic_recommend"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:focusable="true"
-        android:contentDescription="@string/recommend_fab_description" />
-
-
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

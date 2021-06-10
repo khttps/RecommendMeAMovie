@@ -1,5 +1,6 @@
 package com.example.recommendmeamovie.ui.search
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -64,31 +65,35 @@ class SearchFragment : Fragment(R.layout.fragment_search), MovieAdapter.OnMovieC
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_menu, menu)
-
         val searchItem = menu.findItem(R.id.action_search)
-        val searchView = searchItem.actionView as SearchView
 
-        searchView.isIconified = false
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        (searchItem.actionView as SearchView).apply {
+            isIconified = false
+            queryHint = getString(R.string.search) + "... "
+            setBackgroundColor(Color.TRANSPARENT)
 
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                Utils.hideKeyboard(requireActivity())
-                return true
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    Utils.hideKeyboard(requireActivity())
+                    return true
+                }
+
+                override fun onQueryTextChange(query: String?): Boolean {
+                    if (query.isNullOrBlank())
+                        return false
+
+                    viewModel.getSearchResults(query)
+                    return true
+                }
+            })
+
+            setOnCloseListener {
+                findNavController().navigateUp()
+                return@setOnCloseListener true
             }
-
-            override fun onQueryTextChange(query: String?): Boolean {
-                if (query.isNullOrBlank())
-                    return false
-
-                viewModel.getSearchResults(query)
-                return true
-            }
-        })
-
-        searchView.setOnCloseListener {
-            findNavController().navigateUp()
-            return@setOnCloseListener true
         }
+
 
     }
 

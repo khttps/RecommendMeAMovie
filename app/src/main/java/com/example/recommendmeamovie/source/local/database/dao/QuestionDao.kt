@@ -1,4 +1,4 @@
-package com.example.recommendmeamovie.source.local.dao
+package com.example.recommendmeamovie.source.local.database.dao
 
 import androidx.room.*
 import com.example.recommendmeamovie.source.local.QuestionEntity
