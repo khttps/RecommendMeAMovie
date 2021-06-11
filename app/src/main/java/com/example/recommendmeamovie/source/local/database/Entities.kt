@@ -10,8 +10,7 @@ data class MovieEntity(
     val title: String,
     @ColumnInfo(name = "poster_path") val poster: String?,
     @ColumnInfo(name = "release_date") val releaseDate: String?,
-    @ColumnInfo(name = "movie_type") val movieType: String,
-    val page: Int
+    @ColumnInfo(name = "movie_type") val movieType: String
 )
 
 @Entity(tableName = "questions")

@@ -45,9 +45,10 @@ class MovieDaoTest {
         val movieEntity = MovieEntity(0, "Chungking Express", "", "1994-9-26", "top_rated")
         movieDao.addMovie(movieEntity)
 
-        val movies = movieDao.getMoviesPaged("top_rated").first()
-        assertThat(movies).contains(movieEntity)
+        // val movies = movieDao.getMoviesPaged("top_rated").first()
+        // assertThat(movies).contains(movieEntity)
 
+        TODO("Needs to be refactored into testing PagingData")
     }
 
     @Test
@@ -59,8 +60,10 @@ class MovieDaoTest {
         )
         movieDao.insertAll(movieList)
 
-        val movies = movieDao.getMoviesPaged("popular").first()
-        assertThat(movies).containsAtLeastElementsIn(movieList)
+        // val movies = movieDao.getMoviesPaged("popular").first()
+        // assertThat(movies).containsAtLeastElementsIn(movieList)
+
+        TODO("Needs to be refactored into testing PagingData")
     }
 
 
@@ -71,8 +74,10 @@ class MovieDaoTest {
 
         movieDao.deleteAll("top_rated")
 
-        val movies = movieDao.getMoviesPaged("top_rated").first()
-        assertThat(movies).doesNotContain(movieEntity)
+        // val movies = movieDao.getMoviesPaged("top_rated").first()
+        // assertThat(movies).doesNotContain(movieEntity)
+
+        TODO("Needs to be refactored into testing PagingData")
 
     }
 

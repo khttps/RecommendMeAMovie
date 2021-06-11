@@ -1,7 +1,9 @@
 package com.example.recommendmeamovie.repository
 
+import androidx.paging.PagingData
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.util.Resource
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class FakeMovieRepository() : MovieRepository {
@@ -18,8 +20,12 @@ class FakeMovieRepository() : MovieRepository {
         isConnected = value
     }
 
-    override fun getPopularMovies() = getMovies()
-    override fun getTopRatedMovies() = getMovies()
+    override fun getPopularMovies(): Flow<PagingData<Movie>> {
+        TODO("Needs to be refactored into testing PagingData")
+    }
+    override fun getTopRatedMovies(): Flow<PagingData<Movie>> {
+        TODO("Needs to be refactored into testing PagingData")
+    }
 
     private fun getMovies() = flow<Resource<List<Movie>>> {
         emit(Resource.Loading())
