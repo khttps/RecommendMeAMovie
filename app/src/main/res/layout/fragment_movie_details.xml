@@ -23,7 +23,7 @@
             android:layout_height="wrap_content">
 
             <ProgressBar
-                android:id="@+id/pb_loading"
+                android:id="@+id/progress_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -31,7 +31,7 @@
                 android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
 
             <TextView
-                android:id="@+id/tv_error"
+                android:id="@+id/error_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -67,7 +67,7 @@
                     app:strokeWidth="@dimen/unit_dimen">
 
                     <ImageView
-                        android:id="@+id/poster_image_view"
+                        android:id="@+id/poster"
                         android:layout_width="133dp"
                         android:layout_height="200dp"
                         android:contentDescription="@string/movie_poster_description"

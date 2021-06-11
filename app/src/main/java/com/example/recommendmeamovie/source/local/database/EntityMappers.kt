@@ -1,26 +1,23 @@
-package com.example.recommendmeamovie.source.local
+package com.example.recommendmeamovie.source.local.database
 
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.domain.Question
 
-fun List<MovieEntity>.asMovieDomain() : List<Movie> {
+fun MovieEntity.asDomain() = Movie(
+    id = id,
+    title = title,
+    poster = poster,
+    releaseDate = releaseDate
+)
+
+
+fun List<QuestionEntity>.asQuestionDomain(): List<Question> {
 
     return map {
-        Movie(
-            id = it.id,
-            title = it.title,
-            poster = it.poster,
-            releaseDate = it.releaseDate
+        Question(
+            questionText = it.question,
+            choices = it.choices
         )
-    }
-
-}
-
-fun List<QuestionEntity>.asQuestionDomain() : List<Question> {
-
-    return map {
-        Question( questionText = it.question,
-            choices = it.choices)
     }
 
 }

@@ -6,57 +6,55 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.widget.SearchView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.recommendmeamovie.R
-import com.example.recommendmeamovie.adapter.MovieAdapter
+import com.example.recommendmeamovie.adapter.MoviePagingAdapter
 import com.example.recommendmeamovie.databinding.FragmentSearchBinding
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.util.EventObserver
-import com.example.recommendmeamovie.util.Resource
 import com.example.recommendmeamovie.util.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(R.layout.fragment_search), MovieAdapter.OnMovieClickListener {
+class SearchFragment : Fragment(R.layout.fragment_search), MoviePagingAdapter.OnMovieClickListener {
+
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var pagingAdapter: MoviePagingAdapter
 
     private val viewModel: SearchViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentSearchBinding.bind(view)
+        _binding = FragmentSearchBinding.bind(view)
 
-        val movieAdapter = MovieAdapter(this@SearchFragment, MovieAdapter.MOVIE_LIST)
-        binding.rvSearchResults.adapter = movieAdapter
-
-        viewModel.searchResults.observe(viewLifecycleOwner) { results ->
-            binding.pbLoading.isVisible = results is Resource.Loading
-            binding.rvSearchResults.isVisible = results is Resource.Success
-            binding.tvError.isVisible =
-                results is Resource.Error || (results is Resource.Success && results.data.isNullOrEmpty())
-
-            binding.tvError.text = when (results) {
-                is Resource.Error -> {
-                    results.error?.localizedMessage
-                }
-                else -> getString(R.string.nothing_to_see_here)
-            }
-
-            movieAdapter.submitList(results.data)
+        pagingAdapter = MoviePagingAdapter(this@SearchFragment, R.layout.list_item_search)
+        binding.recyclerView.apply {
+            adapter = pagingAdapter
+            setHasFixedSize(true)
         }
 
-        viewModel.eventNavigateToMovie.observe(viewLifecycleOwner, EventObserver {
+        subscribeObservers()
+        setHasOptionsMenu(true)
+    }
+
+    private fun subscribeObservers() {
+        viewModel.results.observe(viewLifecycleOwner) {
+            pagingAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
+
+        viewModel.eventNavigateToMovie.observe(viewLifecycleOwner, EventObserver { movie ->
             findNavController().navigate(
-                SearchFragmentDirections.actionSearchFragmentToMovieFragment(
-                    it.id,
-                    it.title
-                )
+                SearchFragmentDirections.actionSearchFragmentToMovieFragment(movie.id, movie.title)
             )
         })
 
-        setHasOptionsMenu(true)
+        viewModel.eventNavigateUp.observe(viewLifecycleOwner, EventObserver{
+            findNavController().navigateUp()
+        })
     }
 
     override fun onMovieClick(movie: Movie) {
@@ -89,12 +87,15 @@ class SearchFragment : Fragment(R.layout.fragment_search), MovieAdapter.OnMovieC
             })
 
             setOnCloseListener {
-                findNavController().navigateUp()
+                viewModel.navigateUp()
                 return@setOnCloseListener true
             }
         }
+    }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

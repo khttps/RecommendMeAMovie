@@ -5,38 +5,52 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.recommendmeamovie.NavigationDirections
 import com.example.recommendmeamovie.R
-import com.example.recommendmeamovie.adapter.MovieAdapter
+import com.example.recommendmeamovie.adapter.MoviePagingAdapter
 import com.example.recommendmeamovie.databinding.FragmentDiscoverBinding
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.ui.MainActivity
 import com.example.recommendmeamovie.util.EventObserver
-import com.example.recommendmeamovie.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DiscoverFragment : Fragment(R.layout.fragment_discover), MovieAdapter.OnMovieClickListener {
+class DiscoverFragment : Fragment(R.layout.fragment_discover), MoviePagingAdapter.OnMovieClickListener {
 
     private val viewModel: DiscoverViewModel by viewModels()
-    private lateinit var binding : FragmentDiscoverBinding
+
+    private var _binding : FragmentDiscoverBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentDiscoverBinding.bind(view)
 
         (activity as MainActivity).supportActionBar?.title = "Discover"
 
-        binding = FragmentDiscoverBinding.bind(view).apply {
-            fabRecommend.setOnClickListener {
+        binding.apply {
+            recommendFab.setOnClickListener {
                 viewModel.navigateToRecommend()
             }
 
-            rvPopular.adapter = MovieAdapter(this@DiscoverFragment, MovieAdapter.MAIN_LIST)
-            rvTopRated.adapter = MovieAdapter(this@DiscoverFragment, MovieAdapter.MAIN_LIST)
+            popularRecyclerView.apply {
+                setHasFixedSize(true)
+                adapter = MoviePagingAdapter(
+                    this@DiscoverFragment,
+                    R.layout.list_item_discover
+                )
+            }
+
+            topRatedRecyclerView.apply {
+                setHasFixedSize(true)
+                adapter = MoviePagingAdapter(
+                    this@DiscoverFragment,
+                    R.layout.list_item_discover
+                )
+            }
         }
 
         subscribeObservers()
@@ -46,28 +60,29 @@ class DiscoverFragment : Fragment(R.layout.fragment_discover), MovieAdapter.OnMo
     private fun subscribeObservers() {
         viewModel.popularMovies.observe(viewLifecycleOwner) { movies ->
             binding.apply {
-                (rvPopular.adapter as MovieAdapter).submitList(movies.data)
+                (popularRecyclerView.adapter as MoviePagingAdapter)
+                    .submitData(viewLifecycleOwner.lifecycle, movies)
             }
         }
 
         viewModel.topRatedMovies.observe(viewLifecycleOwner) { movies ->
             binding.apply {
-                (rvTopRated.adapter as MovieAdapter).submitList(movies.data)
+                (topRatedRecyclerView.adapter as MoviePagingAdapter)
+                    .submitData(viewLifecycleOwner.lifecycle, movies)
             }
         }
 
         viewModel.eventNavigateToRecommend.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(
-                DiscoverFragmentDirections.actionDiscoverFragmentToRecommendFragment()
-            )
+            findNavController().navigate(DiscoverFragmentDirections.actionDiscoverFragmentToRecommendFragment())
+        })
+
+        viewModel.eventNavigateToSearch.observe(viewLifecycleOwner, EventObserver{
+            findNavController().navigate(NavigationDirections.actionGlobalMovieListFragment())
         })
 
         viewModel.eventNavigateToMovie.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(
-                DiscoverFragmentDirections.actionDiscoverFragmentToMovieDetailsFragment(
-                    it.id,
-                    it.title
-                )
+                DiscoverFragmentDirections.actionDiscoverFragmentToMovieDetailsFragment(it.id, it.title)
             )
         })
     }
@@ -82,7 +97,13 @@ class DiscoverFragment : Fragment(R.layout.fragment_discover), MovieAdapter.OnMo
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_search_click)
-            findNavController().navigate(NavigationDirections.actionGlobalMovieListFragment())
+            viewModel.navigateToSearch()
+
         return true
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

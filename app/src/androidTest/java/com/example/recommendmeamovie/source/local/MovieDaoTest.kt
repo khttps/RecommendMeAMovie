@@ -4,11 +4,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import com.example.recommendmeamovie.source.local.database.dao.MovieDao
 import com.example.recommendmeamovie.source.local.database.MovieDatabase
+import com.example.recommendmeamovie.source.local.database.MovieEntity
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
@@ -45,9 +45,10 @@ class MovieDaoTest {
         val movieEntity = MovieEntity(0, "Chungking Express", "", "1994-9-26", "top_rated")
         movieDao.addMovie(movieEntity)
 
-        val movies = movieDao.getMovies("top_rated").first()
-        assertThat(movies).contains(movieEntity)
+        // val movies = movieDao.getMoviesPaged("top_rated").first()
+        // assertThat(movies).contains(movieEntity)
 
+        TODO("Needs to be refactored into testing PagingData")
     }
 
     @Test
@@ -57,10 +58,12 @@ class MovieDaoTest {
             MovieEntity(1, "Parasite", "", "2019-5-30", "popular"),
             MovieEntity(2, "Evangelion 3.0 + 1.0 Thrice Upon A Time", "", "2021-3-8", "popular")
         )
-        movieDao.addMovieList(movieList)
+        movieDao.insertAll(movieList)
 
-        val movies = movieDao.getMovies("popular").first()
-        assertThat(movies).containsAtLeastElementsIn(movieList)
+        // val movies = movieDao.getMoviesPaged("popular").first()
+        // assertThat(movies).containsAtLeastElementsIn(movieList)
+
+        TODO("Needs to be refactored into testing PagingData")
     }
 
 
@@ -69,10 +72,12 @@ class MovieDaoTest {
         val movieEntity = MovieEntity(0, "Chungking Express", "", "1994-9-26", "top_rated")
         movieDao.addMovie(movieEntity)
 
-        movieDao.deleteMovies("top_rated")
+        movieDao.deleteAll("top_rated")
 
-        val movies = movieDao.getMovies("top_rated").first()
-        assertThat(movies).doesNotContain(movieEntity)
+        // val movies = movieDao.getMoviesPaged("top_rated").first()
+        // assertThat(movies).doesNotContain(movieEntity)
+
+        TODO("Needs to be refactored into testing PagingData")
 
     }
 

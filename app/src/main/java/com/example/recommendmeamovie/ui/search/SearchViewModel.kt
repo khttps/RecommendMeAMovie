@@ -1,6 +1,7 @@
 package com.example.recommendmeamovie.ui.search
 
 import androidx.lifecycle.*
+import androidx.paging.cachedIn
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.repository.SearchRepository
 import com.example.recommendmeamovie.util.Event
@@ -17,26 +18,31 @@ class SearchViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _searchResults = MutableLiveData<Resource<List<Movie>>>()
-    val searchResults: LiveData<Resource<List<Movie>>>
-        get() = _searchResults
+    private val currentQuery = MutableLiveData<String>()
 
+    val results = currentQuery.switchMap { query ->
+        repository.getSearchResults(query).asLiveData(Dispatchers.IO)
+    }.cachedIn(viewModelScope)
 
     private val _eventNavigateToMovie = MutableLiveData<Event<Movie>>()
     val eventNavigateToMovie: LiveData<Event<Movie>>
         get() = _eventNavigateToMovie
+
+    private val _eventNavigateUp = MutableLiveData<Event<Unit>>()
+    val eventNavigateUp: LiveData<Event<Unit>>
+        get() = _eventNavigateUp
 
 
     fun navigateToMovie(movie: Movie) {
         _eventNavigateToMovie.value = Event(movie)
     }
 
+    fun navigateUp() {
+        _eventNavigateUp.value = Event(Unit)
+    }
+
     fun getSearchResults(query: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.getSearchResults(query).collect {
-                _searchResults.postValue(it)
-            }
-        }
+        currentQuery.value = query
     }
 
 }

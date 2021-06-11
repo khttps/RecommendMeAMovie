@@ -1,7 +1,7 @@
 package com.example.recommendmeamovie.source.local.database.dao
 
 import androidx.room.*
-import com.example.recommendmeamovie.source.local.QuestionEntity
+import com.example.recommendmeamovie.source.local.database.QuestionEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

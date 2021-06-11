@@ -1,4 +1,4 @@
-package com.example.recommendmeamovie.source.local
+package com.example.recommendmeamovie.source.local.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -19,3 +19,6 @@ data class QuestionEntity(
     val question: String,
     val choices: Map<String, String>
 )
+
+@Entity(tableName = "remote_keys")
+data class RemoteKey(@PrimaryKey val filter: String, val nextKey: Int?)

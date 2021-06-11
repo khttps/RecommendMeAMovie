@@ -17,7 +17,4 @@ class AccountDataManager @Inject constructor(@ApplicationContext context: Contex
     val dataStore = context.accountDataStore
 
     fun getAccount() = dataStore
-
-
-
 }

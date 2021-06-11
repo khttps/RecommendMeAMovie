@@ -6,17 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.domain.Credit
 import com.example.recommendmeamovie.domain.Movie
-import com.example.recommendmeamovie.adapter.MovieAdapter
 import com.example.recommendmeamovie.adapter.CreditsAdapter
-import com.squareup.picasso.Picasso
-
-
-@BindingAdapter("movieList")
-fun setMovieList(recyclerView: RecyclerView, movies: List<Movie>?) {
-
-    val adapter = recyclerView.adapter as MovieAdapter
-    adapter.submitList(movies)
-}
+import com.example.recommendmeamovie.adapter.MoviePagingAdapter
 
 @BindingAdapter("creditsList")
 fun setCreditsList(recyclerView: RecyclerView, credits: List<Credit>?) {

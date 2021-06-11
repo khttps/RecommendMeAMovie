@@ -1,6 +1,7 @@
 package com.example.recommendmeamovie.ui.discover
 
 import androidx.lifecycle.*
+import androidx.paging.cachedIn
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.repository.MovieRepository
 import com.example.recommendmeamovie.util.Event
@@ -13,8 +14,8 @@ class DiscoverViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val popularMovies = repository.getPopularMovies().asLiveData()
-    val topRatedMovies = repository.getTopRatedMovies().asLiveData()
+    val popularMovies = repository.getPopularMovies().asLiveData().cachedIn(viewModelScope)
+    val topRatedMovies = repository.getTopRatedMovies().asLiveData().cachedIn(viewModelScope)
 
     private val _eventNavigateToRecommend = MutableLiveData<Event<Unit>>()
     val eventNavigateToRecommend: LiveData<Event<Unit>>
@@ -24,9 +25,17 @@ class DiscoverViewModel @Inject constructor(
     val eventNavigateToMovie: LiveData<Event<Movie>>
         get() = _eventNavigateToMovie
 
+    private val _eventNavigateToSearch = MutableLiveData<Event<Unit>>()
+    val eventNavigateToSearch: LiveData<Event<Unit>>
+        get() = _eventNavigateToSearch
+
 
     fun navigateToRecommend() {
         _eventNavigateToRecommend.value = Event(Unit)
+    }
+
+    fun navigateToSearch() {
+        _eventNavigateToSearch.value = Event(Unit)
     }
 
     fun navigateToMovie(movie: Movie) {

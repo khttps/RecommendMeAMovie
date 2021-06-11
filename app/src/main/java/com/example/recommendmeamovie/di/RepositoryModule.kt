@@ -1,5 +1,6 @@
 package com.example.recommendmeamovie.di
 
+import androidx.paging.ExperimentalPagingApi
 import com.example.recommendmeamovie.repository.*
 import com.example.recommendmeamovie.repository.impl.*
 import dagger.Binds
@@ -14,6 +15,7 @@ interface RepositoryModule {
     fun provideQuestionRepository(questionRepositoryImpl: QuestionRepositoryImpl): QuestionRepository
 
     @Binds
+    @ExperimentalPagingApi
     fun provideMovieRepository(movieRepository: MovieRepositoryImpl): MovieRepository
 
     @Binds

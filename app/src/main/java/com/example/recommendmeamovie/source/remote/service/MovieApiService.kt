@@ -9,23 +9,23 @@ import retrofit2.http.*
 
 interface MovieApiService {
 
-
-
     @GET("3/search/movie")
     suspend fun getSearchResults(
         @Query("query") query: String,
-        @Query("api_key") key : String = API_KEY
+        @Query("api_key") apiKey : String = API_KEY,
+        @Query("page") page: Int = 1
     ): MoviesContainer
 
     @GET("3/movie/{filter}")
     suspend fun getMovies(
         @Path("filter") filter: String,
-        @Query("api_key") key: String = API_KEY
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("page") page: Int? = 1
     ): MoviesContainer
 
     @GET("3/discover/movie")
     suspend fun getMovieRecommendation(
-        @Query("api_key") key: String = API_KEY,
+        @Query("api_key") apiKey: String = API_KEY,
         @Query("primary_release_date.gte") releasedAfter: String,
         @Query("primary_release_date.lte") releasedBefore: String,
         @Query("vote_average.gte") voteGreaterThan: Int,
@@ -36,18 +36,18 @@ interface MovieApiService {
     @GET("3/movie/{id}?append_to_response=credits")
     suspend fun getMovieDetails(
         @Path("id") id: Long,
-        @Query("api_key") key: String = API_KEY
+        @Query("api_key") apiKey: String = API_KEY
     ): NetworkMovieDetails
 
     @GET("3/authentication/token/new")
     suspend fun getToken(
-        @Query("api_key") key: String = API_KEY,
+        @Query("api_key") apiKey: String = API_KEY,
     ): NetworkToken
 
     @FormUrlEncoded
     @POST("3/authentication/session/new")
     suspend fun createSession(
-        @Query("api_key") key: String = API_KEY,
+        @Query("api_key") apiKey: String = API_KEY,
         @Field("request_token") token: String
     ): NetworkSession
 

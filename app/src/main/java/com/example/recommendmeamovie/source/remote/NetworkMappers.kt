@@ -1,7 +1,7 @@
 package com.example.recommendmeamovie.source.remote
 
 import com.example.recommendmeamovie.domain.*
-import com.example.recommendmeamovie.source.local.MovieEntity
+import com.example.recommendmeamovie.source.local.database.MovieEntity
 import com.example.recommendmeamovie.source.remote.dto.Cast
 import com.example.recommendmeamovie.source.remote.dto.Crew
 import com.example.recommendmeamovie.source.remote.dto.MoviesContainer
@@ -12,7 +12,7 @@ fun MoviesContainer.asDomain(): List<Movie> = results.map {
         id = it.id,
         title = it.title,
         poster = it.poster,
-        releaseDate = it.releaseDate
+        releaseDate = it.releaseDate,
     )
 }
 
