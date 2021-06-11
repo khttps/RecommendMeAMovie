@@ -49,9 +49,9 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.session.observe(this) {
             changeNavMenu(
-                when(it) {
-                    is Resource.Success -> R.menu.user_menu
-                    else -> R.menu.guest_menu
+                when (it.data) {
+                    "" -> R.menu.guest_menu
+                    else -> R.menu.user_menu
                 }
             )
         }
@@ -64,7 +64,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createNotificationChannel() {
-        val manager = this@MainActivity.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val manager =
+            this@MainActivity.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         manager.createRecommendChannel(this@MainActivity)
     }
 

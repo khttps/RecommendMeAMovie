@@ -3,6 +3,7 @@ package com.example.recommendmeamovie.di
 import android.content.Context
 import androidx.room.Room
 import com.example.recommendmeamovie.source.local.database.MovieDatabase
+import com.example.recommendmeamovie.source.local.database.dao.MovieDao
 import com.example.recommendmeamovie.source.local.database.dao.QuestionDao
 import dagger.Module
 import dagger.Provides
