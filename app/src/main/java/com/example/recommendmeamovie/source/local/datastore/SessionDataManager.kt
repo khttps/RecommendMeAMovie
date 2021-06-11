@@ -25,7 +25,6 @@ class SessionDataManager @Inject constructor(@ApplicationContext context: Contex
             it.toBuilder()
                 .clearRequestToken()
                 .setSessionId(sessionId)
-                .setIsSignedIn(true)
                 .build()
         }
     }
@@ -46,15 +45,10 @@ class SessionDataManager @Inject constructor(@ApplicationContext context: Contex
         it.requestToken
     }
 
-    fun getLoginStatus() = dataStore.data.map {
-        it.isSignedIn
-    }
-
     suspend fun clearSession() {
         dataStore.updateData {
             it.toBuilder()
                 .clearSessionId()
-                .setIsSignedIn(false)
                 .build()
         }
     }

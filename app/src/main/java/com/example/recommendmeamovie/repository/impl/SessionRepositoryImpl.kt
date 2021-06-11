@@ -12,8 +12,6 @@ class SessionRepositoryImpl @Inject constructor(
     private val dataStore: SessionDataManager
 ): SessionRepository {
 
-    override val loginStatus = dataStore.getLoginStatus()
-
     override fun getSessionId() = networkBoundResource(
         query = {
             dataStore.getSessionId()

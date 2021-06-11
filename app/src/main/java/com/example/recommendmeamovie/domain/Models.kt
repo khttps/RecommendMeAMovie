@@ -38,3 +38,9 @@ data class Token (
     val success : Boolean,
     val requestToken : String
 )
+
+data class Account (
+    val name : String,
+    val username : String,
+    val avatar: String
+)

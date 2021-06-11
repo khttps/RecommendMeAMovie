@@ -29,4 +29,7 @@ interface RepositoryModule {
 
     @Binds
     fun provideSessionRepository(sessionRepository: SessionRepositoryImpl): SessionRepository
+
+    @Binds
+    fun provideAccountRepository(accountRepository: AccountRepositoryImpl): AccountRepository
 }

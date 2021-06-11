@@ -1,9 +1,10 @@
 package com.example.recommendmeamovie.ui.account
 
-import androidx.lifecycle.*
-import com.example.recommendmeamovie.source.local.datastore.SessionDataManager
-import com.example.recommendmeamovie.source.remote.dto.NetworkAccount
-import com.example.recommendmeamovie.source.remote.service.AccountApiService
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.recommendmeamovie.repository.AccountRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -11,27 +12,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
-    private val accountApiService: AccountApiService,
-    private val sessionDataManager: SessionDataManager,
+    private val accountRepository: AccountRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val sessionId = sessionDataManager.getSessionId().asLiveData(Dispatchers.IO)
-
-    val account = MutableLiveData<NetworkAccount>()
-
-    fun getAccount(sessionId: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            accountApiService.getAccountDetails(sessionId = sessionId).let {
-                account.postValue(it)
-            }
-        }
-    }
+    val account = accountRepository.getAccount().asLiveData(Dispatchers.IO)
 
     fun clearSession() {
         viewModelScope.launch(Dispatchers.IO) {
-            sessionDataManager.clearSession()
-
+            accountRepository.clearSession()
         }
     }
 

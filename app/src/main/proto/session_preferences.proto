@@ -7,6 +7,4 @@ message SessionPreferences {
 
   string request_token = 1;
   string session_id = 2;
-  bool is_signed_in = 3;
-
 }

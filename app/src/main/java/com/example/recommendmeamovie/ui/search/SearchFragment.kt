@@ -1,11 +1,14 @@
 package com.example.recommendmeamovie.ui.search
 
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.widget.SearchView
+import androidx.annotation.RequiresApi
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -61,6 +64,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), MoviePagingAdapter.On
         viewModel.navigateToMovie(movie)
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_menu, menu)
         val searchItem = menu.findItem(R.id.action_search)
@@ -68,7 +72,6 @@ class SearchFragment : Fragment(R.layout.fragment_search), MoviePagingAdapter.On
         (searchItem.actionView as SearchView).apply {
             isIconified = false
             queryHint = getString(R.string.search) + "... "
-            setBackgroundColor(Color.TRANSPARENT)
 
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 

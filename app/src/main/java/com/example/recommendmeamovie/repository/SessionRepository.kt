@@ -5,8 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface SessionRepository {
 
-    val loginStatus: Flow<Boolean>
-
     fun getSessionId(): Flow<Resource<String>>
 
     suspend fun clearSession()

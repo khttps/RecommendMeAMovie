@@ -29,6 +29,7 @@
             tools:text="Cruella"
             android:gravity="center"
             android:paddingTop="@dimen/half_spacing"
+            android:paddingHorizontal="2dp"
             android:maxLines="1"
             android:ellipsize="end"
             android:background="?colorPrimaryVariant"

@@ -22,7 +22,8 @@ fun MoviesContainer.asEntity(movieType: String) : List<MovieEntity> = results.ma
         title = it.title,
         poster = it.poster,
         releaseDate = it.releaseDate,
-        movieType = movieType
+        movieType = movieType,
+        page = this.page
     )
 }
 

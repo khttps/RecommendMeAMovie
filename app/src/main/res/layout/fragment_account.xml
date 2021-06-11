@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:gravity="center"
@@ -7,17 +8,136 @@
     android:layout_height="match_parent"
     tools:context=".ui.account.AccountFragment">
 
-    <TextView
-        android:id="@+id/account"
-        android:layout_margin="@dimen/default_spacing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Ipsum Lorem fuckem allem" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/log_out_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/log_out"/>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/avatar_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_spacing"
+            app:cardCornerRadius="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_placeholder"
+                app:strokeColor="@color/semi_transparent_grey"
+                app:strokeWidth="@dimen/unit_dimen" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_margin="@dimen/default_spacing"
+            tools:text="Ahmed Khattab"
+            android:textSize="24sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/avatar_card"
+            app:layout_constraintTop_toTopOf="@id/avatar_card" />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light_grey"
+            app:layout_constraintStart_toStartOf="@id/name"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            tools:text="SiiilverSurfffer" />
+
+        <View
+            android:id="@+id/divider_one"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="@dimen/default_spacing"
+            android:background="@color/semi_transparent_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/avatar_card" />
+
+        <TextView
+            android:id="@+id/your_movies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/default_spacing"
+            android:text="@string/your_movies"
+            app:layout_constraintStart_toStartOf="@id/avatar_card"
+            app:layout_constraintTop_toBottomOf="@id/divider_one" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/your_movies_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/half_spacing"
+            android:clipToPadding="false"
+            android:elevation="@dimen/unit_dimen"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/default_spacing"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/your_movies"
+            tools:listitem="@layout/list_item_discover" />
+
+        <View
+            android:id="@+id/divider_two"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="@dimen/default_spacing"
+            android:background="@color/semi_transparent_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/your_movies_recycler_view" />
+
+        <TextView
+            android:id="@+id/watchlist"
+            android:layout_marginVertical="@dimen/default_spacing"
+            android:layout_width="wrap_content"
+            android:text="@string/watchlist"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/your_movies"
+            app:layout_constraintTop_toBottomOf="@id/divider_two" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/watchlist_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/half_spacing"
+            android:clipToPadding="false"
+            android:elevation="@dimen/unit_dimen"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/default_spacing"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/list_item_discover"
+            app:layout_constraintTop_toBottomOf="@id/watchlist"/>
+
+        <View
+            android:id="@+id/divider_three"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="@dimen/default_spacing"
+            android:background="@color/semi_transparent_grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/watchlist_recycler_view" />
+
+        <Button
+            android:id="@+id/log_out_button"
+            android:layout_marginVertical="@dimen/default_spacing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/log_out"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_three" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
