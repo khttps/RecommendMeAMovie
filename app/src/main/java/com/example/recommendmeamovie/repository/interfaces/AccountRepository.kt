@@ -1,4 +1,4 @@
-package com.example.recommendmeamovie.repository
+package com.example.recommendmeamovie.repository.interfaces
 
 import com.example.recommendmeamovie.domain.Account
 import com.example.recommendmeamovie.domain.Movie
@@ -8,9 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface AccountRepository {
     fun getAccount(): Flow<Resource<Account>>
 
-    fun getWatchlist(): Flow<List<Movie>>
-
-    fun getYourFilms(): Flow<List<Movie>>
-
-    suspend fun clearSession()
+    suspend fun clearAccount()
 }

@@ -1,6 +1,5 @@
 package com.example.recommendmeamovie.ui.search
 
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -8,10 +7,11 @@ import android.view.MenuInflater
 import android.view.View
 import android.widget.SearchView
 import androidx.annotation.RequiresApi
-import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.adapter.MoviePagingAdapter
 import com.example.recommendmeamovie.databinding.FragmentSearchBinding
@@ -35,9 +35,28 @@ class SearchFragment : Fragment(R.layout.fragment_search), MoviePagingAdapter.On
         _binding = FragmentSearchBinding.bind(view)
 
         pagingAdapter = MoviePagingAdapter(this@SearchFragment, R.layout.list_item_search)
-        binding.recyclerView.apply {
-            adapter = pagingAdapter
-            setHasFixedSize(true)
+
+        binding.apply {
+            pagingAdapter.addLoadStateListener {
+                val state = it.source.refresh
+
+                progressBar.isVisible = state is LoadState.Loading
+                errorMessage.isVisible = state is LoadState.Error
+                recyclerView.isVisible = state !is LoadState.Error && state !is LoadState.Loading
+
+                when(state) {
+                    is LoadState.Error -> errorMessage.text = state.error.localizedMessage
+                    is LoadState.NotLoading -> {
+                        if (it.append.endOfPaginationReached && pagingAdapter.itemCount < 1) {
+                            errorMessage.isVisible = true
+                            errorMessage.text = getString(R.string.nothing_to_see_here)
+                        }
+                    }
+                    else -> recyclerView.scrollToPosition(0)
+
+                }
+            }
+            recyclerView.adapter = pagingAdapter
         }
 
         subscribeObservers()
@@ -64,7 +83,6 @@ class SearchFragment : Fragment(R.layout.fragment_search), MoviePagingAdapter.On
         viewModel.navigateToMovie(movie)
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_menu, menu)
         val searchItem = menu.findItem(R.id.action_search)
@@ -81,7 +99,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), MoviePagingAdapter.On
                 }
 
                 override fun onQueryTextChange(query: String?): Boolean {
-                    if (query.isNullOrBlank())
+                    if (query.isNullOrBlank() || query.last() == ' ')
                         return false
 
                     viewModel.getSearchResults(query)

@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Margin & Padding -->
     <dimen name="default_spacing">16dp</dimen>
     <dimen name="half_spacing">8dp</dimen>
-    <dimen name="nav_header_height">200dp</dimen>
-    <dimen name="list_item_height">150dp</dimen>
-    <dimen name="list_item_width">100dp</dimen>
-    <dimen name="button_dimen">48dp</dimen>
     <dimen name="unit_dimen">1dp</dimen>
-    <dimen name="button_dimen_alt">56dp</dimen>
+    <dimen name="circle_photo_dimen">72dp</dimen>
+
+    <dimen name="nav_header_height">176dp</dimen>
+
+    <!-- Discover -->
+    <dimen name="discover_poster_height">150dp</dimen>
+    <dimen name="discover_poster_width">100dp</dimen>
+
+    <!-- Text -->
+    <dimen name="header_text_size">24sp</dimen>
+    <dimen name="subheader_text_size">18sp</dimen>
+
+    <!-- Movie Details -->
+    <dimen name="round_edges_radius">10dp</dimen>
+    <dimen name="big_poster_width">132dp</dimen>
+    <dimen name="big_poster_height">200dp</dimen>
+    <dimen name="movie_buttons_dimen">48dp</dimen>
+
+    <!-- Credits List -->
+    <dimen name="circle_radius">60dp</dimen>
+    <dimen name="credit_list_item_height">116dp</dimen>
+    <dimen name="discover_item_height">198dp</dimen>
+    <dimen name="avatar_dimen">96dp</dimen>
 </resources>

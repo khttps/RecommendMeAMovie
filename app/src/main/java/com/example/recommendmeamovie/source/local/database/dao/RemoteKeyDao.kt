@@ -13,9 +13,9 @@ interface RemoteKeyDao {
     suspend fun insertOrReplace(remoteKey: RemoteKey)
 
     @Query("SELECT * FROM remote_keys WHERE filter = :filter")
-    suspend fun remoteKeyByQuery(filter: String): RemoteKey
+    suspend fun remoteKeyByFilter(filter: String): RemoteKey
 
-    @Query("DELETE FROM remote_keys WHERE filter = :query")
-    suspend fun deleteByQuery(query: String)
+    @Query("DELETE FROM remote_keys WHERE filter = :filter")
+    suspend fun deleteByFilter(filter: String)
 
 }

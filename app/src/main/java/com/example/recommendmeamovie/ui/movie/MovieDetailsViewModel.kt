@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.example.recommendmeamovie.domain.MovieDetails
-import com.example.recommendmeamovie.repository.MovieDetailsRepository
+import com.example.recommendmeamovie.repository.interfaces.MovieDetailsRepository
 import com.example.recommendmeamovie.util.Resource
 import com.example.recommendmeamovie.util.scheduleNotification
 import dagger.hilt.android.lifecycle.HiltViewModel

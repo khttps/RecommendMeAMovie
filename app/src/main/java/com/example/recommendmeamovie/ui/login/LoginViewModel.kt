@@ -2,20 +2,18 @@ package com.example.recommendmeamovie.ui.login
 
 import android.net.Uri
 import androidx.lifecycle.*
-import com.example.recommendmeamovie.repository.LoginRepository
+import com.example.recommendmeamovie.repository.interfaces.SessionRepository
 import com.example.recommendmeamovie.util.Constants
 import com.example.recommendmeamovie.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val repository: LoginRepository,
+    private val repository: SessionRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -36,7 +34,7 @@ class LoginViewModel @Inject constructor(
 
     fun getRequestToken() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getToken().collect {
+            repository.getRequestToken().collect {
                 _token.postValue(it)
             }
         }

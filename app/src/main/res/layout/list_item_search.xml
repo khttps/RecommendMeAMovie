@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?colorPrimaryVariant"
     android:orientation="horizontal">
 
     <com.google.android.material.card.MaterialCardView
@@ -28,31 +28,35 @@
             tools:src="@drawable/ic_broken_image" />
     </com.google.android.material.card.MaterialCardView>
 
-    <TextView
-        android:id="@+id/title"
+    <LinearLayout
+        android:id="@+id/text_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/default_spacing"
-        android:layout_marginTop="@dimen/default_spacing"
-        android:layout_toEndOf="@id/poster_card"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:textStyle="bold"
+        android:layout_margin="@dimen/default_spacing"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.090"
         app:layout_constraintStart_toEndOf="@+id/poster_card"
-        app:layout_constraintTop_toTopOf="@+id/poster_card"
-        tools:text="The Assassination of Jesse James by the Coward Robert Ford" />
+        app:layout_constraintTop_toTopOf="@+id/poster_card">
 
-    <TextView
-        android:id="@+id/year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
-        app:layout_constraintStart_toStartOf="@+id/title"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        tools:text="2007" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textStyle="bold"
+            tools:text="The Assassination" />
+
+        <TextView
+            android:id="@+id/year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="2007" />
+    </LinearLayout>
+
+
 
     <View
         android:id="@+id/divider"
@@ -63,4 +67,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/poster_card" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

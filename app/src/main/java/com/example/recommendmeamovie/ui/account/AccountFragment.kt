@@ -8,7 +8,9 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.databinding.FragmentAccountBinding
+import com.example.recommendmeamovie.ui.MainActivity
 import com.example.recommendmeamovie.util.Constants.IMAGE_URL
+import com.example.recommendmeamovie.util.EventObserver
 import com.example.recommendmeamovie.util.Resource
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,13 +27,24 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         viewModel.account.observe(viewLifecycleOwner) {
             if (it is Resource.Success) {
                 binding.apply {
-                    name.text = it.data!!.name
-                    username.text = it.data.username
+                    Glide.with(this.root)
+                        .load(IMAGE_URL + it.data!!.avatar)
+                        .placeholder(R.drawable.loading_animation)
+                        .error(R.drawable.ic_placeholder)
+                        .into(avatar)
 
-                    Glide.with(this.root).load(IMAGE_URL + it.data.avatar).circleCrop().into(avatar)
+                    name.text = it.data.name
+                    it.data.username.apply {
+                        (activity as MainActivity).supportActionBar?.title = this
+                        username.text = this
+                    }
                 }
             }
         }
+
+        viewModel.eventNavigateUp.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigateUp()
+        })
 
         binding.logOutButton.setOnClickListener {
             showLogoutDialog()
@@ -48,7 +61,6 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
             .setPositiveButton(resources.getString(R.string.dialog_accept)) { dialog, _ ->
                 viewModel.clearSession()
                 dialog.dismiss()
-                findNavController().navigateUp()
             }.show()
     }
 

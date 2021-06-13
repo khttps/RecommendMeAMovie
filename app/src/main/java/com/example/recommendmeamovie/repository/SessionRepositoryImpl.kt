@@ -1,16 +1,31 @@
-package com.example.recommendmeamovie.repository.impl
+package com.example.recommendmeamovie.repository
 
-import com.example.recommendmeamovie.repository.SessionRepository
+import com.example.recommendmeamovie.repository.interfaces.SessionRepository
 import com.example.recommendmeamovie.source.local.datastore.SessionDataManager
-import com.example.recommendmeamovie.source.remote.service.MovieApiService
+import com.example.recommendmeamovie.source.remote.service.AccountApiService
 import com.example.recommendmeamovie.util.networkBoundResource
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class SessionRepositoryImpl @Inject constructor(
-    private val movieApiService: MovieApiService,
+    private val service: AccountApiService,
     private val dataStore: SessionDataManager
 ): SessionRepository {
+
+    override fun getRequestToken() = networkBoundResource(
+        query = {
+            dataStore.getToken()
+        },
+        fetch = {
+            service.getToken().also {
+                if (!it.success)
+                    throw Throwable(message = "Couldn't retrieve token. ")
+            }
+        },
+        saveFetchResult = {
+            dataStore.setToken(it.requestToken)
+        }
+    )
 
     override fun getSessionId() = networkBoundResource(
         query = {
@@ -18,7 +33,7 @@ class SessionRepositoryImpl @Inject constructor(
         },
         fetch = {
             val token = dataStore.getToken().first()
-            movieApiService.createSession(token = token).also {
+            service.createSession(token = token).also {
                 if (!it.success)
                     throw Throwable(message = "Couldn't retrieve session. ")
             }
@@ -31,7 +46,9 @@ class SessionRepositoryImpl @Inject constructor(
         }
     )
 
-    override suspend fun clearSession() = dataStore.clearSession()
+    override suspend fun clearSession() {
+        dataStore.clearSession()
+    }
 
 
 }

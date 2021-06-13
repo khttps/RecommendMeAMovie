@@ -20,19 +20,27 @@ class AccountDataManager @Inject constructor(@ApplicationContext context: Contex
 
     fun getAccount() = dataStore.data.map {
         Account(
+            it.id,
             it.name,
             it.username,
             it.avatar
         )
     }
 
-    suspend fun setAccount(name: String, username: String, avatar: String) {
+    suspend fun setAccount(id: Long, name: String, username: String, avatar: String) {
         dataStore.updateData {
             it.toBuilder()
+                .setId(id)
                 .setName(name)
                 .setUsername(username)
                 .setAvatar(avatar)
                 .build()
+        }
+    }
+
+    suspend fun clearAccount() {
+        dataStore.updateData {
+            it.toBuilder().clear().build()
         }
     }
 }

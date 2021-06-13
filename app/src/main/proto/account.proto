@@ -5,8 +5,9 @@ option java_multiple_files = true;
 
 message ProtoAccount {
 
-  string name = 1;
-  string username = 2;
-  string avatar = 3;
+  int64 id = 1;
+  string name = 2;
+  string username = 3;
+  string avatar = 4;
 
 }

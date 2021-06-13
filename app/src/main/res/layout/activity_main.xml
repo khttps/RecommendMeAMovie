@@ -41,9 +41,10 @@
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:layout_gravity="start"
-        android:background="@color/light_grey"
+        android:background="?colorPrimary"
         app:headerLayout="@layout/nav_header"
-        app:itemTextColor="@color/white"
+        app:itemTextColor="?colorOnPrimary"
         app:menu="@menu/guest_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

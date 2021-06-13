@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:elevation="5dp"
-    android:background="@color/dark_grey"
-    android:padding="@dimen/default_spacing"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:background="?colorPrimaryVariant"
+    android:elevation="@dimen/unit_dimen"
+    android:gravity="bottom"
     android:orientation="vertical"
-    android:gravity="bottom">
+    android:padding="@dimen/default_spacing"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/avatar_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="60dp">
+        app:cardCornerRadius="@dimen/circle_radius"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
-            app:strokeWidth="@dimen/unit_dimen"
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/circle_photo_dimen"
+            android:layout_height="@dimen/circle_photo_dimen"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/ic_placeholder"
             app:strokeColor="@color/semi_transparent_grey"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:id="@+id/imageView"
-            android:paddingTop="@dimen/half_spacing"
-            android:layout_gravity="center_horizontal"
-            android:scaleType="centerCrop"/>
-
+            app:strokeWidth="@dimen/unit_dimen" />
     </com.google.android.material.card.MaterialCardView>
-
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/hello"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="26dp"
         android:paddingTop="@dimen/half_spacing"
         android:text="@string/hello_guest"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />

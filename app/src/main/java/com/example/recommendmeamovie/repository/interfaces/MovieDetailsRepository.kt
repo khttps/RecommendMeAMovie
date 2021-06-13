@@ -1,4 +1,4 @@
-package com.example.recommendmeamovie.repository
+package com.example.recommendmeamovie.repository.interfaces
 
 import com.example.recommendmeamovie.domain.MovieDetails
 import com.example.recommendmeamovie.util.Resource

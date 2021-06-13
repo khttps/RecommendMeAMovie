@@ -18,12 +18,11 @@ fun MoviesContainer.asDomain(): List<Movie> = results.map {
 
 fun MoviesContainer.asEntity(movieType: String) : List<MovieEntity> = results.map {
     MovieEntity(
-        id = it.id,
+        movieId = it.id,
         title = it.title,
         poster = it.poster,
         releaseDate = it.releaseDate,
         movieType = movieType,
-        page = this.page
     )
 }
 
@@ -52,7 +51,6 @@ fun List<Cast>.asCastDomain() : List<Credit> = this.map {
         picture = it.picture
     )
 }
-
 
 fun List<Crew>.asCrewDomain() = this.map {
     Credit(

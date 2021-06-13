@@ -1,10 +1,8 @@
 package com.example.recommendmeamovie.ui.account
 
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
-import com.example.recommendmeamovie.repository.AccountRepository
+import androidx.lifecycle.*
+import com.example.recommendmeamovie.repository.interfaces.AccountRepository
+import com.example.recommendmeamovie.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,16 +10,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
-    private val accountRepository: AccountRepository,
+    private val repository: AccountRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val account = accountRepository.getAccount().asLiveData(Dispatchers.IO)
+    val account = repository.getAccount().asLiveData()
 
     fun clearSession() {
         viewModelScope.launch(Dispatchers.IO) {
-            accountRepository.clearSession()
+            repository.clearAccount()
+            _eventNavigateUp.postValue(Event(Unit))
         }
     }
+
+    private val _eventNavigateUp = MutableLiveData<Event<Unit>>()
+    val eventNavigateUp: LiveData<Event<Unit>>
+        get() = _eventNavigateUp
 
 }

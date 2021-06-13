@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="credit"
             type="com.example.recommendmeamovie.domain.Credit" />
@@ -13,21 +11,21 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/credit_list_item_height"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/half_spacing">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="60dp"
+            app:cardCornerRadius="@dimen/circle_radius"
             app:strokeColor="@color/semi_transparent_grey"
             app:strokeWidth="@dimen/unit_dimen">
 
             <ImageView
                 android:id="@+id/credits_profile"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
+                android:layout_width="@dimen/circle_photo_dimen"
+                android:layout_height="72dp"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="centerCrop"
                 app:profile="@{credit.picture}"

@@ -43,6 +43,7 @@
     <string name="recommend_fab_description">Start Movie Recommendation Process</string>
     <string name="movie_poster_description">Movie Poster</string>
     <string name="vote_average_description">Vote Average</string>
+    <string name="tmdb_logo_description">TMDB Logo</string>
 
     <!-- Logout Dialog -->
     <string name="dialog_title">Log out</string>
@@ -51,7 +52,9 @@
     <string name="dialog_accept">Yes</string>
 
     <!-- Nav Header -->
-    <string name="hello_guest">Hello, Guest</string>
+    <string name="hello">Hello, %1$s!</string>
+    <string name="guest">Guest</string>
     <string name="log_out">Log out</string>
+    <string name="hello_guest">Hello, Guest!</string>
 
 </resources>

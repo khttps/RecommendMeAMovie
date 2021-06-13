@@ -5,6 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class NetworkAccount(
+    val id: Long,
     val name: String,
     val username: String,
     val avatar: Avatar

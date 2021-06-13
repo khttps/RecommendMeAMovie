@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:gravity="center"
+    android:paddingVertical="@dimen/default_spacing"
+    android:clipToPadding="false"
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".ui.account.AccountFragment">
@@ -17,15 +19,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_spacing"
-            app:cardCornerRadius="60dp"
+            app:cardCornerRadius="@dimen/round_edges_radius"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/avatar"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:scaleType="fitXY"
+                android:layout_width="@dimen/avatar_dimen"
+                android:layout_height="@dimen/avatar_dimen"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/ic_placeholder"
                 app:strokeColor="@color/semi_transparent_grey"
                 app:strokeWidth="@dimen/unit_dimen" />
@@ -36,7 +38,7 @@
             android:id="@+id/name"
             android:layout_margin="@dimen/default_spacing"
             tools:text="Ahmed Khattab"
-            android:textSize="24sp"
+            android:textSize="@dimen/header_text_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/avatar_card"
@@ -73,7 +75,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/your_movies_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/discover_item_height"
             android:layout_marginTop="@dimen/half_spacing"
             android:clipToPadding="false"
             android:elevation="@dimen/unit_dimen"
@@ -107,7 +109,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/watchlist_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/discover_item_height"
             android:layout_marginTop="@dimen/half_spacing"
             android:clipToPadding="false"
             android:elevation="@dimen/unit_dimen"

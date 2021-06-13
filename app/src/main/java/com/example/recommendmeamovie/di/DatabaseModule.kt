@@ -3,8 +3,6 @@ package com.example.recommendmeamovie.di
 import android.content.Context
 import androidx.room.Room
 import com.example.recommendmeamovie.source.local.database.MovieDatabase
-import com.example.recommendmeamovie.source.local.database.dao.MovieDao
-import com.example.recommendmeamovie.source.local.database.dao.QuestionDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,14 +23,4 @@ object DatabaseModule {
         .fallbackToDestructiveMigration()
         .build()
     }
-
-    @Provides
-    fun provideQuestionDao(movieDatabase: MovieDatabase) : QuestionDao {
-        return movieDatabase.questionDao
-    }
-
-
-
-
-
 }

@@ -27,7 +27,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_gravity="center"
                 android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
 
             <TextView
@@ -35,19 +34,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
                 android:text="@{viewModel.movieDetails.error.localizedMessage}"
-                android:textAlignment="center"
                 android:visibility="@{viewModel.loadingFailed ? View.VISIBLE : View.GONE}"
                 tools:text="Error Message"
                 tools:visibility="visible" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
@@ -59,8 +51,8 @@
                     android:id="@+id/poster_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/default_spacing"
-                    app:cardCornerRadius="10dp"
+                    android:layout_marginHorizontal="@dimen/default_spacing"
+                    app:cardCornerRadius="@dimen/round_edges_radius"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:strokeColor="@color/semi_transparent_grey"
@@ -68,8 +60,8 @@
 
                     <ImageView
                         android:id="@+id/poster"
-                        android:layout_width="133dp"
-                        android:layout_height="200dp"
+                        android:layout_width="@dimen/big_poster_width"
+                        android:layout_height="@dimen/big_poster_height"
                         android:contentDescription="@string/movie_poster_description"
                         android:scaleType="fitXY"
                         app:poster="@{viewModel.movieDetails.data.poster}"
@@ -77,13 +69,12 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
-                    android:id="@+id/title_text_view"
-                    style="@style/TextAppearance.AppCompat.Headline"
+                    android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/default_spacing"
                     android:text="@{viewModel.movieDetails.data.title}"
-                    android:textColor="@color/white"
+                    android:textSize="@dimen/header_text_size"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.090"
@@ -96,18 +87,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/directed_by"
-                    app:layout_constraintStart_toStartOf="@+id/title_text_view"
-                    app:layout_constraintTop_toBottomOf="@+id/title_text_view" />
+                    app:layout_constraintStart_toStartOf="@+id/title"
+                    app:layout_constraintTop_toBottomOf="@+id/title" />
 
                 <TextView
-                    android:id="@+id/director_text_view"
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:id="@+id/director"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/half_spacing"
+                    android:textSize="@dimen/subheader_text_size"
                     android:text="@{viewModel.director.name}"
-                    android:textColor="@color/white"
-                    app:layout_constrainedWidth="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/directed_by"
@@ -115,16 +104,16 @@
                     tools:text="Orson Welles" />
 
                 <LinearLayout
-                    android:id="@+id/linearLayout"
+                    android:id="@+id/details_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_spacing"
                     android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="@+id/director_text_view"
-                    app:layout_constraintTop_toBottomOf="@+id/director_text_view">
+                    app:layout_constraintStart_toStartOf="@+id/director"
+                    app:layout_constraintTop_toBottomOf="@+id/director">
 
                     <TextView
-                        android:id="@+id/runtime_text_view"
+                        android:id="@+id/runtime"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/default_spacing"
@@ -132,7 +121,7 @@
                         tools:text="119 minutes" />
 
                     <TextView
-                        android:id="@+id/release_text_view"
+                        android:id="@+id/year"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/default_spacing"
@@ -142,7 +131,7 @@
 
 
                 <TextView
-                    android:id="@+id/genre_text_view"
+                    android:id="@+id/genre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/half_spacing"
@@ -150,70 +139,70 @@
                     app:layout_constrainedWidth="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@+id/linearLayout"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                    app:layout_constraintStart_toStartOf="@+id/details_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/details_layout"
                     tools:text="Drama/Mystery" />
 
                 <LinearLayout
-                    android:id="@+id/buttonsLayout"
+                    android:id="@+id/buttons_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_spacing"
                     android:gravity="center"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/title_text_view"
-                    app:layout_constraintTop_toBottomOf="@+id/genre_text_view">
+                    app:layout_constraintStart_toStartOf="@+id/title"
+                    app:layout_constraintTop_toBottomOf="@+id/genre">
 
                     <TextView
-                        android:id="@+id/vote_average_text_view"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
+                        android:id="@+id/vote_average"
+                        android:layout_width="@dimen/movie_buttons_dimen"
+                        android:layout_height="@dimen/movie_buttons_dimen"
                         android:layout_marginEnd="@dimen/half_spacing"
                         android:background="@drawable/ic_circle"
                         android:contentDescription="@string/vote_average_description"
                         android:gravity="center"
                         android:text="@{String.valueOf(viewModel.movieDetails.data.voteAverage)}"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/genre_text_view"
+                        app:layout_constraintTop_toBottomOf="@+id/genre"
                         tools:text="7.5" />
 
                     <ImageView
-                        android:id="@+id/add_to_watchlist_button"
-                        android:layout_width="@dimen/button_dimen_alt"
-                        android:layout_height="@dimen/button_dimen_alt"
+                        android:id="@+id/watchlist"
+                        android:layout_width="@dimen/movie_buttons_dimen"
+                        android:layout_height="@dimen/movie_buttons_dimen"
                         android:layout_marginEnd="@dimen/half_spacing"
                         android:contentDescription="@string/add_to_watchlist_description"
                         android:onClick="@{() -> viewModel.scheduleMovieNotification()}"
                         android:scaleType="fitCenter"
                         android:src="@drawable/ic_watchlist"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/genre_text_view" />
+                        app:layout_constraintTop_toBottomOf="@+id/genre" />
 
                     <ImageView
-                        android:id="@+id/add_to_your_films_button"
-                        android:layout_width="@dimen/button_dimen_alt"
-                        android:layout_height="@dimen/button_dimen_alt"
+                        android:id="@+id/favorites"
+                        android:layout_width="@dimen/movie_buttons_dimen"
+                        android:layout_height="@dimen/movie_buttons_dimen"
                         android:layout_marginEnd="@dimen/half_spacing"
                         android:contentDescription="@string/add_to_watched_description"
                         android:scaleType="fitXY"
                         android:src="@drawable/ic_watched"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/genre_text_view" />
+                        app:layout_constraintTop_toBottomOf="@+id/genre" />
                 </LinearLayout>
 
                 <View
                     android:id="@+id/divider_one"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/unit_dimen"
-                    android:layout_marginTop="@dimen/default_spacing"
+                    android:layout_marginTop="24dp"
                     android:layout_marginBottom="@dimen/half_spacing"
                     android:background="@color/semi_transparent_grey"
-                    app:layout_constraintTop_toBottomOf="@+id/buttonsLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/buttons_layout"
                     tools:layout_editor_absoluteX="16dp" />
 
                 <TextView
-                    android:id="@+id/overview_text_view"
+                    android:id="@+id/overview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/default_spacing"
@@ -230,24 +219,24 @@
                     android:layout_height="@dimen/unit_dimen"
                     android:layout_marginVertical="@dimen/half_spacing"
                     android:background="@color/semi_transparent_grey"
-                    app:layout_constraintTop_toBottomOf="@+id/overview_text_view" />
+                    app:layout_constraintTop_toBottomOf="@+id/overview" />
 
                 <TextView
-                    android:id="@+id/cast_text_view"
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:id="@+id/cast"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="@dimen/half_spacing"
                     android:layout_marginStart="@dimen/default_spacing"
                     android:text="@string/cast"
                     android:textColor="@color/white"
+                    android:textSize="@dimen/subheader_text_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider_two" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/cast_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/credit_list_item_height"
                     android:layout_marginTop="@dimen/half_spacing"
                     android:clipToPadding="false"
                     android:orientation="horizontal"
@@ -256,7 +245,7 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cast_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/cast"
                     tools:listitem="@layout/list_item_credits" />
 
                 <View
@@ -268,21 +257,21 @@
                     app:layout_constraintTop_toBottomOf="@+id/cast_list" />
 
                 <TextView
-                    android:id="@+id/crew_text_view"
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:id="@+id/crew"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/default_spacing"
                     android:layout_marginVertical="@dimen/half_spacing"
+                    android:layout_marginStart="@dimen/default_spacing"
                     android:text="@string/crew"
                     android:textColor="@color/white"
+                    android:textSize="@dimen/subheader_text_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider_three" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/crew_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/credit_list_item_height"
                     android:layout_marginTop="@dimen/half_spacing"
                     android:clipToPadding="false"
                     android:orientation="horizontal"
@@ -291,15 +280,9 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/crew_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/crew"
                     tools:listitem="@layout/list_item_credits" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
         </RelativeLayout>
-
-
     </ScrollView>
-
 </layout>

@@ -10,25 +10,34 @@ import com.example.recommendmeamovie.source.local.database.MovieEntity
 import com.example.recommendmeamovie.source.local.database.RemoteKey
 import com.example.recommendmeamovie.source.remote.asEntity
 import com.example.recommendmeamovie.source.remote.service.MovieApiService
+import retrofit2.HttpException
+import java.io.IOException
 
 @ExperimentalPagingApi
 class MovieRemoteMediator(
     private val filter: String,
-    private val movieApiService: MovieApiService,
-    private val movieDatabase: MovieDatabase
+    private val service: MovieApiService,
+    private val database: MovieDatabase
 ) : RemoteMediator<Int, MovieEntity>() {
 
-    private val movieDao = movieDatabase.movieDao
-    private val remoteKeyDao = movieDatabase.remoteKeyDao
+    private val movieDao = database.movieDao
+    private val remoteKeyDao = database.remoteKeyDao
 
-    override suspend fun load(loadType: LoadType, state: PagingState<Int, MovieEntity>): MediatorResult {
+    override suspend fun initialize(): InitializeAction {
+        return InitializeAction.LAUNCH_INITIAL_REFRESH
+    }
+
+    override suspend fun load(
+        loadType: LoadType,
+        state: PagingState<Int, MovieEntity>
+    ): MediatorResult {
         return try {
-            val loadKey = when(loadType) {
-                LoadType.REFRESH -> null
+            val loadKey = when (loadType) {
+                LoadType.REFRESH -> 1
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
-                    val remoteKey = movieDatabase.withTransaction {
-                        remoteKeyDao.remoteKeyByQuery(filter = filter)
+                    val remoteKey = database.withTransaction {
+                        remoteKeyDao.remoteKeyByFilter(filter = filter)
                     }
 
                     if (remoteKey.nextKey == null)
@@ -38,23 +47,24 @@ class MovieRemoteMediator(
                 }
             }
 
-            val response = movieApiService.getMovies(filter = filter, page = loadKey)
+            val response = service.getMovies(filter = filter, page = loadKey)
 
-            movieDatabase.withTransaction {
+            database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    remoteKeyDao.deleteByQuery(filter)
+                    remoteKeyDao.deleteByFilter(filter)
                     movieDao.deleteAll(filter)
                 }
 
                 remoteKeyDao.insertOrReplace(
-                    RemoteKey(filter, response.page + 1)
+                    RemoteKey(filter, response.page.inc())
                 )
                 movieDao.insertAll(response.asEntity(filter))
             }
-
             MediatorResult.Success(endOfPaginationReached = response.results.isEmpty())
 
-        } catch (exception: Exception) {
+        } catch (exception: IOException) {
+            MediatorResult.Error(exception)
+        } catch (exception: HttpException) {
             MediatorResult.Error(exception)
         }
     }
