@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="@string/search" android:id="@id/searchFragment"/>
-    <item android:title="@string/your_movies" />
+    <item android:title="@string/favorites" />
     <item android:title="@string/watchlist" />
     <item android:title="@string/account" android:id="@id/accountFragment"/>
 </menu>

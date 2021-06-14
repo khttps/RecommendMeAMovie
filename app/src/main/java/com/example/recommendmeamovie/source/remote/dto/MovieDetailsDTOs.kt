@@ -13,7 +13,8 @@ data class NetworkMovieDetails(
     val credits: NetworkCredits,
     @Json(name = "poster_path") val poster: String?,
     @Json(name = "release_date") val releaseDate: String,
-    @Json(name = "vote_average") val voteAverage: Double
+    @Json(name = "vote_average") val voteAverage: Double,
+    @Json(name = "account_states") val accountStates: AccountStates
 )
 
 @JsonClass(generateAdapter = true)
@@ -40,5 +41,11 @@ data class Crew(
 data class Genre(
     val id: Long,
     val name: String
+)
+
+data class AccountStates(
+    val favorite: Boolean,
+    val rated: Boolean,
+    val watchlist: Boolean
 )
 

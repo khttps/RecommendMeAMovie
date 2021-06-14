@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.recommendmeamovie.source.local.database.MovieEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
@@ -16,11 +17,11 @@ interface MovieDao {
     @Insert
     suspend fun addMovie(movie : MovieEntity)
 
-    @Query("SELECT * FROM movies WHERE movie_type = :filter ORDER BY CASE WHEN :ascending = 1 THEN id END ASC, CASE WHEN :ascending = 0 THEN id END DESC")
-    fun getMoviesPaged(filter : String, ascending: Boolean) : PagingSource<Int, MovieEntity>
+    @Query("SELECT * FROM movies WHERE movie_type = :filter ORDER BY id ASC")
+    fun getMoviesPaged(filter : String) : PagingSource<Int, MovieEntity>
 
-    @Query("SELECT * FROM movies WHERE movie_type = :filter ORDER BY id DESC")
-    fun getMovies(filter : String) : List<MovieEntity>
+    @Query("SELECT * FROM movies WHERE movie_type = :filter ORDER BY id ASC LIMIT 20")
+    fun getMovies(filter : String) : Flow<List<MovieEntity>>
 
     @Query("DELETE FROM movies WHERE movie_type = :filter")
     suspend fun deleteAll(filter: String)

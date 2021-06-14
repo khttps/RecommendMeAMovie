@@ -40,7 +40,9 @@ fun NetworkMovieDetails.asDomain() : MovieDetails {
         crew = credits.crew?.asCrewDomain(),
         poster = poster,
         releaseDate = releaseDate,
-        voteAverage = voteAverage
+        voteAverage = voteAverage,
+        watchlist = accountStates.watchlist,
+        favorite = accountStates.favorite
     )
 }
 

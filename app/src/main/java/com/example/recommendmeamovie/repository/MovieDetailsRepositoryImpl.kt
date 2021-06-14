@@ -1,6 +1,5 @@
 package com.example.recommendmeamovie.repository
 
-import com.example.recommendmeamovie.domain.MovieDetails
 import com.example.recommendmeamovie.repository.interfaces.MovieDetailsRepository
 import com.example.recommendmeamovie.source.remote.asDomain
 import com.example.recommendmeamovie.source.remote.service.MovieApiService
@@ -14,16 +13,15 @@ class MovieDetailsRepositoryImpl @Inject constructor(
     private val movieService: MovieApiService
 ) : MovieDetailsRepository {
 
-    override fun getMovieDetails(id: Long) =  flow {
+    override fun getMovieDetails(id: Long, sessionId: String?) = flow {
         emit(Resource.Loading())
 
         val flow = try {
-                Resource.Success(movieService.getMovieDetails(id).asDomain())
+                Resource.Success(movieService.getMovieDetails(id = id, sessionId = sessionId).asDomain())
         } catch (throwable: Throwable) {
             Resource.Error(throwable = throwable)
         }
 
         emit(flow)
     }
-
 }

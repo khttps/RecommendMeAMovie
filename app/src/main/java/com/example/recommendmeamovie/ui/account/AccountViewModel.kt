@@ -2,6 +2,8 @@ package com.example.recommendmeamovie.ui.account
 
 import androidx.lifecycle.*
 import com.example.recommendmeamovie.repository.interfaces.AccountRepository
+import com.example.recommendmeamovie.repository.interfaces.MovieRepository
+import com.example.recommendmeamovie.repository.interfaces.SessionRepository
 import com.example.recommendmeamovie.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -10,15 +12,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
-    private val repository: AccountRepository,
+    private val accountRepository: AccountRepository,
+    private val sessionRepository: SessionRepository,
+    private val movieRepository: MovieRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val account = repository.getAccount().asLiveData()
+    val sessionId = sessionRepository.getSessionId().asLiveData()
+
+    val account = accountRepository.getAccount().asLiveData()
+
+
 
     fun clearSession() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.clearAccount()
+            accountRepository.clearAccount()
             _eventNavigateUp.postValue(Event(Unit))
         }
     }

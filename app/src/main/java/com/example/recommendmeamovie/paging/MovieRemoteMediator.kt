@@ -9,6 +9,7 @@ import com.example.recommendmeamovie.source.local.database.MovieDatabase
 import com.example.recommendmeamovie.source.local.database.MovieEntity
 import com.example.recommendmeamovie.source.local.database.RemoteKey
 import com.example.recommendmeamovie.source.remote.asEntity
+import com.example.recommendmeamovie.source.remote.dto.MoviesContainer
 import com.example.recommendmeamovie.source.remote.service.MovieApiService
 import retrofit2.HttpException
 import java.io.IOException
@@ -16,7 +17,7 @@ import java.io.IOException
 @ExperimentalPagingApi
 class MovieRemoteMediator(
     private val filter: String,
-    private val service: MovieApiService,
+    private val request: suspend (page: Int) -> MoviesContainer,
     private val database: MovieDatabase
 ) : RemoteMediator<Int, MovieEntity>() {
 
@@ -47,7 +48,7 @@ class MovieRemoteMediator(
                 }
             }
 
-            val response = service.getMovies(filter = filter, page = loadKey)
+            val response = request(loadKey)
 
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {

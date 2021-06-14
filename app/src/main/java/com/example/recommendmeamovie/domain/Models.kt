@@ -17,7 +17,9 @@ data class MovieDetails(
     val crew: List<Credit>?,
     val poster: String?,
     val releaseDate: String,
-    val voteAverage: Double
+    val voteAverage: Double,
+    val watchlist: Boolean?,
+    val favorite: Boolean?
 )
 
 data class Credit(

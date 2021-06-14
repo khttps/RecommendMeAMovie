@@ -8,3 +8,7 @@ fun MovieEntity.asDomain() = Movie(
     poster = poster,
     releaseDate = releaseDate
 )
+
+fun List<MovieEntity>.asDomain() = map {
+    it.asDomain()
+}

@@ -5,15 +5,12 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import com.example.recommendmeamovie.domain.Movie
 
-class MoviePagingAdapter(
+class MovieAdapter(
     private val listener: OnMovieClickListener?,
     private val resId: Int
 ) : PagingDataAdapter<Movie, MovieViewHolder>(ListItemCallbacks) {
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): MovieViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
             resId, parent, false
         )

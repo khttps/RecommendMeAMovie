@@ -5,7 +5,9 @@ import androidx.lifecycle.*
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.example.recommendmeamovie.domain.MovieDetails
+import com.example.recommendmeamovie.repository.interfaces.AccountRepository
 import com.example.recommendmeamovie.repository.interfaces.MovieDetailsRepository
+import com.example.recommendmeamovie.repository.interfaces.SessionRepository
 import com.example.recommendmeamovie.util.Resource
 import com.example.recommendmeamovie.util.scheduleNotification
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,23 +20,34 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(
     private val repository: MovieDetailsRepository,
+    private val sessionRepository: SessionRepository,
     @ApplicationContext private val context: Context,
     private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val movieId = savedStateHandle.get<Long>("movieId")
 
-    private val _movieDetails = MutableLiveData<Resource<MovieDetails>>()
-    val movieDetails: LiveData<Resource<MovieDetails>>
-        get() = _movieDetails
+    private val sessionId = sessionRepository.getSessionId().asLiveData()
 
-    val year = Transformations.map(movieDetails) {
-        it?.data?.releaseDate?.substringBefore("-")
+    //private val _movieDetails = MutableLiveData<Resource<MovieDetails>>()
+    val movieDetails = sessionId.switchMap {
+        val sessionId = it.data
+        repository.getMovieDetails(movieId!!, sessionId).asLiveData()
+    }
+    //LiveData<Resource<MovieDetails>>
+        //get() = _movieDetails
+
+    val year = Transformations.map(movieDetails) { details ->
+        details.data?.releaseDate?.substringBefore("-")
     }
 
     val director = Transformations.map(movieDetails) { details ->
-        details?.data?.crew?.first {
+        details.data?.crew?.first {
             it.role.equals("Director", true)
         }
+    }
+
+    val watchlist = Transformations.map(movieDetails) { details ->
+        details.data?.watchlist
     }
 
     val isLoading: LiveData<Boolean> = Transformations.map(movieDetails) {
@@ -50,16 +63,22 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     init {
-        if (movieId == null)
-            _movieDetails.value = Resource.Error(Throwable("Failed to load movie info."))
-        else {
-            viewModelScope.launch(Dispatchers.IO) {
-                repository.getMovieDetails(movieId).collect {
-                    _movieDetails.postValue(it)
-                }
-            }
-        }
+        //getMovieDetails()
     }
+
+//    private fun getMovieDetails() {
+//        if (movieId == null)
+//            movieDetails.value = Resource.Error(Throwable("Failed to load movie info."))
+//        else {
+//            viewModelScope.launch(Dispatchers.IO) {
+//                sessionId.value.let { session ->
+//                    repository.getMovieDetails(id = movieId, sessionId = session?.data).collect {
+//                        movieDetails.postValue(it)
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     fun scheduleMovieNotification() {
         val data = workDataOf(

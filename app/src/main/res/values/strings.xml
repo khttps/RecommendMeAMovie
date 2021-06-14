@@ -32,7 +32,7 @@
     <!-- Navigation View Items -->
     <string name="sign_in">Sign In</string>
     <string name="account">Account</string>
-    <string name="your_movies">Your Movies</string>
+    <string name="favorites">Favorites</string>
     <string name="watchlist">Watchlist</string>
     <string name="search">Search</string>
 

@@ -12,12 +12,18 @@ interface MovieRepository {
     val topRatedMoviesPaged: Flow<PagingData<Movie>>
 
 //    val watchlist: Flow<Resource<List<Movie>>>
-//
-//    val favorites: Flow<Resource<List<Movie>>>
-//
-//    val watchlistPaged: Flow<PagingData<Movie>>
-//
-//    val favoritesPaged: Flow<PagingData<Movie>>
 
-    fun getPagedSearchResults(query: String) : Flow<PagingData<Movie>>
+//    val favorites: Flow<Resource<List<Movie>>>
+
+    fun getWatchlistPaged(accountId: Long, sessionId: String): Flow<PagingData<Movie>>
+
+    fun getFavoritesPaged(accountId: Long, sessionId: String): Flow<PagingData<Movie>>
+
+    fun getPagedSearchResults(query: String): Flow<PagingData<Movie>>
+
+    fun getFavorites(accountId: Long, sessionId: String): Flow<Resource<List<Movie>>>
+
+    fun getWatchlist(accountId: Long, sessionId: String): Flow<Resource<List<Movie>>>
+
+    suspend fun clearCachedMovies()
 }

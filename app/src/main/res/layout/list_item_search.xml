@@ -21,8 +21,8 @@
 
         <ImageView
             android:id="@+id/poster"
-            android:layout_width="80dp"
-            android:layout_height="120dp"
+            android:layout_width="@dimen/search_item_poster_width"
+            android:layout_height="@dimen/search_item_poster_height"
             android:contentDescription="@string/movie_poster_description"
             android:scaleType="fitCenter"
             tools:src="@drawable/ic_broken_image" />

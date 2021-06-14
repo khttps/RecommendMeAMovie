@@ -44,10 +44,11 @@ interface MovieApiService {
         @Query("api_key") apiKey: String = API_KEY
     ): MoviesContainer
 
-    @GET("3/movie/{id}?append_to_response=credits")
+    @GET("3/movie/{id}?append_to_response=credits,account_states")
     suspend fun getMovieDetails(
         @Path("id") id: Long,
-        @Query("api_key") apiKey: String = API_KEY
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("session_id") sessionId: String?,
     ): NetworkMovieDetails
 }
 

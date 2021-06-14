@@ -1,12 +1,10 @@
 package com.example.recommendmeamovie.ui.search
 
-import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.widget.SearchView
-import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.adapter.MoviePagingAdapter
+import com.example.recommendmeamovie.adapter.OnMovieClickListener
 import com.example.recommendmeamovie.databinding.FragmentSearchBinding
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.util.EventObserver
@@ -21,7 +20,7 @@ import com.example.recommendmeamovie.util.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(R.layout.fragment_search), MoviePagingAdapter.OnMovieClickListener {
+class SearchFragment : Fragment(R.layout.fragment_search), OnMovieClickListener {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -44,7 +43,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), MoviePagingAdapter.On
                 errorMessage.isVisible = state is LoadState.Error
                 recyclerView.isVisible = state !is LoadState.Error && state !is LoadState.Loading
 
-                when(state) {
+                when (state) {
                     is LoadState.Error -> errorMessage.text = state.error.localizedMessage
                     is LoadState.NotLoading -> {
                         if (it.append.endOfPaginationReached && pagingAdapter.itemCount < 1) {
@@ -74,7 +73,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), MoviePagingAdapter.On
             )
         })
 
-        viewModel.eventNavigateUp.observe(viewLifecycleOwner, EventObserver{
+        viewModel.eventNavigateUp.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigateUp()
         })
     }

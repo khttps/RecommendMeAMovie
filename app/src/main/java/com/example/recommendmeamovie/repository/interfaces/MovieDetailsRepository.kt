@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieDetailsRepository {
 
-    fun getMovieDetails(id: Long): Flow<Resource<MovieDetails>>
+    fun getMovieDetails(id: Long, sessionId: String?): Flow<Resource<MovieDetails>>
 
 }

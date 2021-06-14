@@ -27,4 +27,6 @@
     <dimen name="credit_list_item_height">116dp</dimen>
     <dimen name="discover_item_height">198dp</dimen>
     <dimen name="avatar_dimen">96dp</dimen>
+    <dimen name="search_item_poster_width">80dp</dimen>
+    <dimen name="search_item_poster_height">120dp</dimen>
 </resources>
