@@ -38,6 +38,18 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
                 binding.watchlist.setBackgroundColor(Color.GREEN)
             }
         }
+
+        viewModel.watchlist.observe(viewLifecycleOwner) {
+            if (it == true) {
+                binding.watchlist.setBackgroundColor(Color.GREEN)
+            }
+        }
+
+        viewModel.favorite.observe(viewLifecycleOwner) {
+            if (it == true) {
+                binding.favorite.setBackgroundColor(Color.GREEN)
+            }
+        }
     }
 
 }

@@ -24,4 +24,12 @@ class MovieDetailsRepositoryImpl @Inject constructor(
 
         emit(flow)
     }
+
+    override suspend fun setWatchlist(id: Long, sessionId: String, addToWatchlist: Boolean) {
+        movieService.addOrRemoveMovieWatchlist(movieId = id, sessionId = sessionId, addToWatchlist = addToWatchlist)
+    }
+
+    override suspend fun setFavorite(id: Long, sessionId: String, addToFavorites: Boolean) {
+        movieService.addOrRemoveMovieFavorites(movieId = id, sessionId = sessionId, addToFavorites = addToFavorites)
+    }
 }

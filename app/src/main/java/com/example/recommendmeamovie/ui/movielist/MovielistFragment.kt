@@ -20,7 +20,6 @@ class MovielistFragment : Fragment(R.layout.fragment_movielist) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMovielistBinding.bind(view)
 
-
     }
 
     override fun onDestroyView() {

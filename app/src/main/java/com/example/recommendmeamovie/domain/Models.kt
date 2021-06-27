@@ -18,8 +18,8 @@ data class MovieDetails(
     val poster: String?,
     val releaseDate: String,
     val voteAverage: Double,
-    val watchlist: Boolean?,
-    val favorite: Boolean?
+    val watchlist: Boolean,
+    val favorite: Boolean
 )
 
 data class Credit(

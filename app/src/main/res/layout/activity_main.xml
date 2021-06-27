@@ -11,6 +11,7 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
+        android:fitsSystemWindows="true"
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -41,10 +42,9 @@
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
+        android:fitsSystemWindows="false"
         android:layout_gravity="start"
         android:background="?colorPrimary"
-        app:headerLayout="@layout/nav_header"
         app:itemTextColor="?colorOnPrimary"
         app:menu="@menu/guest_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

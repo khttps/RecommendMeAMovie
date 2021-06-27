@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.recommendmeamovie.R
+import com.example.recommendmeamovie.adapter.MovieAdapter
 import com.example.recommendmeamovie.databinding.FragmentAccountBinding
 import com.example.recommendmeamovie.ui.MainActivity
 import com.example.recommendmeamovie.util.Constants.IMAGE_URL
@@ -14,31 +15,62 @@ import com.example.recommendmeamovie.util.EventObserver
 import com.example.recommendmeamovie.util.Resource
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class AccountFragment : Fragment(R.layout.fragment_account) {
 
     private val viewModel: AccountViewModel by viewModels()
+    private var _binding: FragmentAccountBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentAccountBinding.bind(view)
+        _binding = FragmentAccountBinding.bind(view)
 
+        subscribeObservers()
+
+        binding.logOutButton.setOnClickListener {
+            showLogoutDialog()
+        }
+    }
+
+    private fun subscribeObservers() {
         viewModel.account.observe(viewLifecycleOwner) {
             if (it is Resource.Success) {
-                binding.apply {
-                    Glide.with(this.root)
-                        .load(IMAGE_URL + it.data!!.avatar)
-                        .placeholder(R.drawable.loading_animation)
-                        .error(R.drawable.ic_placeholder)
-                        .into(avatar)
+                Glide.with(this@AccountFragment)
+                    .load(IMAGE_URL + it.data!!.avatar)
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_placeholder)
+                    .into(binding.avatar)
 
-                    name.text = it.data.name
-                    it.data.username.apply {
-                        (activity as MainActivity).supportActionBar?.title = this
-                        username.text = this
-                    }
+                binding.name.text = it.data.name
+                it.data.username.apply {
+                    (activity as MainActivity).supportActionBar?.title = this
+                    binding.username.text = this
                 }
+            }
+        }
+
+        viewModel.favorites.observe(viewLifecycleOwner) {
+            if (it is Resource.Success) {
+                val adapter = MovieAdapter()
+                binding.favoritesRecyclerView.adapter = adapter
+                (binding.favoritesRecyclerView.adapter as MovieAdapter).submitList(it.data)
+
+            } else {
+                Timber.tag("account-debug").d(it.error)
+            }
+        }
+
+        viewModel.watchlist.observe(viewLifecycleOwner) {
+            if (it is Resource.Success) {
+                val adapter = MovieAdapter()
+                binding.favoritesRecyclerView.adapter = adapter
+                (binding.favoritesRecyclerView.adapter as MovieAdapter).submitList(it.data)
+
+            } else {
+                Timber.tag("account-debug").d(it.error)
             }
         }
 
@@ -46,9 +78,6 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
             findNavController().navigateUp()
         })
 
-        binding.logOutButton.setOnClickListener {
-            showLogoutDialog()
-        }
     }
 
     private fun showLogoutDialog() {

@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.adapter.MoviePagingAdapter
-import com.example.recommendmeamovie.adapter.OnMovieClickListener
 import com.example.recommendmeamovie.databinding.FragmentSearchBinding
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.util.EventObserver
@@ -20,7 +19,7 @@ import com.example.recommendmeamovie.util.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(R.layout.fragment_search), OnMovieClickListener {
+class SearchFragment : Fragment(R.layout.fragment_search), MoviePagingAdapter.OnMovieClickListener {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!

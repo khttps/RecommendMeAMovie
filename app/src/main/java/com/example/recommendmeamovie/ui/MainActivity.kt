@@ -15,6 +15,7 @@ import androidx.navigation.ui.*
 import com.bumptech.glide.Glide
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.databinding.ActivityMainBinding
+import com.example.recommendmeamovie.databinding.NavHeaderBinding
 import com.example.recommendmeamovie.util.Constants.IMAGE_URL
 import com.example.recommendmeamovie.util.Resource
 import com.example.recommendmeamovie.util.Utils
@@ -23,18 +24,18 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private val navController: NavController by lazy {
-        (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
+        (supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+                as NavHostFragment).navController
     }
 
-    private val drawerLayout: DrawerLayout by lazy {
-        binding.drawerLayout
+    private val navHeaderBinding: NavHeaderBinding by lazy {
+        NavHeaderBinding.inflate(layoutInflater)
     }
 
     private val viewModel: MainViewModel by viewModels()
@@ -46,14 +47,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+        appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         binding.navigationView.setupWithNavController(navController)
+
+        binding.navigationView.addHeaderView(navHeaderBinding.root)
 
         navController.addOnDestinationChangedListener { _, _, _ ->
             Utils.hideKeyboard(this)
         }
 
+        subscribeObservers()
+        createNotificationChannel()
+    }
+
+    private fun subscribeObservers() {
         viewModel.session.observe(this) {
             if (it is Resource.Success)
                 changeNavMenu(
@@ -64,31 +72,22 @@ class MainActivity : AppCompatActivity() {
                 )
         }
 
-        viewModel.account.observe(this) { resource ->
-            binding.navigationView.getHeaderView(0).apply {
-                if (resource is Resource.Success) {
-                    findViewById<ImageView>(R.id.avatar)?.let { avatar ->
-                        Glide.with(this)
-                            .load(IMAGE_URL + resource.data?.avatar)
-                            .placeholder(R.drawable.loading_animation)
-                            .error(R.drawable.ic_placeholder)
-                            .into(avatar)
-                    }
-                }
+        viewModel.account.observe(this) {
+            if (it is Resource.Success) {
+                Glide.with(this)
+                    .load(IMAGE_URL + it.data!!.avatar)
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_placeholder)
+                    .into(navHeaderBinding.avatar)
 
-                var name = resource.data?.name?.substringBefore(" ") ?: resource.data?.username
-                if (name.isNullOrBlank())
-                    name = getString(R.string.guest)
-
-                findViewById<TextView>(R.id.hello).text = getString(R.string.hello, name)
+                val name = it.data.name.substringBefore(" ")
+                navHeaderBinding.hello.text = getString(R.string.hello, name)
             }
         }
-
-        createNotificationChannel()
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(drawerLayout) || super.onSupportNavigateUp()
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
     private fun createNotificationChannel() {

@@ -20,26 +20,6 @@ interface AccountApiService {
         @Field("request_token") token: String
     ): NetworkSession
 
-    @FormUrlEncoded
-    @POST("3/authentication/session/new")
-    suspend fun addOrRemoveMovieWatchlist(
-        @Query("api_key") apiKey: String = API_KEY,
-        @Query("session_id") sessionId: String,
-        @Field("media_type") type: String = "movie",
-        @Field("media_id") movieId: Long,
-        @Field("watchlist") addToWatchlist: Boolean
-    )
-
-    @FormUrlEncoded
-    @POST("3/authentication/session/new")
-    suspend fun addOrRemoveMovieFavorites(
-        @Query("api_key") apiKey: String = API_KEY,
-        @Query("session_id") sessionId: String,
-        @Field("media_type") type: String = "movie",
-        @Field("media_id") movieId: Long,
-        @Field("favorites") addToFavorites: Boolean
-    )
-
     @GET("3/account")
     suspend fun getAccount(
         @Query("api_key") apiKey: String = API_KEY,

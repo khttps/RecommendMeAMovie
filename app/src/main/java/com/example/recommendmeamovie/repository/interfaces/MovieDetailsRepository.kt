@@ -8,4 +8,8 @@ interface MovieDetailsRepository {
 
     fun getMovieDetails(id: Long, sessionId: String?): Flow<Resource<MovieDetails>>
 
+    suspend fun setWatchlist(id: Long, sessionId: String, addToWatchlist: Boolean)
+
+    suspend fun setFavorite(id: Long, sessionId: String, addToFavorite: Boolean)
+
 }

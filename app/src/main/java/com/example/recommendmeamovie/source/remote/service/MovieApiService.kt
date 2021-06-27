@@ -4,9 +4,7 @@ import com.example.recommendmeamovie.BuildConfig.API_KEY
 import com.example.recommendmeamovie.source.remote.dto.MoviesContainer
 import com.example.recommendmeamovie.source.remote.dto.NetworkMovieDetails
 import com.example.recommendmeamovie.source.remote.dto.NetworkToken
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface MovieApiService {
 
@@ -50,5 +48,25 @@ interface MovieApiService {
         @Query("api_key") apiKey: String = API_KEY,
         @Query("session_id") sessionId: String?,
     ): NetworkMovieDetails
+
+    @FormUrlEncoded
+    @POST("3/authentication/session/new")
+    suspend fun addOrRemoveMovieWatchlist(
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("session_id") sessionId: String,
+        @Field("media_type") type: String = "movie",
+        @Field("media_id") movieId: Long,
+        @Field("watchlist") addToWatchlist: Boolean
+    )
+
+    @FormUrlEncoded
+    @POST("3/authentication/session/new")
+    suspend fun addOrRemoveMovieFavorites(
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("session_id") sessionId: String,
+        @Field("media_type") type: String = "movie",
+        @Field("media_id") movieId: Long,
+        @Field("favorites") addToFavorites: Boolean
+    )
 }
 

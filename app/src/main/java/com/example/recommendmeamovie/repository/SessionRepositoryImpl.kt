@@ -1,7 +1,7 @@
 package com.example.recommendmeamovie.repository
 
 import com.example.recommendmeamovie.repository.interfaces.SessionRepository
-import com.example.recommendmeamovie.source.local.datastore.SessionDataManager
+import com.example.recommendmeamovie.source.local.datastore.SessionManager
 import com.example.recommendmeamovie.source.remote.service.AccountApiService
 import com.example.recommendmeamovie.util.networkBoundResource
 import kotlinx.coroutines.flow.first
@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class SessionRepositoryImpl @Inject constructor(
     private val service: AccountApiService,
-    private val dataStore: SessionDataManager
+    private val dataStore: SessionManager
 ): SessionRepository {
 
     override fun getRequestToken() = networkBoundResource(

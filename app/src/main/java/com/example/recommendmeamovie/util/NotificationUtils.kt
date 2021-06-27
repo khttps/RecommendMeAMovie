@@ -13,12 +13,12 @@ import androidx.navigation.NavDeepLinkBuilder
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.bumptech.glide.Glide
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.receiver.WatchedReceiver
 import com.example.recommendmeamovie.ui.MainActivity
 import com.example.recommendmeamovie.work.NotificationWorker
-import com.squareup.picasso.Picasso
 import java.util.concurrent.TimeUnit
 
 fun NotificationManager.sendNotification(context: Context, movie: Movie) {
@@ -42,7 +42,7 @@ fun NotificationManager.sendNotification(context: Context, movie: Movie) {
             context,
             Constants.WATCHED_REQUEST_CODE,
             watchedIntent,
-            Constants.FLAGS
+            PendingIntent.FLAG_UPDATE_CURRENT
         )
 
     // Add movie to watched list when action is clicked
@@ -55,7 +55,11 @@ fun NotificationManager.sendNotification(context: Context, movie: Movie) {
     )
 
     // Movie Poster as Icon
-    val largeIcon: Bitmap = Picasso.get().load(Constants.IMAGE_URL + movie.poster).get()
+    val largeIcon: Bitmap = Glide.with(context)
+        .asBitmap()
+        .load(Constants.IMAGE_URL + movie.poster)
+        .submit()
+        .get()
 
     val builder = NotificationCompat
         .Builder(context, context.getString(R.string.channel_id))

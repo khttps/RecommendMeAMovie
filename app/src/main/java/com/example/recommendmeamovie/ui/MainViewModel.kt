@@ -14,6 +14,7 @@ class MainViewModel @Inject constructor(
     private val accountRepository: AccountRepository,
     private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
+
     val session = repository.getSessionId().asLiveData(Dispatchers.IO)
 
     val account = session.switchMap {

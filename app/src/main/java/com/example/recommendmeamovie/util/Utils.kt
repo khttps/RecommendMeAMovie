@@ -4,22 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.util.Constants.IMAGE_URL
-import com.squareup.picasso.Picasso
+import javax.inject.Inject
 
 object Utils {
-
-    fun bindImage(imagePath : String?, imageView : ImageView, errorResId : Int) {
-        Picasso
-            .get()
-            .load(IMAGE_URL + imagePath)
-            .placeholder(R.drawable.loading_animation)
-            .apply {
-                if (errorResId != 0)
-                    error(errorResId)
-            }.into(imageView)
-    }
 
     fun hideKeyboard(activity: Activity) {
         val inputMethodManager =

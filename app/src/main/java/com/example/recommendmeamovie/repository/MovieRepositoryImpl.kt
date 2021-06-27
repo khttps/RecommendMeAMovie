@@ -11,11 +11,14 @@ import com.example.recommendmeamovie.paging.MovieRemoteMediator
 import com.example.recommendmeamovie.repository.interfaces.MovieRepository
 import com.example.recommendmeamovie.source.local.database.MovieDatabase
 import com.example.recommendmeamovie.source.local.database.asDomain
+import com.example.recommendmeamovie.source.local.datastore.AccountManager
+import com.example.recommendmeamovie.source.local.datastore.SessionManager
 import com.example.recommendmeamovie.source.remote.asEntity
 import com.example.recommendmeamovie.source.remote.dto.MoviesContainer
 import com.example.recommendmeamovie.source.remote.service.MovieApiService
 import com.example.recommendmeamovie.util.networkBoundResource
 import dagger.hilt.android.scopes.ViewModelScoped
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -24,8 +27,11 @@ import javax.inject.Inject
 class MovieRepositoryImpl
 @Inject constructor(
     private val service: MovieApiService,
-    private val database: MovieDatabase
+    private val database: MovieDatabase,
+    private val sessionManager: SessionManager,
+    private val accountManager: AccountManager
 ) : MovieRepository {
+
     private val movieDao = database.movieDao
 
     companion object {
@@ -62,6 +68,10 @@ class MovieRepositoryImpl
         }
     ).flow
 
+    override fun getUserWatchlist() = getUserList(WATCHLIST_FILTER)
+
+    override fun getUserFavorites() = getUserList(FAVORITES_FILTER)
+
     override fun getWatchlistPaged(accountId: Long, sessionId: String) = gePagedMovies(
         filter = WATCHLIST_FILTER,
         maxSize = MAX_SIZE_UNBOUNDED,
@@ -88,36 +98,29 @@ class MovieRepositoryImpl
         }
     )
 
-     override fun getWatchlist(accountId: Long, sessionId: String) = networkBoundResource(
-         query = {
-                 movieDao.getMovies(WATCHLIST_FILTER).map {
-                     it.asDomain()
-                 }
-         },
-         fetch = {
-             service.getAccountMovieList(accountId = accountId, sessionId = sessionId, type = WATCHLIST_FILTER)
-         },
-         saveFetchResult = {
-             database.withTransaction {
-                 movieDao.deleteAll(WATCHLIST_FILTER)
-                 movieDao.insertAll(it.asEntity(WATCHLIST_FILTER))
-             }
-         }
-     )
-
-    override fun getFavorites(accountId: Long, sessionId: String) = networkBoundResource(
+    private fun getUserList(filter: String) = networkBoundResource(
         query = {
-            movieDao.getMovies(FAVORITES_FILTER).map {
+            movieDao.getMovies(filter).map {
                 it.asDomain()
             }
         },
         fetch = {
-            service.getAccountMovieList(accountId = accountId, sessionId = sessionId, type = FAVORITES_FILTER)
+            val sessionId = sessionManager.getSessionId().first()
+            val accountId = accountManager.getAccount().first().id
+
+            if (sessionId.isEmpty() || accountId == 0L)
+                throw Throwable("User is not signed in. ")
+
+            service.getAccountMovieList(
+                accountId = accountId,
+                sessionId = sessionId,
+                type = filter
+            )
         },
         saveFetchResult = {
             database.withTransaction {
-                movieDao.deleteAll(FAVORITES_FILTER)
-                movieDao.insertAll(it.asEntity(FAVORITES_FILTER))
+                movieDao.deleteAll(filter)
+                movieDao.insertAll(it.asEntity(filter))
             }
         }
     )
@@ -146,8 +149,7 @@ class MovieRepositoryImpl
         }
     }
 
-    override suspend fun clearCachedMovies() {
-        movieDao.deleteAll(WATCHLIST_FILTER)
-        movieDao.deleteAll(FAVORITES_FILTER)
+    override suspend fun clearUserCachedMovies() {
+        movieDao.clearUserCachedMovies()
     }
 }

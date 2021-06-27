@@ -14,7 +14,7 @@ private val Context.accountDataStore by dataStore(
 )
 
 @Singleton
-class AccountDataManager @Inject constructor(@ApplicationContext context: Context) {
+class AccountManager @Inject constructor(@ApplicationContext context: Context) {
 
     private val dataStore = context.accountDataStore
 

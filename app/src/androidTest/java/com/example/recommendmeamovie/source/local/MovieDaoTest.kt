@@ -5,7 +5,6 @@ import androidx.test.filters.SmallTest
 import com.example.recommendmeamovie.source.local.database.dao.MovieDao
 import com.example.recommendmeamovie.source.local.database.MovieDatabase
 import com.example.recommendmeamovie.source.local.database.MovieEntity
-import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -43,7 +42,7 @@ class MovieDaoTest {
     @Test
     fun insertAndRead() = runBlockingTest {
         val movieEntity = MovieEntity(0, "Chungking Express", "", "1994-9-26", "top_rated")
-        movieDao.addMovie(movieEntity)
+        movieDao.insertMovie(movieEntity)
 
         // val movies = movieDao.getMoviesPaged("top_rated").first()
         // assertThat(movies).contains(movieEntity)
@@ -70,7 +69,7 @@ class MovieDaoTest {
     @Test
     fun deleteAndRead() = runBlockingTest {
         val movieEntity = MovieEntity(0, "Chungking Express", "", "1994-9-26", "top_rated")
-        movieDao.addMovie(movieEntity)
+        movieDao.insertMovie(movieEntity)
 
         movieDao.deleteAll("top_rated")
 

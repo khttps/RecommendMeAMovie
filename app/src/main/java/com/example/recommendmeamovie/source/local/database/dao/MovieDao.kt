@@ -15,7 +15,7 @@ interface MovieDao {
     suspend fun insertAll(movies : List<MovieEntity>)
 
     @Insert
-    suspend fun addMovie(movie : MovieEntity)
+    suspend fun insertMovie(movie : MovieEntity)
 
     @Query("SELECT * FROM movies WHERE movie_type = :filter ORDER BY id ASC")
     fun getMoviesPaged(filter : String) : PagingSource<Int, MovieEntity>
@@ -25,5 +25,9 @@ interface MovieDao {
 
     @Query("DELETE FROM movies WHERE movie_type = :filter")
     suspend fun deleteAll(filter: String)
+
+    @Query("DELETE FROM movies WHERE movie_type = 'watchlist'  OR movie_type = 'favorite'")
+    suspend fun clearUserCachedMovies()
+
 
 }

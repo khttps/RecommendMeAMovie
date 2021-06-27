@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.recommendmeamovie.NavigationDirections
 import com.example.recommendmeamovie.R
 import com.example.recommendmeamovie.adapter.MoviePagingAdapter
-import com.example.recommendmeamovie.adapter.OnMovieClickListener
 import com.example.recommendmeamovie.databinding.FragmentDiscoverBinding
 import com.example.recommendmeamovie.domain.Movie
 import com.example.recommendmeamovie.ui.MainActivity
@@ -19,7 +18,8 @@ import com.example.recommendmeamovie.util.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DiscoverFragment : Fragment(R.layout.fragment_discover), OnMovieClickListener {
+class DiscoverFragment : Fragment(R.layout.fragment_discover),
+    MoviePagingAdapter.OnMovieClickListener {
 
     private val viewModel: DiscoverViewModel by viewModels()
 

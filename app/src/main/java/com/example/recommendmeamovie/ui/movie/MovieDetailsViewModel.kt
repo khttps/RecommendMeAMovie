@@ -28,13 +28,10 @@ class MovieDetailsViewModel @Inject constructor(
 
     private val sessionId = sessionRepository.getSessionId().asLiveData()
 
-    //private val _movieDetails = MutableLiveData<Resource<MovieDetails>>()
     val movieDetails = sessionId.switchMap {
         val sessionId = it.data
         repository.getMovieDetails(movieId!!, sessionId).asLiveData()
     }
-    //LiveData<Resource<MovieDetails>>
-        //get() = _movieDetails
 
     val year = Transformations.map(movieDetails) { details ->
         details.data?.releaseDate?.substringBefore("-")
@@ -50,6 +47,10 @@ class MovieDetailsViewModel @Inject constructor(
         details.data?.watchlist
     }
 
+    val favorite = Transformations.map(movieDetails) { details ->
+        details.data?.favorite
+    }
+
     val isLoading: LiveData<Boolean> = Transformations.map(movieDetails) {
         it is Resource.Loading
     }
@@ -62,25 +63,32 @@ class MovieDetailsViewModel @Inject constructor(
         it is Resource.Error
     }
 
-    init {
-        //getMovieDetails()
-    }
-
-//    private fun getMovieDetails() {
-//        if (movieId == null)
-//            movieDetails.value = Resource.Error(Throwable("Failed to load movie info."))
-//        else {
-//            viewModelScope.launch(Dispatchers.IO) {
-//                sessionId.value.let { session ->
-//                    repository.getMovieDetails(id = movieId, sessionId = session?.data).collect {
-//                        movieDetails.postValue(it)
-//                    }
-//                }
+//    fun setWatchlist() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            sessionId.value?.data?.let {
+//                scheduleMovieNotification()
+//                repository.setWatchlist(
+//                    id = movieId!!,
+//                    sessionId = it,
+//                    addToWatchlist = watchlist.value
+//                )
+//            }
+//        }
+//    }
+//
+//    fun setFavorite() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            sessionId.value?.data?.let {
+//                repository.setFavorite(
+//                    id = movieId!!,
+//                    sessionId = it,
+//                    addToFavorite = !favorite.value!!
+//                )
 //            }
 //        }
 //    }
 
-    fun scheduleMovieNotification() {
+    private fun scheduleMovieNotification() {
         val data = workDataOf(
             "movieId" to movieDetails.value?.data?.id,
             "movieName" to movieDetails.value?.data?.title,

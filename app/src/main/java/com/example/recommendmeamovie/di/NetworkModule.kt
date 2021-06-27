@@ -15,7 +15,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiServiceModule {
+object NetworkModule {
 
     @Provides
     fun provideMoshi() : Moshi {
