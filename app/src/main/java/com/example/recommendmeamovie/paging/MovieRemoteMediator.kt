@@ -37,9 +37,7 @@ class MovieRemoteMediator(
                 LoadType.REFRESH -> 1
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
-                    val remoteKey = database.withTransaction {
-                        remoteKeyDao.remoteKeyByFilter(filter = filter)
-                    }
+                    val remoteKey = remoteKeyDao.remoteKeyByFilter(filter = filter)
 
                     if (remoteKey.nextKey == null)
                         return MediatorResult.Success(endOfPaginationReached = true)

@@ -14,7 +14,7 @@ data class NetworkMovieDetails(
     @Json(name = "poster_path") val poster: String?,
     @Json(name = "release_date") val releaseDate: String,
     @Json(name = "vote_average") val voteAverage: Double,
-    @Json(name = "account_states") val accountStates: AccountStates
+    @Json(name = "account_states") val accountStates: AccountStates?
 )
 
 @JsonClass(generateAdapter = true)

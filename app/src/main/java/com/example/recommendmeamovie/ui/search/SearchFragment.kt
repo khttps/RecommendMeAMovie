@@ -36,7 +36,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), MoviePagingAdapter.On
 
         binding.apply {
             pagingAdapter.addLoadStateListener {
-                val state = it.source.refresh
+                val state: LoadState = it.source.refresh
 
                 progressBar.isVisible = state is LoadState.Loading
                 errorMessage.isVisible = state is LoadState.Error
