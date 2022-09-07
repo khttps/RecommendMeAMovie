@@ -11,7 +11,7 @@ It also includes other features:
 
 This app is written in Kotlin, with the MVVM architecture
 
-## Features used:
+## Features:
 - Room persistence library for persisting and caching data
 - Kotlin Flow for emitting data
 - LiveData and ViewModels
